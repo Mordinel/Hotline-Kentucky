@@ -1,6 +1,6 @@
 # System Design Document
 
-## 1. Are your player, items and enemies the same class, di↵erent classes in the same family, or completely di↵erent classes?
+## 1. Are your player, items and enemies the same class, different classes in the same family, or completely di↵erent classes?
 The player, items, and enemies classes will derive from a base entity class and therefore be in the same family of classes.
 
 ## 2. What logic will you put into your Form class? What logic will you put into your Game Manager class?
@@ -37,7 +37,8 @@ GameManager or the Sprite/Entity class itself.
      • Describe the behaviour
      • Describe the implementation logic
 Enemies will have a finite state machine, where by default they will wander without straying too far from their original location.
-They will have a state of alert where they know where the player was but not where they went (like a gunshot), they will go to that location and depending on if they see the player or not, they will either engage in combat with the player, or enter a searching state if they are unable to find the player where they thought the player would be. In the searching state, the enemy will wander at an increased speed in search of the player. After an amount of time if they haven't found the player, they will return to their original location going back into the default state.
+They will have a state of alert where they know where the player was but not where they went (like a gunshot), they will go to that location and depending on if they see the player or not, they will either engage in combat with the player, or enter a searching state if they are unable to find the player where they thought the player would be.
+In the searching state, the enemy will wander at an increased speed in search of the player. After an amount of time if they haven't found the player, they will return to their original location going back into the default state.
 At any point, if the enemy is to see the player, they will immediately engage in combat.
 
 ## 13. Describe the trigonometry you are going to include
