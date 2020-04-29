@@ -19,14 +19,11 @@ int main()
                     window->close();
                     break;
             }
-
+        
         }
-
         // display the window
         window->display();
     }
-
+    
     return 0;
 }
-
-
