@@ -45,7 +45,7 @@ void Dungeon::genRooms(unsigned int roomCount) {
 
 }
 
-bool roomsIntersect(Room* a, Room* b) {
+bool Dungeon::roomsIntersect(Room* a, Room* b) {
     int deltaX;
     int deltaY;
     int intersectX;
