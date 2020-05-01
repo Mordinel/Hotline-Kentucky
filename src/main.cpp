@@ -6,14 +6,14 @@
 #include "Dungeon.h"
 #include "Room.h"
 
-const unsigned long random_seed = 69;
-const int tileSize = 5;
+const unsigned int random_seed = static_cast<unsigned int>(time(NULL));
+const int tileSize = 4;
 
 int main()
 {
     int i;
     //create render window
-    sf::RenderWindow window(sf::VideoMode(1024, 512), "SFML Hello world", sf::Style::Close | sf::Style::Titlebar);
+    sf::RenderWindow window(sf::VideoMode(1024, 768), "SFML Hello world", sf::Style::Close | sf::Style::Titlebar);
 
     sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(window.getSize().x, window.getSize().y));
 
