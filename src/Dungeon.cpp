@@ -29,8 +29,9 @@ void Dungeon::genRooms(unsigned int roomCount) {
             tmpRoom = new Room(newX, newY, newWidth, newHeight);
 
             intersects = false;
+
             // check if any of the existing rooms intersect
-            for (ri = 0; ri < r; ri ++) {
+            for (ri = 0; !intersects && (ri < r); ri ++) {
                 intersects = roomsIntersect(tmpRoom, rooms[ri]);
             }
 
@@ -54,8 +55,8 @@ bool Dungeon::roomsIntersect(Room* a, Room* b) {
     deltaX = b->X - a->X;
     deltaY = b->Y - a->Y;
 
-    intersectX = abs(deltaX) - ((b->Width / 2) + (a->Width / 2));
-    intersectY = abs(deltaY) - ((b->Height / 2) + (a->Height / 2));
+    intersectX = abs(deltaX) - ((b->Width + a->Width) / 2);
+    intersectY = abs(deltaY) - ((b->Height + a->Height) / 2);
 
     return ((intersectX < 0) && (intersectY < 0));
 }

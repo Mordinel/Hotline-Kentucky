@@ -7,7 +7,7 @@
 //#include "TileType.h"
 #include "Room.h"
 
-#define DUNGEON_SIZE 300
+#define DUNGEON_SIZE 100
 #define ROOM_MAXSIZE 30
 #define ROOM_MINSIZE 10
 #define MIN_ROOM_COUNT 2;
