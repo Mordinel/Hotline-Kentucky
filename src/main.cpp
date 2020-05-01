@@ -7,11 +7,12 @@
 #include "Room.h"
 
 const unsigned int random_seed = static_cast<unsigned int>(time(NULL));
-const int tileSize = 4;
+const int tileSize = 16 * 2;
 
 int main()
 {
     int i;
+
     //create render window
     sf::RenderWindow window(sf::VideoMode(1024, 768), "SFML Hello world", sf::Style::Close | sf::Style::Titlebar);
 
@@ -26,10 +27,6 @@ int main()
 
     Dungeon d;
     std::vector<Room*> rooms = d.GetRooms();
-   
-    for (i = 0; i < rooms.size(); i++) {
-        printf("Room %d: X:%d Y:%d W:%d H:%d\n",i, rooms[i]->X, rooms[i]->Y, rooms[i]->Width, rooms[i]->Height); 
-    }
 
     float deltaTime = 0.0f;
     sf::Clock* clock = new sf::Clock();
@@ -59,10 +56,21 @@ int main()
 
             sf::RectangleShape rect(sf::Vector2f((float)rooms[i]->Width * tileSize, (float)rooms[i]->Height * tileSize));
             rect.setPosition(rooms[i]->X * tileSize, rooms[i]->Y * tileSize);
-
             rect.setOutlineColor(sf::Color(255, 255, 255));
-            rect.setFillColor(sf::Color(255, 255, 255, 0));
             rect.setOutlineThickness(1);
+            rect.setFillColor(sf::Color(0, 0, 0, 0));
+
+            sf::VertexArray line(sf::Lines, 2);
+
+            if (rooms[i]->ConnectsTo != nullptr) {
+                line[0].position = rooms[i]->GetCenter() * (float)tileSize; // point 1 of line
+                line[1].position = rooms[i]->ConnectsTo->GetCenter() * (float)tileSize; // point 2 of line
+                
+                line[0].color = sf::Color(0,0,0);
+                line[1].color = sf::Color(0,0,0);
+                
+                window.draw(line);
+            }
 
             window.draw(rect);
         }

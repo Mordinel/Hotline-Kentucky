@@ -4,7 +4,7 @@
 
 Dungeon::Dungeon()
 {
-    roomCount = 64;
+    roomCount = 32;
     genRooms(roomCount);
 }
 
@@ -23,11 +23,13 @@ void Dungeon::genRooms(unsigned int roomCount) {
 
     int dungeonSize = roomCount * ROOM_MAXSIZE;
 
+    // generate roomCount amount of rooms
     for (r = 0; r < roomCount; r++) {
         // generate random room values
         newWidth = (std::rand() % (ROOM_MAXSIZE - ROOM_MINSIZE)) + ROOM_MINSIZE;
         newHeight = (std::rand() % (ROOM_MAXSIZE - ROOM_MINSIZE)) + ROOM_MINSIZE;
        
+        // first room always at 0,0
         if (r == 0) {
             newX = 0;
             newY = 0;
@@ -35,34 +37,36 @@ void Dungeon::genRooms(unsigned int roomCount) {
             tmpRoom = new Room(newX, newY, newWidth, newHeight);
 
             rooms.push_back(tmpRoom);
-            printf("Initial Room: X:%d Y:%d W:%d H:%d\n", newX, newY, newWidth, newHeight);
-        } else {
+        } else {    // all other rooms except room 0
             do {
+                // randomly pick a direction and an existing room
                 Direction newDir = (Direction)(std::rand() % (int)Direction::None);
                 branchRoom = std::rand() % rooms.size(); 
-                printf("Branching from room %d\n", branchRoom);
+
+                // plot the new room based on the direction
                 switch (newDir) {
                     case Direction::North:
-                        newX = rooms[branchRoom]->X;
-                        newY = rooms[branchRoom]->Y - (ROOM_MAXSIZE);
+                        newX = rooms[branchRoom]->GetCenter().x;
+                        newY = rooms[branchRoom]->GetCenter().y - (ROOM_MAXSIZE);
                         break;
                     case Direction::East:
-                        newX = rooms[branchRoom]->X + (ROOM_MAXSIZE);
-                        newY = rooms[branchRoom]->Y;
+                        newX = rooms[branchRoom]->GetCenter().x + (ROOM_MAXSIZE);
+                        newY = rooms[branchRoom]->GetCenter().y;
                         break;
                     case Direction::South:
-                        newX = rooms[branchRoom]->X;
-                        newY = rooms[branchRoom]->Y + (ROOM_MAXSIZE);
+                        newX = rooms[branchRoom]->GetCenter().x;
+                        newY = rooms[branchRoom]->GetCenter().y + (ROOM_MAXSIZE);
                         break;
                     case Direction::West:
-                        newX = rooms[branchRoom]->X - (ROOM_MAXSIZE);
-                        newY = rooms[branchRoom]->Y;
+                        newX = rooms[branchRoom]->GetCenter().x - (ROOM_MAXSIZE);
+                        newY = rooms[branchRoom]->GetCenter().y;
                         break;
                 }
                 
-                printf("Tried to create room at X:%d Y:%d W:%d H:%d\n", newX, newY, newWidth, newHeight);
 
+                // instance the new room
                 tmpRoom = new Room(newX, newY, newWidth, newHeight);
+                tmpRoom->ConnectsTo = rooms[branchRoom];
 
                 intersects = false;
 
@@ -71,16 +75,14 @@ void Dungeon::genRooms(unsigned int roomCount) {
                     intersects = roomsIntersect(tmpRoom, rooms[ri]);
                 }
 
+                // if intersects delete room else add it to the room list
                 if (intersects) {
-                    printf("New room intersects with room %d\n", ri-1);
                     delete tmpRoom;
                 } else {
-                    printf("Added room to list\n");
                     rooms.push_back(tmpRoom);
                 }
-            } while (intersects);
+            } while (intersects); // while intersects
         }
-        printf("Added room %d\n", r);
     }
 }
 
