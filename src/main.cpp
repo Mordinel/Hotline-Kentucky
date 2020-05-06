@@ -10,7 +10,7 @@
 #include "TileMap.h"
 
 const unsigned int random_seed = static_cast<unsigned int>(time(NULL));
-const int tileSize = 16 * 2;
+const int tileSize = 32;
 
 int main()
 {
@@ -33,10 +33,9 @@ int main()
 
     std::vector<std::vector<TileType>> map = d.GenMap();
 
-    /*sf::Texture tileTexture;
+    sf::Texture tileTexture;
     tileTexture.loadFromFile("../assets/sprites/tiles.png");
-    std::cout << "Got here!" << std::endl;
-    TileMap tm(map, 32, tileTexture);*/
+    TileMap tm(map, 32, tileTexture);
 
 
     float deltaTime = 0.0f;
@@ -63,6 +62,8 @@ int main()
         window.setView(view);
         view.setCenter(player.GetPosition());
 
+        window.draw(tm);
+
         for (i = 0; i < rooms.size(); i++) {
 
             sf::RectangleShape rect(sf::Vector2f((float)rooms[i]->Width * tileSize, (float)rooms[i]->Height * tileSize));
@@ -85,7 +86,6 @@ int main()
 
             window.draw(rect);
         }
-        //window.draw(tm);
         player.Update(&deltaTime);
         player.Draw(&window);
 
