@@ -4,7 +4,7 @@
 
 Dungeon::Dungeon()
 {
-    roomCount = 32;
+    roomCount = 5;
     genRooms(roomCount);
 }
 
@@ -120,9 +120,11 @@ std::vector<Room*> Dungeon::GetRooms() {
 std::vector<std::vector<TileType>> Dungeon::GenMap() {
     std::vector<std::vector<TileType>> map;
 
+    translateRooms();
+
     Box b = getBounds();
-    int width = abs(b.left - b.right) + 1;
-    int height = abs(b.bottom - b.top) + 1;
+    int width = abs(b.Left - b.Right);
+    int height = abs(b.Bottom - b.Top);
 
     // fill map with zeroes/void
     for (int i = 0; i < height; i++) {
@@ -138,35 +140,45 @@ std::vector<std::vector<TileType>> Dungeon::GenMap() {
 
     // fill room tiles;
     for (int i = 0; i < rooms.size(); i++) {
-        int x = rooms[i]->X + (b.left * -1);
-        int y = rooms[i]->Y + (b.top * -1);
+        int x = rooms[i]->X + abs(b.Left);
+        int y = rooms[i]->Y + abs(b.Top);
         int right = x + rooms[i]->Width;
         int bottom = y + rooms[i]->Height;
 
         // fill border with wall tiles
         // Top and bottom border
-        for (int j = x; j <= right; j++) {
+        for (int j = x; j < right; j++) {
             map[y][j] = TileType::Wall;
-            map[bottom][j] = TileType::Wall;
+            map[bottom - 1][j] = TileType::Wall;
         }
 
         // Left and right border
-        for (int j = y; j <= bottom; j++)
+        for (int j = y; j < bottom; j++)
         {
             map[j][x] = TileType::Wall;
-            map[j][right] = TileType::Wall;
+            map[j][right - 1] = TileType::Wall;
         }
 
         // fill inside with floor tiles
-        for (int j = y + 1; j < bottom; j++) { // for each row
+        for (int j = y + 1; j < bottom - 1; j++) { // for each row
             // t for tile
-            for (int t = x + 1; t < right; t++) { // for each column of row
+            for (int t = x + 1; t < right - 1; t++) { // for each column of row
                 map[j][t] = TileType::Floor;
             }
         }
     }
 
     return map;
+}
+
+void Dungeon::translateRooms() {
+    int i;
+    Box b = getBounds();
+
+    for (i = 0; i < rooms.size(); i++) {
+        rooms[i]->X = rooms[i]->X + abs(b.Left);
+        rooms[i]->Y = rooms[i]->Y + abs(b.Top);
+    }
 }
 
 Box Dungeon::getBounds()
@@ -198,10 +210,10 @@ Box Dungeon::getBounds()
     }
 
     Box bounds;
-    bounds.left = minLeft;
-    bounds.top = minTop;
-    bounds.right = maxRight;
-    bounds.bottom = maxBottom;
+    bounds.Left = minLeft;
+    bounds.Top = minTop;
+    bounds.Right = maxRight;
+    bounds.Bottom = maxBottom;
     
     return bounds;
 }

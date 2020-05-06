@@ -25,6 +25,7 @@ private:
     bool roomsIntersect(Room* a, Room* b);
     void genPaths();
     Box getBounds();
+    void translateRooms();
 
 public:
     Dungeon();

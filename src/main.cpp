@@ -78,8 +78,8 @@ int main()
                 line[0].position = rooms[i]->GetCenter() * (float)tileSize; // point 1 of line
                 line[1].position = rooms[i]->ConnectsTo->GetCenter() * (float)tileSize; // point 2 of line
                 
-                line[0].color = sf::Color(0,0,0);
-                line[1].color = sf::Color(0,0,0);
+                line[0].color = sf::Color(255, 255, 255);
+                line[1].color = sf::Color(255, 255, 255);
                 
                 window.draw(line);
             }

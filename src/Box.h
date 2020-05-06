@@ -2,10 +2,10 @@
 #define BOX_H
 
 struct Box {
-    int left;
-    int top;
-    int right;
-    int bottom;
+    int Left;
+    int Top;
+    int Right;
+    int Bottom;
 };
 
 #endif
