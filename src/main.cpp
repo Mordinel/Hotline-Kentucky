@@ -14,7 +14,6 @@
 #define ZOOM_MAX 1.3f
 #define ZOOM_DEFAULT 1.0f
 
-
 const unsigned int random_seed = static_cast<unsigned int>(time(NULL));
 const int tileSize = 32;
 
@@ -50,6 +49,7 @@ int main()
     if (!playerTexture->loadFromFile("../assets/sprites/chicken.png")) return 1;
 
     Player player(playerTexture, &window, sf::Vector2u(8, 8), 0.125f, 500.0f);
+    sf::Vector2f playerPos;
     
     std::srand(random_seed);
 
@@ -87,12 +87,15 @@ int main()
                     break;
             }
         }
+
+        playerPos = player.GetPosition();
  
         window.clear(sf::Color(100, 100, 100));
         window.setView(view);
         view.setCenter(player.GetPosition());
         view.setSize(viewSize * viewZoom);
 
+        tm.CastLight(playerPos.x / tileSize, playerPos.y / tileSize);
         window.draw(tm);
 
         player.Update(&deltaTime);

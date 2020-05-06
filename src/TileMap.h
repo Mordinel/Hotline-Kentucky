@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include <SFML/Graphics.hpp>
 
 #include "TileType.h"
@@ -11,6 +12,7 @@ class TileMap : public sf::Drawable, public sf::Transformable
 {
 private:
 	std::vector<std::vector<TileType>> tiles;
+	std::vector<std::vector<TileType>> litMask;
 	int tileSize;
 	sf::Texture tileSet;
 	int width;
@@ -37,6 +39,7 @@ public:
 	~TileMap();
 
 	void SetTiles(std::vector<std::vector<TileType>> newTiles);
+    void CastLight(float playerX, float playerY);
 	
 };
 
