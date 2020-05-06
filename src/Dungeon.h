@@ -9,8 +9,7 @@
 #include "Room.h"
 #include "Box.h"
 
-#define DUNGEON_SIZE 150
-#define ROOM_MAXSIZE 30
+#define ROOM_MAXSIZE 18
 #define ROOM_MINSIZE 10
 #define MIN_ROOM_COUNT 2
 #define CORRIDOR_WIDTH 3
@@ -23,7 +22,6 @@ private:
 
     void genRooms(unsigned int roomCount);
     bool roomsIntersect(Room* a, Room* b);
-    void genPaths();
     Box getBounds();
     void translateRooms();
 

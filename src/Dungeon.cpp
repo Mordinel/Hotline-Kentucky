@@ -4,8 +4,9 @@
 
 Dungeon::Dungeon()
 {
-    roomCount = 5;
+    roomCount = 16;
     genRooms(roomCount);
+    translateRooms();
 }
 
 Dungeon::~Dungeon(){}
@@ -101,10 +102,6 @@ bool Dungeon::roomsIntersect(Room* a, Room* b) {
     return ((intersectX < 0) && (intersectY < 0));
 }
 
-void Dungeon::genPaths() {
-    
-}
-
 void Dungeon::NextDungeon() {
     
 }
@@ -118,16 +115,18 @@ std::vector<Room*> Dungeon::GetRooms() {
 }
 
 std::vector<std::vector<TileType>> Dungeon::GenMap() {
+    int i;
+    int j;
+    int t;
+    int d;
     std::vector<std::vector<TileType>> map;
-
-    translateRooms();
 
     Box b = getBounds();
     int width = abs(b.Left - b.Right);
     int height = abs(b.Bottom - b.Top);
 
     // fill map with zeroes/void
-    for (int i = 0; i < height; i++) {
+    for (i = 0; i < height; i++) {
         std::vector<TileType> row;
 
 
@@ -139,7 +138,7 @@ std::vector<std::vector<TileType>> Dungeon::GenMap() {
     }
 
     // fill room tiles;
-    for (int i = 0; i < rooms.size(); i++) {
+    for (i = 0; i < rooms.size(); i++) {
         int x = rooms[i]->X + abs(b.Left);
         int y = rooms[i]->Y + abs(b.Top);
         int right = x + rooms[i]->Width;
@@ -147,26 +146,63 @@ std::vector<std::vector<TileType>> Dungeon::GenMap() {
 
         // fill border with wall tiles
         // Top and bottom border
-        for (int j = x; j < right; j++) {
+        for (j = x; j < right; j++) {
             map[y][j] = TileType::Wall;
             map[bottom - 1][j] = TileType::Wall;
         }
 
         // Left and right border
-        for (int j = y; j < bottom; j++)
+        for (j = y; j < bottom; j++)
         {
             map[j][x] = TileType::Wall;
             map[j][right - 1] = TileType::Wall;
         }
 
         // fill inside with floor tiles
-        for (int j = y + 1; j < bottom - 1; j++) { // for each row
+        for (j = y + 1; j < bottom - 1; j++) { // for each row
             // t for tile
-            for (int t = x + 1; t < right - 1; t++) { // for each column of row
+            for (t = x + 1; t < right - 1; t++) { // for each column of row
                 map[j][t] = TileType::Floor;
             }
         }
     }
+
+    // fill paths between rooms
+    for (i = 1; i < rooms.size(); i++) {
+        sf::Vector2f fromPos = rooms[i]->GetCenter();
+        sf::Vector2f toPos = rooms[i]->ConnectsTo->GetCenter();
+        
+        Box path;
+        path.Top = (toPos.y < fromPos.y) ? toPos.y : fromPos.y;
+        path.Bottom = (toPos.y > fromPos.y) ? toPos.y : fromPos.y;
+        path.Left = (toPos.x < fromPos.x) ? toPos.x : fromPos.x;
+        path.Right = (toPos.x > fromPos.x) ? toPos.x : fromPos.x;
+
+        // fill with floor
+        for (j = path.Top; j <= path.Bottom; j++) {
+            for (t = path.Left; t <= path.Right; t++) {
+                map[j][t] = TileType::Floor;
+                
+                // set adjacent void tiles to walls
+                if (map[j+1][t] == TileType::Void) {
+                    map[j+1][t] = TileType::Wall;
+                }
+                if (map[j][t+1] == TileType::Void) {
+                    map[j][t+1] = TileType::Wall;
+                }
+                if (map[j-1][t] == TileType::Void) {
+                    map[j-1][t] = TileType::Wall;
+                }
+                if (map[j][t-1] == TileType::Void) {
+                    map[j][t-1] = TileType::Wall;
+                }
+            }
+        }
+
+    }
+
+    sf::Vector2f lastRoomCenter = rooms[rooms.size()-1]->GetCenter();
+    map[lastRoomCenter.y][lastRoomCenter.x] = TileType::Stairs;
 
     return map;
 }

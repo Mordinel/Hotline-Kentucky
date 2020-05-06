@@ -15,6 +15,7 @@ public:
     virtual void Draw(sf::RenderWindow* window);
 
     virtual sf::Vector2f GetPosition() { return body.getPosition(); }
+    virtual void SetPosition(sf::Vector2f* position);
 
     Entity* Next;
 protected:

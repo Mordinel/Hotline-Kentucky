@@ -10,7 +10,7 @@ Entity::Entity(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imag
     Next = nullptr;
     row = 0;
 
-    body.setSize(sf::Vector2f(100.0f, 100.0f));
+    body.setSize(sf::Vector2f(32.0f, 32.0f));
     body.setOrigin(body.getSize() / 2.0f);
     body.setPosition(window->getSize().x / 2.0f, window->getSize().y / 2.0f);
     body.setTexture(texture);
@@ -32,4 +32,8 @@ void Entity::Update(float* deltaTime) {
 // draw entity to window
 void Entity::Draw(sf::RenderWindow* window) {
     window->draw(body);
+}
+
+void Entity::SetPosition(sf::Vector2f* position) {
+    body.setPosition(*position);
 }

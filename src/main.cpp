@@ -17,7 +17,7 @@ int main()
     int i;
 
     //create render window
-    sf::RenderWindow window(sf::VideoMode(1024, 768), "SFML Hello world", sf::Style::Close | sf::Style::Titlebar);
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Hello world", sf::Style::None/* | sf::Style::Fullscreen*/);
 
     sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(window.getSize().x, window.getSize().y));
 
@@ -31,11 +31,14 @@ int main()
     Dungeon d;
     std::vector<Room*> rooms = d.GetRooms();
 
+    sf::Vector2f spawnLocation = rooms[0]->GetCenter() * (float)tileSize;
+    player.SetPosition(&spawnLocation);
+
     std::vector<std::vector<TileType>> map = d.GenMap();
 
     sf::Texture tileTexture;
     tileTexture.loadFromFile("../assets/sprites/tiles.png");
-    TileMap tm(map, 32, tileTexture);
+    TileMap tm(map, tileSize, tileTexture);
 
 
     float deltaTime = 0.0f;
@@ -64,28 +67,6 @@ int main()
 
         window.draw(tm);
 
-        for (i = 0; i < rooms.size(); i++) {
-
-            sf::RectangleShape rect(sf::Vector2f((float)rooms[i]->Width * tileSize, (float)rooms[i]->Height * tileSize));
-            rect.setPosition(rooms[i]->X * tileSize, rooms[i]->Y * tileSize);
-            rect.setOutlineColor(sf::Color(255, 255, 255));
-            rect.setOutlineThickness(1);
-            rect.setFillColor(sf::Color(0, 0, 0, 0));
-
-            sf::VertexArray line(sf::Lines, 2);
-
-            if (rooms[i]->ConnectsTo != nullptr) {
-                line[0].position = rooms[i]->GetCenter() * (float)tileSize; // point 1 of line
-                line[1].position = rooms[i]->ConnectsTo->GetCenter() * (float)tileSize; // point 2 of line
-                
-                line[0].color = sf::Color(255, 255, 255);
-                line[1].color = sf::Color(255, 255, 255);
-                
-                window.draw(line);
-            }
-
-            window.draw(rect);
-        }
         player.Update(&deltaTime);
         player.Draw(&window);
 
