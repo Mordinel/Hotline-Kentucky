@@ -1,11 +1,13 @@
 #ifndef DUNGEON_H
 #define DUNGEON_H
 
+#include <iostream>
 #include <cstdlib>
 #include <vector>
 
 //#include "TileType.h"
 #include "Room.h"
+#include "Box.h"
 
 #define DUNGEON_SIZE 150
 #define ROOM_MAXSIZE 30
@@ -22,6 +24,8 @@ private:
     void genRooms(unsigned int roomCount);
     bool roomsIntersect(Room* a, Room* b);
     void genPaths();
+    Box getBounds();
+
 public:
     Dungeon();
     ~Dungeon();
@@ -29,6 +33,7 @@ public:
     void NextDungeon();
     std::vector<std::vector<int>> GetDungeon();
     std::vector<Room*> GetRooms();
+    std::vector<std::vector<int>> GenMap();
 };
 
 #endif

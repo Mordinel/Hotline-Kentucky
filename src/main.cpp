@@ -28,6 +28,8 @@ int main()
     Dungeon d;
     std::vector<Room*> rooms = d.GetRooms();
 
+    d.GenMap();
+
     float deltaTime = 0.0f;
     sf::Clock* clock = new sf::Clock();
     // while window is open

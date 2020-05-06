@@ -113,7 +113,54 @@ std::vector<std::vector<int>> Dungeon::GetDungeon() {
     return dungeon;
 }
 
-std::vector<Room*> Dungeon::GetRooms()
-{
+std::vector<Room*> Dungeon::GetRooms() {
     return rooms;
 }
+
+std::vector<std::vector<int>> Dungeon::GenMap() {
+    std::vector<std::vector<int>> map;
+
+    Box b = getBounds();
+    
+    
+
+    return map;
+}
+
+Box Dungeon::getBounds()
+{
+    int minLeft = 0;
+    int minTop = 0;
+    int maxRight = 0;
+    int maxBottom = 0;
+
+    for (int i = 0; i < rooms.size(); i++)
+    {
+        int left = rooms[i]->X;
+        int top = rooms[i]->Y;
+        int right = left + rooms[i]->Width;
+        int bottom = top + rooms[i]->Height;
+
+        if (left < minLeft) {
+            minLeft = left;
+        }
+        if (top < minTop) {
+            minTop = top;
+        }
+        if (right > maxRight) {
+            maxRight = right;
+        }
+        if (bottom > maxBottom) {
+            maxBottom = bottom;
+        }
+    }
+
+    Box bounds;
+    bounds.left = minLeft;
+    bounds.top = minTop;
+    bounds.right = maxRight;
+    bounds.bottom = maxBottom;
+    
+    return bounds;
+}
+
