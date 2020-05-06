@@ -9,17 +9,42 @@
 #include "TileType.h"
 #include "TileMap.h"
 
+#define ZOOM_INCREMENTS 0.1f
+#define ZOOM_MIN 0.7f
+#define ZOOM_MAX 1.3f
+#define ZOOM_DEFAULT 1.0f
+
+
 const unsigned int random_seed = static_cast<unsigned int>(time(NULL));
 const int tileSize = 32;
+
+void setViewZoom(float* viewZoom, int mouseDelta) {
+    if (mouseDelta < 0) {
+        *viewZoom += ZOOM_INCREMENTS;
+    } else if (mouseDelta > 0) {
+        *viewZoom -= ZOOM_INCREMENTS;
+    }
+
+    if (*viewZoom < ZOOM_MIN) {
+        *viewZoom = ZOOM_MIN;
+    } else if (*viewZoom > ZOOM_MAX) {
+        *viewZoom = ZOOM_MAX;
+    }
+}
 
 int main()
 {
     int i;
+    float viewZoom = ZOOM_DEFAULT;
+
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8;
 
     //create render window
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Hello world", sf::Style::None/* | sf::Style::Fullscreen*/);
 
-    sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(window.getSize().x, window.getSize().y));
+    sf::Vector2f viewSize(window.getSize().x, window.getSize().y);
+    sf::View view(sf::Vector2f(0.0f, 0.0f), viewSize);
 
     sf::Texture* playerTexture = new sf::Texture();
     if (!playerTexture->loadFromFile("../assets/sprites/chicken.png")) return 1;
@@ -57,13 +82,16 @@ int main()
                 case sf::Event::Closed:
                     window.close();
                     break;
+                case sf::Event::MouseWheelMoved:
+                    setViewZoom(&viewZoom, evnt.mouseWheel.delta);
+                    break;
             }
-        
         }
  
         window.clear(sf::Color(100, 100, 100));
         window.setView(view);
         view.setCenter(player.GetPosition());
+        view.setSize(viewSize * viewZoom);
 
         window.draw(tm);
 
@@ -76,3 +104,4 @@ int main()
     
     return 0;
 }
+
