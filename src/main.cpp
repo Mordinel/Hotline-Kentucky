@@ -1,10 +1,13 @@
 // main.cpp
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
 
 #include "Player.h"
 #include "Dungeon.h"
 #include "Room.h"
+#include "TileType.h"
+#include "TileMap.h"
 
 const unsigned int random_seed = static_cast<unsigned int>(time(NULL));
 const int tileSize = 16 * 2;
@@ -18,7 +21,7 @@ int main()
 
     sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(window.getSize().x, window.getSize().y));
 
-    sf::Texture* playerTexture = new sf::Texture();;
+    sf::Texture* playerTexture = new sf::Texture();
     if (!playerTexture->loadFromFile("../assets/sprites/chicken.png")) return 1;
 
     Player player(playerTexture, &window, sf::Vector2u(8, 8), 0.125f, 500.0f);
@@ -28,7 +31,13 @@ int main()
     Dungeon d;
     std::vector<Room*> rooms = d.GetRooms();
 
-    d.GenMap();
+    std::vector<std::vector<TileType>> map = d.GenMap();
+
+    /*sf::Texture tileTexture;
+    tileTexture.loadFromFile("../assets/sprites/tiles.png");
+    std::cout << "Got here!" << std::endl;
+    TileMap tm(map, 32, tileTexture);*/
+
 
     float deltaTime = 0.0f;
     sf::Clock* clock = new sf::Clock();
@@ -76,7 +85,7 @@ int main()
 
             window.draw(rect);
         }
-
+        //window.draw(tm);
         player.Update(&deltaTime);
         player.Draw(&window);
 
