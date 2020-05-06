@@ -5,7 +5,7 @@ enum TileType {
     Void,
     Floor,
     Wall,
-    Door,
+    Unlit,
     Stairs
 };
 
