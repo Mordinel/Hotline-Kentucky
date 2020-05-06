@@ -9,9 +9,9 @@
 #include "TileType.h"
 #include "TileMap.h"
 
-#define ZOOM_INCREMENTS 0.1f
-#define ZOOM_MIN 0.7f
-#define ZOOM_MAX 1.3f
+#define ZOOM_INCREMENTS 0.2f
+#define ZOOM_MIN 0.6f
+#define ZOOM_MAX 4.0f
 #define ZOOM_DEFAULT 1.0f
 
 const unsigned int random_seed = static_cast<unsigned int>(time(NULL));
