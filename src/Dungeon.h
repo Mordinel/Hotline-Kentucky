@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <vector>
 
-//#include "TileType.h"
+#include "TileType.h"
 #include "Room.h"
 #include "Box.h"
 
@@ -33,7 +33,7 @@ public:
     void NextDungeon();
     std::vector<std::vector<int>> GetDungeon();
     std::vector<Room*> GetRooms();
-    std::vector<std::vector<int>> GenMap();
+    std::vector<std::vector<TileType>> GenMap();
 };
 
 #endif

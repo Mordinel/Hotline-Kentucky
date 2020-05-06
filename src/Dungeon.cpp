@@ -117,12 +117,54 @@ std::vector<Room*> Dungeon::GetRooms() {
     return rooms;
 }
 
-std::vector<std::vector<int>> Dungeon::GenMap() {
-    std::vector<std::vector<int>> map;
+std::vector<std::vector<TileType>> Dungeon::GenMap() {
+    std::vector<std::vector<TileType>> map;
 
     Box b = getBounds();
-    
-    
+    int width = b.left - b.right;
+    int height = b.top - b.bottom;
+
+    // fill map with zeroes/void
+    for (int i = 0; i < height; i++) {
+        std::vector<TileType> row;
+
+        for (int j = 0; j < width; i ++) {
+            row.push_back(TileType::Void);
+        }
+
+        map.push_back(row);
+    }
+
+    // fill room tiles;
+    for (int i = 0; i < rooms.size(); i++) {
+        int x = rooms[i]->X + (b.left * -1);
+        int y = rooms[i]->Y + (b.left * -1);
+        int right = x + rooms[i]->Width;
+        int bottom = y + rooms[i]->Height;
+
+        // fill border with wall tiles
+        
+        // Top and bottom border
+        for (int j = rooms[i]->X; j < right; j++) {
+            map[y][j] = TileType::Wall;
+            map[bottom][j] = TileType::Wall;
+        }
+
+        // Left and right border
+        for (int j = rooms[i]->Y; j < bottom; j++)
+        {
+            map[j][x] = TileType::Wall;
+            map[j][right] = TileType::Wall;
+        }
+
+        // fill inside with floor tiles
+        for (int j = rooms[i]->Y + 1; j < bottom - 1; j++) { // for each row
+            // t for tile
+            for (int t = rooms[i]->X + 1; t < right - 1; t++) { // for each column of row
+                map[j][t] = TileType::Floor;
+            }
+        }
+    }
 
     return map;
 }
