@@ -64,6 +64,9 @@ void TileMap::CastLight(float playerX, float playerY) {
     float oy;
     float d;
 
+    playerX /= tileSize;
+    playerY /= tileSize;
+
     // make lit mask fully unlit
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
@@ -81,7 +84,7 @@ void TileMap::CastLight(float playerX, float playerY) {
         oy = playerY;
 
         // walk the ray from the player, setting each tile to be lit until a wall or the limit is reached.
-        for (j = 0; j < 30; j++) {
+        for (j = 0; j < 25; j++) {
 
             // if the tile exceeds the bounds,  break
             if ((int)oy >= height || (int)ox >= width) {
@@ -97,6 +100,11 @@ void TileMap::CastLight(float playerX, float playerY) {
 
             // if the tile just set is a wall, break
             if (litMask[(int)oy][(int)ox] == TileType::Wall) {
+                break;
+            }
+
+            // if tile is void, break
+            if(litMask[(int)oy][(int)ox] == TileType::Void) {
                 break;
             }
 

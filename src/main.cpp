@@ -89,14 +89,15 @@ int main()
         }
 
         playerPos = player.GetPosition();
- 
-        window.clear(sf::Color(100, 100, 100));
+        tm.CastLight(playerPos.x, playerPos.y);
+
+        window.clear(sf::Color::Black);
+        window.draw(tm);
+
         window.setView(view);
         view.setCenter(player.GetPosition());
         view.setSize(viewSize * viewZoom);
 
-        tm.CastLight(playerPos.x / tileSize, playerPos.y / tileSize);
-        window.draw(tm);
 
         player.Update(&deltaTime);
         player.Draw(&window);
