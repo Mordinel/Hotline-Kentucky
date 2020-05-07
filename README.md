@@ -22,3 +22,7 @@ main.exe should appear in bin/
 
 main-linux should appear in bin/
 
+# Progress
+| Feature | State |
+|:-- |:--:|
+| Displayed	at	the	correct	screen	size	of	1920x1080 | :white_check_mark: |
