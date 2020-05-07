@@ -36,9 +36,6 @@ int main()
     int i;
     float viewZoom = ZOOM_DEFAULT;
 
-    sf::ContextSettings settings;
-    settings.antialiasingLevel = 8;
-
     //create render window
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Hello world", sf::Style::None/* | sf::Style::Fullscreen*/);
 
@@ -90,7 +87,7 @@ int main()
         playerPos = player.GetPosition();
         tm.CastLight(playerPos.x, playerPos.y);
 
-        window.clear(sf::Color::Black);
+        window.clear(sf::Color(29, 32, 33));
         window.draw(tm);
         window.setView(view);
 
