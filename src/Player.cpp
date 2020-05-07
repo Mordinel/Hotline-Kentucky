@@ -92,43 +92,45 @@ void Player::collisionCheck(sf::Vector2f movement) {
     bool bl = (*tileMap)[(int)(bottomLeft.getPosition().y / tileSize)][(int)(bottomLeft.getPosition().x / tileSize)] == TileType::Wall;
     bool br = (*tileMap)[(int)(bottomRight.getPosition().y / tileSize)][(int)(bottomRight.getPosition().x / tileSize)] == TileType::Wall;
 
+    float piBoundX = boundary.getSize().x / 3.14;
+    float piBoundY = boundary.getSize().y / 3.14;
+
     //concave corners
     if (tl && bl && tr) {
-        boundary.setPosition(topLeft.getPosition().x + topLeft.getSize().x - (float)(boundary.getSize().x / 2.0f - 1.0f),
-                            (topLeft.getPosition().y + topLeft.getSize().y) - (float)((boundary.getSize().y / 2.0f) - 1.0f));
+        boundary.setPosition(topLeft.getPosition().x + topLeft.getSize().x - piBoundX,
+                            (topLeft.getPosition().y + topLeft.getSize().y - piBoundX));
     } else if (tr && tl && br) {
-        boundary.setPosition(topRight.getPosition().x - (float)(boundary.getSize().x / 2.0f + 1.0f),
-                            (topRight.getPosition().y + topRight.getSize().y) - (float)((boundary.getSize().y / 2.0f) - 1.0f));
-    } else if (br && tr && bl) {
-        boundary.setPosition(bottomRight.getPosition().x - (float)(boundary.getSize().x / 2.0f + 1.0f),
-                             bottomRight.getPosition().y - (float)(boundary.getSize().y / 2.0f + 1.0f));
+        boundary.setPosition(topRight.getPosition().x - (piBoundX * 2.0f),
+                            (topRight.getPosition().y + topRight.getSize().y - piBoundY));
     } else if (bl && tl && br) {
-        boundary.setPosition(bottomLeft.getPosition().x + bottomLeft.getSize().x - (float)(boundary.getSize().x / 2.0f - 1.0f),
-                             bottomLeft.getPosition().y - (float)(boundary.getSize().y / 2.0f + 1.0f));
-
+        boundary.setPosition(bottomLeft.getPosition().x + bottomLeft.getSize().x - piBoundX,
+                             bottomLeft.getPosition().y - (piBoundY * 2.0f));
+    } else if (br && tr && bl) {
+        boundary.setPosition(bottomRight.getPosition().x - (piBoundX * 2.0f),
+                             bottomRight.getPosition().y - (piBoundY * 2.0f));
    // edges
     } else if (tl && bl) {         // left
-        boundary.setPosition((topLeft.getPosition().x + topLeft.getSize().x) - (float)((boundary.getSize().x / 2.0f) - 1.0f), boundary.getPosition().y);
+        boundary.setPosition((topLeft.getPosition().x + topLeft.getSize().x) - piBoundX, boundary.getPosition().y);
     } else if (tl && tr) {  // top
-        boundary.setPosition(boundary.getPosition().x, (topLeft.getPosition().y + topLeft.getSize().y) - (float)((boundary.getSize().y / 2.0f) - 1.0f));
+        boundary.setPosition(boundary.getPosition().x, (topLeft.getPosition().y + topLeft.getSize().y) - piBoundY);
     } else if (tr && br) {  // right
-        boundary.setPosition(topRight.getPosition().x - (float)(boundary.getSize().x / 2.0f), boundary.getPosition().y);
+        boundary.setPosition((topRight.getPosition().x - boundary.getSize().x) + piBoundX + 1.0f, boundary.getPosition().y);
     } else if (bl && br) {  // bottom
-        boundary.setPosition(boundary.getPosition().x, (bottomLeft.getPosition().y - (float)(boundary.getSize().y / 2.0f)));
+        boundary.setPosition(boundary.getPosition().x, (bottomLeft.getPosition().y - boundary.getSize().y) + piBoundY + 1.0f);
 
     // convex corners
     } else if (tl) {        // top left
-        boundary.setPosition(topLeft.getPosition().x + topLeft.getSize().x - (float)(boundary.getSize().x / 2.0f - 1.0f),
-                            (topLeft.getPosition().y + topLeft.getSize().y) - (float)((boundary.getSize().y / 2.0f) - 1.0f));
+        boundary.setPosition((topLeft.getPosition().x + topLeft.getSize().x - piBoundX),
+                            ((topLeft.getPosition().y + topLeft.getSize().y - piBoundY)));
     } else if (tr) {        // top right
-        boundary.setPosition(topRight.getPosition().x - (float)(boundary.getSize().x / 2.0f + 1.0f),
-                            (topRight.getPosition().y + topRight.getSize().y) - (float)((boundary.getSize().y / 2.0f) - 1.0f));
+        boundary.setPosition(topRight.getPosition().x - (piBoundX * 2.0f),
+                            (topRight.getPosition().y + topRight.getSize().y - piBoundY));
     } else if (bl) {        // bottom left
-        boundary.setPosition(bottomLeft.getPosition().x + bottomLeft.getSize().x - (float)(boundary.getSize().x / 2.0f - 1.0f),
-                             bottomLeft.getPosition().y - (float)(boundary.getSize().y / 2.0f + 1.0f));
+        boundary.setPosition(bottomLeft.getPosition().x + bottomLeft.getSize().x - piBoundX,
+                             bottomLeft.getPosition().y - (piBoundY * 2.0f));
     } else if (br) {        // bottom right
-        boundary.setPosition(bottomRight.getPosition().x - (float)(boundary.getSize().x / 2.0f + 1.0f),
-                             bottomRight.getPosition().y - (float)(boundary.getSize().y / 2.0f + 1.0f));
+        boundary.setPosition(bottomRight.getPosition().x - (piBoundX * 2.0f),
+                             bottomRight.getPosition().y - (piBoundY * 2.0f));
     }
 }
 
