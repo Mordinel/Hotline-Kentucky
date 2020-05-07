@@ -72,10 +72,10 @@ void TileMap::CastLight(float playerX, float playerY) {
     }
 
     // cast rays from the player
-    for (i = 0; i < 360; i++) {
+    for (d = 0.0f; d < 360.0f; d+=0.2f) {
         // getting gradient in radians
-        x = std::cos((float)i * 0.01745329f);
-        y = std::sin((float)i * 0.01745329f);
+        x = std::cos(d * 0.01745329f);
+        y = std::sin(d * 0.01745329f);
 
         ox = playerX;
         oy = playerY;
