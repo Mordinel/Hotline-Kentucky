@@ -36,8 +36,10 @@ int main()
     int i;
     float viewZoom = ZOOM_DEFAULT;
 
+
     //create render window
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Hello world", sf::Style::None/* | sf::Style::Fullscreen*/);
+    window.setVerticalSyncEnabled(true);
 
     sf::Vector2f viewSize(window.getSize().x, window.getSize().y);
     sf::View view(sf::Vector2f(0.0f, 0.0f), viewSize);
