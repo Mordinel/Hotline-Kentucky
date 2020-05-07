@@ -44,12 +44,6 @@ int main()
 
     sf::Vector2f viewSize(window.getSize().x, window.getSize().y);
     sf::View view(sf::Vector2f(0.0f, 0.0f), viewSize);
-
-    sf::Texture* playerTexture = new sf::Texture();
-    if (!playerTexture->loadFromFile("../assets/sprites/chicken.png")) return 1;
-
-    Player player(playerTexture, &window, sf::Vector2u(8, 8), 0.125f, 500.0f);
-    sf::Vector2f playerPos;
     
     std::srand(random_seed);
 
@@ -57,14 +51,19 @@ int main()
     std::vector<Room*> rooms = d.GetRooms();
 
     sf::Vector2f spawnLocation = rooms[0]->GetCenter() * (float)tileSize;
-    player.SetPosition(&spawnLocation);
 
     std::vector<std::vector<TileType>> map = d.GenMap();
+
+    sf::Texture* playerTexture = new sf::Texture();
+    if (!playerTexture->loadFromFile("../assets/sprites/chicken.png")) return 1;
+
+    Player player(playerTexture, &window, sf::Vector2u(8, 8), 0.125f, 300.0f, &map);
+    sf::Vector2f playerPos;
+    player.SetPosition(&spawnLocation);
 
     sf::Texture tileTexture;
     tileTexture.loadFromFile("../assets/sprites/tiles.png");
     TileMap tm(map, tileSize, tileTexture);
-
 
     float deltaTime = 0.0f;
     sf::Clock* clock = new sf::Clock();
@@ -93,15 +92,14 @@ int main()
 
         window.clear(sf::Color::Black);
         window.draw(tm);
-
         window.setView(view);
-        view.setCenter(player.GetPosition());
-        view.setSize(viewSize * viewZoom);
-
 
         player.Update(&deltaTime);
         player.Draw(&window);
+        view.setSize(viewSize * viewZoom);
 
+        view.setCenter(player.GetPosition());
+        
         // display the window
         window.display();
     }
