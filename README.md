@@ -22,3 +22,19 @@ main.exe should appear in bin/
 
 main-linux should appear in bin/
 
+# Progress
+| Feature | State |
+|:-- |:--:|
+| Displayed	at	the	correct	screen	size	of	1920x1080 | :heavy_check_mark: |
+| Dungeon	represented	as	a	tile	map	| :heavy_check_mark: |
+| Edge	of	the	world	has	a	dead	zone	which	is	½	the	dimension	of	the	viewable	area | :heavy_check_mark: |
+| Dungeon	procedurally	generated	at	each	new	level,	e.g.,	multiple	non-overlapping	rooms,	walls,	corridors	and	portal	tiles	correctly	placed | :heavy_check_mark: |
+| Fog	of	war	reveals	the	dungeon	as	the	player	character	progressively	navigates	through	the	dungeon	| :heavy_check_mark: |
+| One	or	more	player	characters	are	controlled	by	user	keyword	| :heavy_check_mark: |
+| Two	distinct	animated	enemies | :x: |
+| Careful	sprite	and	terrain	collision	detection,	e.g.,	sprite	to	enemy,	sprite	to	wall	collision	detection | :x: |
+| Careful	collision	detection that	affects	the	score	and	condition,	e.g.,	sprite	to	coin,	sprite	to	health	potion | :x: |
+| Working	battle	system,	e.g.,	turn-based	or/and to-the death | :x: |
+| Immediate	gameplay	feedback	including	battle	system	feedback,	score,	win	and	loss | :x: |
+| One	enemy	that	exhibits	artificial	intelligence	behaviour.	This	may	be	implemented	using	trigonometry | :x: |
+
