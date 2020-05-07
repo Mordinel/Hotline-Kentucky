@@ -1,4 +1,5 @@
 #include "TileMap.h"
+#include <cmath>
 
 TileMap::TileMap(std::vector<std::vector<TileType>> startTiles, int startTileSize, sf::Texture startTileset)
 {
@@ -41,10 +42,10 @@ void TileMap::load()
 			quad[3].position = sf::Vector2f(j * tileSize, (i + 1) * tileSize);
 
 			// define texture coordinates
-			quad[0].texCoords = sf::Vector2f(tu * tileSize, tv * tileSize);
+			quad[0].texCoords = sf::Vector2f((tu * tileSize) + 1, tv * tileSize);
 			quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize, tv * tileSize);
 			quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize, (tv + 1) * tileSize);
-			quad[3].texCoords = sf::Vector2f(tu * tileSize, (tv + 1) * tileSize);
+			quad[3].texCoords = sf::Vector2f((tu * tileSize) + 1, (tv + 1) * tileSize);
 		}
 	}
 }
