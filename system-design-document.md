@@ -9,6 +9,7 @@ We will not have a Form class, the game manager will handle cross-platform windo
 ## 3. What classes do you need to implement the dungeon? Brieﬂy explain the job of each class, list the data members it must hold, and the methods it must expose. How do the Dungeon and the TileMap communicate?
 We were unsure about this at the conception of this document, but the way it has been implemented is like the following:
 Dungeon class:
+
     private:
     - dungeon matrix that uses the TileType enum to define tile types at locations.
     - list of Room class pointer, this holds room pointers to each room generated.
@@ -27,6 +28,7 @@ Dungeon class:
     - GenMap converts Room class into a matrix of TileType based on the rooms list
 
 TileType enum:
+
     enum for tiles types:
     - Void, outside room boundaries
     - Floor, the only walkable tile
@@ -35,6 +37,7 @@ TileType enum:
     - Stairs, the end of level target
 
 Room class:
+
     public:
     - Constructor
     - GetCenter, returns the center coordinate of the room
