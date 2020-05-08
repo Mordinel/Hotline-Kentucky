@@ -14,6 +14,13 @@ TileMap::TileMap(std::vector<std::vector<TileType>> startTiles, int startTileSiz
 	vertices.setPrimitiveType(sf::Quads);
 	vertices.resize(width * height * 4);
 
+    // make lit mask fully unlit
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            litMask[i][j] = TileType::Unlit;
+        }
+    }
+ 
 	load();
 }
 
@@ -65,16 +72,31 @@ void TileMap::CastLight(float playerX, float playerY) {
     float oy;
     float d;
 
+    TileType newTile;
+
     playerX /= tileSize;
     playerY /= tileSize;
 
-    // make lit mask fully unlit
+    // makes tiles dark if they have been seen
     for (i = 0; i < height; i++) {
         for (j = 0; j < width; j++) {
-            litMask[i][j] = TileType::Unlit;
+
+            switch (litMask[i][j]) {
+                case TileType::Floor:
+                    newTile = TileType::FloorDark;
+                    break;
+                case TileType::Wall:
+                    newTile = TileType::WallDark;
+                    break;
+                default:
+                    newTile = litMask[i][j];
+                    break;
+            }
+
+            litMask[i][j] = newTile;
         }
     }
-
+ 
     // cast rays from the player
     for (d = 0.0f; d < 360.0f; d+=0.2f) {
         // getting gradient in radians

@@ -3,10 +3,12 @@
 
 enum TileType {
     Void,
+    Unlit,
+    Stairs,
     Floor,
     Wall,
-    Unlit,
-    Stairs
+    FloorDark,
+    WallDark
 };
 
 #endif
