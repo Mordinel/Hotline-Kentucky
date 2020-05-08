@@ -38,7 +38,7 @@ int main()
 
 
     //create render window
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML Hello world", sf::Style::None/* | sf::Style::Fullscreen*/);
+    sf::RenderWindow window(sf::VideoMode(1600, 900), "Roguelike", sf::Style::Titlebar | sf::Style::Close /*sf::Style::None/* | sf::Style::Fullscreen*/);
     window.setVerticalSyncEnabled(true);
 
     sf::Vector2f viewSize(window.getSize().x, window.getSize().y);
