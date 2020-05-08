@@ -1,10 +1,9 @@
 #include <SFML/Graphics.hpp>
 
 #include "Entity.h"
-#include "Animation.h"
 
 // Entity definition
-Entity::Entity(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageCount, float switchTime, float speed) : animation(texture, imageCount, switchTime) {
+Entity::Entity(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageCount, float switchTime, float speed, std::vector<std::vector<TileType>>* tileMap) : animation(texture, imageCount, switchTime), Collider(body, tileMap) {
     this->speed = speed;
     this->window = window;
     Next = nullptr;
@@ -37,3 +36,4 @@ void Entity::Draw(sf::RenderWindow* window) {
 void Entity::SetPosition(sf::Vector2f* position) {
     body.setPosition(*position);
 }
+

@@ -8,7 +8,7 @@
 
 class Collider {
 public:
-    Collider(sf::RectangleShape& boundary);
+    Collider(sf::RectangleShape& boundary, std::vector<std::vector<TileType>>* tileMap);
     ~Collider();
 
     void Move(float dx, float dy) { boundary.move(dx, dy); }
@@ -20,6 +20,8 @@ public:
 protected:
     sf::RectangleShape& boundary;
     std::vector<std::vector<TileType>>* tileMap;
+
+    void checkTilemapCollision(sf::Vector2f movement);
 };
 
 #endif
