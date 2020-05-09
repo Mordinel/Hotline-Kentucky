@@ -122,7 +122,7 @@ int main()
 
         view.setCenter(player.GetPosition());
         window.setView(view);
-        std::cout << "x: " << player.GetPosition().x << " y: " << player.GetPosition().y << std::endl;
+        //std::cout << "x: " << player.GetPosition().x << " y: " << player.GetPosition().y << std::endl;
         
         // display the window
         window.display();

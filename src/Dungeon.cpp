@@ -114,6 +114,8 @@ void Dungeon::NextDungeon() {
     roomCount += ROOM_INCREASE;
     genRooms(roomCount);
     translateRooms();
+
+    std::cout << "Room count:" << roomCount << std::endl;
 }
 
 std::vector<Room*> Dungeon::GetRooms() {
