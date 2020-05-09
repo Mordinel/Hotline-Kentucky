@@ -8,6 +8,7 @@
 #include "Room.h"
 #include "TileType.h"
 #include "TileMap.h"
+#include "Gun.h"
 
 #define ZOOM_INCREMENTS 0.2f
 #define ZOOM_MIN 0.6f
@@ -36,7 +37,6 @@ int main()
     int i;
     float viewZoom = ZOOM_DEFAULT;
 
-
     //create render window
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Roguelike", sf::Style::Titlebar | sf::Style::Close /*sf::Style::None/* | sf::Style::Fullscreen*/);
     window.setVerticalSyncEnabled(true);
@@ -63,6 +63,8 @@ int main()
     sf::Texture tileTexture;
     tileTexture.loadFromFile("../assets/sprites/tiles.png");
     TileMap tm(map, tileSize, tileTexture);
+
+    Gun gun;
 
     float deltaTime = 0.0f;
     sf::Clock* clock = new sf::Clock();
@@ -96,6 +98,9 @@ int main()
                         ///////////////////////////////////////////////////////////////////
                     }
                     break;
+                case sf::Event::MouseButtonPressed:
+                    gun.Fire();
+                    break;
             }
         }
 
@@ -104,13 +109,20 @@ int main()
 
         window.clear(sf::Color(29, 32, 33));
         window.draw(tm);
-        window.setView(view);
 
         player.Update(&deltaTime);
+
+        sf::Vector2i cursorPos = sf::Mouse::getPosition(window);
+        sf::Vector2f relativeCursorPos = window.mapPixelToCoords(cursorPos);
+        gun.SetLineCoordinates(player.GetPosition(), relativeCursorPos);
+        gun.Update(&deltaTime);
+        window.draw(gun);
         player.Draw(&window);
         view.setSize(viewSize * viewZoom);
 
         view.setCenter(player.GetPosition());
+        window.setView(view);
+        std::cout << "x: " << player.GetPosition().x << " y: " << player.GetPosition().y << std::endl;
         
         // display the window
         window.display();
