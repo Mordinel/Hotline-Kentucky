@@ -4,7 +4,7 @@
 
 Dungeon::Dungeon()
 {
-    roomCount = 16;
+    roomCount = INITIAL_ROOM_COUNT;
     genRooms(roomCount);
     translateRooms();
 }
@@ -102,12 +102,18 @@ bool Dungeon::roomsIntersect(Room* a, Room* b) {
     return ((intersectX < 0) && (intersectY < 0));
 }
 
-void Dungeon::NextDungeon() {
-    
+void Dungeon::clearRooms() {
+    for (int i = 0; i < roomCount; i++)
+    {
+        rooms.erase(rooms.begin());
+    }
 }
 
-std::vector<std::vector<int>> Dungeon::GetDungeon() {
-    return dungeon;
+void Dungeon::NextDungeon() {
+    clearRooms();
+    roomCount += ROOM_INCREASE;
+    genRooms(roomCount);
+    translateRooms();
 }
 
 std::vector<Room*> Dungeon::GetRooms() {
@@ -128,7 +134,6 @@ std::vector<std::vector<TileType>> Dungeon::GenMap() {
     // fill map with zeroes/void
     for (i = 0; i < height; i++) {
         std::vector<TileType> row;
-
 
         for (int j = 0; j < width; j++) {
             row.push_back(TileType::Void);
@@ -203,7 +208,6 @@ std::vector<std::vector<TileType>> Dungeon::GenMap() {
                 }
             }
         }
-
     }
 
     sf::Vector2f lastRoomCenter = rooms[rooms.size()-1]->GetCenter();
