@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 
 #define LINE_VERTEX_COUNT 2
-#define FIRE_ANIMATION_LEN 0.5f
+#define FIRE_ANIMATION_LEN 0.1f
 
 class Gun : public sf::Drawable {
 private:

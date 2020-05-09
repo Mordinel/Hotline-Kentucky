@@ -18,7 +18,10 @@ void Gun::SetLineCoordinates(sf::Vector2f playerPos, sf::Vector2f cursorPos) {
 }
 
 void Gun::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-    target.draw(sightLine, states);
+    if (sightLine[0].color == sf::Color::Red)
+    {
+        target.draw(sightLine, states);
+    }
 }
 
 void Gun::Fire() {
