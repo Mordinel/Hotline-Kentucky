@@ -60,6 +60,6 @@ void Player::Update(float* deltaTime) {
     animation.Update(row, deltaTime);
     body.setTextureRect(animation.uvRect);
     body.move(movement);
-    checkTilemapCollision(movement);
+    checkCollisionsNearBody();
 }
 
