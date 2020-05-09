@@ -13,10 +13,11 @@
 #define ROOM_MINSIZE 10
 #define MIN_ROOM_COUNT 2
 #define CORRIDOR_WIDTH 3
+#define INITIAL_ROOM_COUNT 6
+#define ROOM_INCREASE 3
 
 class Dungeon {
 private:    
-    std::vector<std::vector<int>> dungeon;
     std::vector<Room*> rooms;
     unsigned int roomCount;
 
@@ -24,13 +25,13 @@ private:
     bool roomsIntersect(Room* a, Room* b);
     Box getBounds();
     void translateRooms();
+    void clearRooms();
 
 public:
     Dungeon();
     ~Dungeon();
 
     void NextDungeon();
-    std::vector<std::vector<int>> GetDungeon();
     std::vector<Room*> GetRooms();
     std::vector<std::vector<TileType>> GenMap();
 };

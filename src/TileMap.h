@@ -19,6 +19,7 @@ private:
 	int height;
 	sf::VertexArray vertices;
 	
+	void init();
 	void load();
 
 	// From SFML docs

@@ -8,10 +8,18 @@ TileMap::TileMap(std::vector<std::vector<TileType>> startTiles, int startTileSiz
 	tileSize = startTileSize;
 	tileSet = startTileset;
 
-	height = tiles.size();
+    vertices.setPrimitiveType(sf::Quads);
+
+	init();
+}
+
+TileMap::~TileMap(){}
+
+void TileMap::init()
+{
+    height = tiles.size();
 	width = tiles[0].size();
 
-	vertices.setPrimitiveType(sf::Quads);
 	vertices.resize(width * height * 4);
 
     // make lit mask fully unlit
@@ -20,11 +28,9 @@ TileMap::TileMap(std::vector<std::vector<TileType>> startTiles, int startTileSiz
             litMask[i][j] = TileType::Unlit;
         }
     }
- 
-	load();
-}
 
-TileMap::~TileMap(){}
+    load();
+}
 
 void TileMap::load()
 {
@@ -53,6 +59,7 @@ void TileMap::load()
 			quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize, tv * tileSize);
 			quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize, (tv + 1) * tileSize);
 			quad[3].texCoords = sf::Vector2f((tu * tileSize) + 1, (tv + 1) * tileSize);
+
 		}
 	}
 }
@@ -60,7 +67,22 @@ void TileMap::load()
 void TileMap::SetTiles(std::vector<std::vector<TileType>> newTiles)
 {
 	tiles = newTiles;
-	load();
+    litMask = newTiles;
+
+    init();
+
+    height = tiles.size();
+	width = tiles[0].size();
+
+	vertices.resize(width * height * 4);
+
+    // make lit mask fully unlit
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            litMask[i][j] = TileType::Unlit;
+        }
+    }
+    
 }
 
 void TileMap::CastLight(float playerX, float playerY) {
@@ -138,6 +160,5 @@ void TileMap::CastLight(float playerX, float playerY) {
     }
 
     load();
-
 }
 

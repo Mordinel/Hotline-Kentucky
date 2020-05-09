@@ -11,7 +11,7 @@
 
 #define ZOOM_INCREMENTS 0.2f
 #define ZOOM_MIN 0.6f
-#define ZOOM_MAX 4.0f
+#define ZOOM_MAX 100.0f
 #define ZOOM_DEFAULT 1.0f
 
 const unsigned int random_seed = static_cast<unsigned int>(time(NULL));
@@ -82,6 +82,19 @@ int main()
                     break;
                 case sf::Event::MouseWheelMoved:
                     setViewZoom(&viewZoom, evnt.mouseWheel.delta);
+                    break;
+                case sf::Event::KeyPressed:
+                    if (evnt.key.code == sf::Keyboard::Enter) {
+                        ///////////////////////////////////////////////////////////////////
+                        // Move this to when the player collides with exit
+                        d.NextDungeon();
+                        map = d.GenMap();
+                        rooms = d.GetRooms();
+                        tm.SetTiles(map);
+                        spawnLocation = rooms[0]->GetCenter() * (float)tileSize;
+                        player.SetPosition(&spawnLocation);
+                        ///////////////////////////////////////////////////////////////////
+                    }
                     break;
             }
         }
