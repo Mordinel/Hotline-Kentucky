@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <string>
 
 #include "Player.h"
 #include "Dungeon.h"
@@ -36,6 +37,16 @@ int main()
 {
     int i;
     float viewZoom = ZOOM_DEFAULT;
+
+    int levelCount = 1;
+    sf::Font font;
+    font.loadFromFile("../assets/font.ttf");
+    std::string levelString = "Level: " + std::to_string(levelCount);
+    sf::Text levelText;
+    levelText.setFont(font);
+    levelText.setString(levelString);
+    levelText.setCharacterSize(16);
+    levelText.setFillColor(sf::Color::White);
 
     //create render window
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Roguelike", sf::Style::Titlebar | sf::Style::Close /*sf::Style::None/* | sf::Style::Fullscreen*/);
@@ -116,6 +127,9 @@ int main()
 
         view.setCenter(player.GetPosition());
         window.setView(view);
+
+        levelText.setPosition(window.mapPixelToCoords(sf::Vector2i(20, 20)));
+        window.draw(levelText);
         
         // display the window
         window.display();
@@ -131,6 +145,10 @@ int main()
             player.SetPosition(&spawnLocation);
             exitLocation = d.GetExitLocation() * (float)tileSize;
             exitRect.setPosition(exitLocation);
+
+            levelCount++;
+            levelString = "Level: " + std::to_string(levelCount);
+            levelText.setString(levelString);
         }
     }
     
