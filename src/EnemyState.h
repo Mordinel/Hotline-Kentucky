@@ -3,7 +3,7 @@
 
 enum EnemyState {
     Sleep,
-    Patrol,
+    Wander,
     Attack
 };
 
