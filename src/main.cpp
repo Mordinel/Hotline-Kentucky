@@ -51,6 +51,11 @@ int main()
 
     sf::Vector2f spawnLocation = rooms[0]->GetCenter() * (float)tileSize;
 
+    // Dungeon Exit Code
+    sf::RectangleShape exitRect(sf::Vector2f(tileSize, tileSize));
+    sf::Vector2f exitLocation = d.GetExitLocation() * (float)tileSize;
+    exitRect.setPosition(exitLocation);
+
     std::vector<std::vector<TileType>> map = d.GenMap();
 
     sf::Texture* playerTexture = new sf::Texture();
@@ -65,6 +70,8 @@ int main()
     TileMap tm(map, tileSize, tileTexture);
 
     Gun gun;
+    sf::RectangleShape shp(sf::Vector2f(1.0f, 1.0f));
+    Collider c(shp, &map);
 
     float deltaTime = 0.0f;
     sf::Clock* clock = new sf::Clock();
@@ -84,19 +91,6 @@ int main()
                     break;
                 case sf::Event::MouseWheelMoved:
                     setViewZoom(&viewZoom, evnt.mouseWheel.delta);
-                    break;
-                case sf::Event::KeyPressed:
-                    if (evnt.key.code == sf::Keyboard::Enter) {
-                        ///////////////////////////////////////////////////////////////////
-                        // Move this to when the player collides with exit
-                        d.NextDungeon();
-                        map = d.GenMap();
-                        rooms = d.GetRooms();
-                        tm.SetTiles(map);
-                        spawnLocation = rooms[0]->GetCenter() * (float)tileSize;
-                        player.SetPosition(&spawnLocation);
-                        ///////////////////////////////////////////////////////////////////
-                    }
                     break;
                 case sf::Event::MouseButtonPressed:
                     gun.Fire();
@@ -122,10 +116,22 @@ int main()
 
         view.setCenter(player.GetPosition());
         window.setView(view);
-        //std::cout << "x: " << player.GetPosition().x << " y: " << player.GetPosition().y << std::endl;
         
         // display the window
         window.display();
+
+        // Did the player reach the exit?
+        if (player.CheckCollision(exitRect, 0.0f))
+        {
+            d.NextDungeon();
+            map = d.GenMap();
+            rooms = d.GetRooms();
+            tm.SetTiles(map);
+            spawnLocation = rooms[0]->GetCenter() * (float)tileSize;
+            player.SetPosition(&spawnLocation);
+            exitLocation = d.GetExitLocation() * (float)tileSize;
+            exitRect.setPosition(exitLocation);
+        }
     }
     
     return 0;

@@ -213,10 +213,14 @@ std::vector<std::vector<TileType>> Dungeon::GenMap() {
         }
     }
 
-    sf::Vector2f lastRoomCenter = rooms[rooms.size()-1]->GetCenter();
+    sf::Vector2f lastRoomCenter = GetExitLocation();
     map[lastRoomCenter.y][lastRoomCenter.x] = TileType::Stairs;
 
     return map;
+}
+
+sf::Vector2f Dungeon::GetExitLocation() {
+    return rooms[rooms.size()-1]->GetCenter();
 }
 
 void Dungeon::translateRooms() {
@@ -265,4 +269,3 @@ Box Dungeon::getBounds()
     
     return bounds;
 }
-

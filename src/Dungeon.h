@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 #include "TileType.h"
 #include "Room.h"
@@ -34,6 +35,7 @@ public:
     void NextDungeon();
     std::vector<Room*> GetRooms();
     std::vector<std::vector<TileType>> GenMap();
+    sf::Vector2f GetExitLocation();
 };
 
 #endif
