@@ -48,7 +48,7 @@ Room class:
 The GenMap method parses the rooms list into a TileType matrix for the tilemap to interpret and render.
 
 ## 4. What data structure(s) do you need to hold collections of enemies and items?
-Linked list and maybe std::vector
+Linked list and std::vector
 
 ## 5. Does the dungeon need pointers to its sprites? Why or why not?
 No. The TileMap will however need a pointer to its spritesheet for drawing.
@@ -57,7 +57,7 @@ No. The TileMap will however need a pointer to its spritesheet for drawing.
 The Entity class gets a pointer to its dungeon's tileMap, not the dungeon itself. This makes tile-based collision much more efficient because you only need to check the tiles the sprite is on for collision.
 
 ## 7. What enumeration types (if any) do you need?
-Entity Direction, Tile Type
+Entity Direction, Tile Type, Enemy State
 
 ## 8. Does the player sprite need access to the collection(s) of enemy sprites?
 No. The enemy might need access to player though. The entity class will inherit the collider class, then the enemy list can be iterated over whilst holding a player pointer so that the collider class instances work together to perform sprite to sprite collision.
