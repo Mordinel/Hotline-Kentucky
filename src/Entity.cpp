@@ -34,7 +34,7 @@ void Entity::Draw(sf::RenderWindow* window) {
     window->draw(body);
 }
 
-void Entity::Draw(sf::RenderWindow* window, std::vector<std::vector<bool>> fogOfWar) {
+void Entity::Draw(sf::RenderWindow* window, const std::vector<std::vector<bool>>& fogOfWar) {
     sf::Vector2i positionOnMap = (sf::Vector2i)GetPosition() / 32;
 
     if (fogOfWar[positionOnMap.y][positionOnMap.x]) {

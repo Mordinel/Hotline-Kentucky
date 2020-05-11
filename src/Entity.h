@@ -14,7 +14,7 @@ public:
     ~Entity();
     virtual void Update(float* deltaTime);
     virtual void Draw(sf::RenderWindow* window);
-    virtual void Draw(sf::RenderWindow* window, std::vector<std::vector<bool>> fogOfWar);
+    virtual void Draw(sf::RenderWindow* window, const std::vector<std::vector<bool>>& fogOfWar);
 
     virtual sf::Vector2f GetPosition() { return body.getPosition(); }
     virtual void SetPosition(sf::Vector2f* position);
