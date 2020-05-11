@@ -26,6 +26,7 @@ void Entity::Update(float* deltaTime) {
     animation.Update(row, deltaTime);
     body.setTextureRect(animation.uvRect);
     body.move(movement);
+    checkCollisionsNearBody();
 }
 
 // draw entity to window
@@ -36,8 +37,6 @@ void Entity::Draw(sf::RenderWindow* window) {
 void Entity::Draw(sf::RenderWindow* window, std::vector<std::vector<bool>> fogOfWar) {
     sf::Vector2i positionOnMap = (sf::Vector2i)GetPosition() / 32;
 
-
-    std::cout << "Got here!" << std::endl;
     if (fogOfWar[positionOnMap.y][positionOnMap.x]) {
         window->draw(body);
     }
