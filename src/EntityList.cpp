@@ -7,7 +7,7 @@ EntityList::EntityList() {
 }
 
 EntityList::~EntityList() {
-
+    DeleteAll();
 }
 
 // count the items in the linked list
@@ -95,3 +95,14 @@ void EntityList::DeleteAll() {
     tail = nullptr;
 }
 
+void EntityList::CheckCollision(Entity& ent, float push) {
+    Entity* node;
+
+    if (head == nullptr) {
+        return;
+    }
+
+    for (node = head; node != nullptr; node = node->Next) {
+        node->CheckCollision(ent, push);
+    }
+}

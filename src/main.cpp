@@ -11,6 +11,8 @@
 #include "TileMap.h"
 #include "Gun.h"
 #include "Enemy.h"
+#include "EntityList.h"
+#include "EnemyList.h"
 
 #define ZOOM_INCREMENTS 0.2f
 #define ZOOM_MIN 0.6f
@@ -87,10 +89,17 @@ int main()
 
     sf::Texture* enemyTexture = new sf::Texture();
     if (!enemyTexture->loadFromFile("../assets/sprites/evil-chicken.png")) return 1;
-    Enemy enemy(enemyTexture, &window, sf::Vector2u(8, 8), 0.125f, 300.0f, &map);
-    sf::Vector2f enemySpawn = rooms[1]->GetCenter() * (float)tileSize;
-    enemy.SetPosition(&enemySpawn);
 
+    EnemyList enemyList;
+    for (i = 1; i < rooms.size() - 1; i++) {
+        if (std::rand() % 2 == 0) {
+            Enemy* tmp = new Enemy(enemyTexture, &window, sf::Vector2u(8, 8), 0.125f, 200.0f, &map);
+            sf::Vector2f tmpSpawn = rooms[i]->GetCenter() * (float)tileSize;
+            tmp->SetPosition(tmpSpawn);
+            enemyList.Append(tmp);
+        }
+
+    }
 
     float deltaTime = 0.0f;
     sf::Clock* clock = new sf::Clock();
@@ -128,14 +137,14 @@ int main()
         sf::Vector2f relativeCursorPos = window.mapPixelToCoords(cursorPos);
         gun.SetLineCoordinates(player.GetPosition(), relativeCursorPos);
         gun.Update(&deltaTime);
-        enemy.Update(&deltaTime);
-        player.CheckCollision(enemy, 0.1f);
+        enemyList.Update(&deltaTime);
+        enemyList.CheckCollision(player, 0.7f);
 
         
         std::vector<std::vector<bool>> fogOfWar = tm.LitMaskToFogOfWar();
         
         window.draw(gun);
-        enemy.Draw(&window, fogOfWar);
+        enemyList.Draw(&window, fogOfWar);
         player.Draw(&window);
         view.setSize(viewSize * viewZoom);
 
@@ -165,6 +174,18 @@ int main()
             levelCount++;
             levelString = "Level: " + std::to_string(levelCount);
             levelText.setString(levelString);
+
+            enemyList.DeleteAll();
+            for (i = 1; i < rooms.size() - 1; i++) {
+                if (std::rand() % 2 == 0) {
+                    Enemy* tmp = new Enemy(enemyTexture, &window, sf::Vector2u(8, 8), 0.125f, 200.0f, &map);
+                    sf::Vector2f tmpSpawn = rooms[i]->GetCenter() * (float)tileSize;
+                    tmp->SetPosition(tmpSpawn);
+                    enemyList.Append(tmp);
+                }
+
+            }
+
         }
     }
     
