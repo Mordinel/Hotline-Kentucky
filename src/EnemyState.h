@@ -4,7 +4,8 @@
 enum EnemyState {
     Sleep,
     Wander,
-    Attack
+    Attack,
+    Dead
 };
 
 #endif

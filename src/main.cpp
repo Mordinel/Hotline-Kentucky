@@ -83,7 +83,6 @@ int main()
     tileTexture.loadFromFile("../assets/sprites/tiles.png");
     TileMap tm(map, tileSize, tileTexture);
 
-    Gun gun;
     sf::RectangleShape shp(sf::Vector2f(1.0f, 1.0f));
     Collider c(shp, &map);
 
@@ -100,6 +99,8 @@ int main()
         }
 
     }
+
+    Gun gun(&map, enemyList);
 
     float deltaTime = 0.0f;
     sf::Clock* clock = new sf::Clock();
@@ -121,7 +122,11 @@ int main()
                     setViewZoom(&viewZoom, evnt.mouseWheel.delta);
                     break;
                 case sf::Event::MouseButtonPressed:
-                    gun.Fire();
+                    sf::Vector2i cursorPos = sf::Mouse::getPosition(window);
+                    sf::Vector2f relativeCursorPos = window.mapPixelToCoords(cursorPos);
+                    sf::Vector2f playerPos = player.GetPosition();
+                    gun.SetLineCoordinates(player.GetPosition(), relativeCursorPos);
+                    gun.Fire(playerPos, relativeCursorPos);
                     break;
             }
         }
@@ -135,12 +140,12 @@ int main()
         player.Update(&deltaTime);
         sf::Vector2i cursorPos = sf::Mouse::getPosition(window);
         sf::Vector2f relativeCursorPos = window.mapPixelToCoords(cursorPos);
-        gun.SetLineCoordinates(player.GetPosition(), relativeCursorPos);
+        //gun.SetLineCoordinates(player.GetPosition(), relativeCursorPos);
         gun.Update(&deltaTime);
+        enemyList.DeleteDead();
         enemyList.Update(&deltaTime);
         enemyList.CheckCollision(player, 0.7f);
 
-        
         std::vector<std::vector<bool>> fogOfWar = tm.LitMaskToFogOfWar();
         
         window.draw(gun);

@@ -1,4 +1,11 @@
+#ifndef GUN_H
+#define GUN_H
+
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include <cmath>
+#include "TileType.h"
+#include "EnemyList.h"
 
 #define LINE_VERTEX_COUNT 2
 #define FIRE_ANIMATION_LEN 0.1f
@@ -8,14 +15,19 @@ private:
     sf::VertexArray sightLine;
     float totalTime;
     float switchTime;
+    std::vector<std::vector<TileType>>* tileMap;
+    EnemyList enemyList;
+    bool isFiring;
 
     void setColor(sf::Color color);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 public:
-    Gun();
+    Gun(std::vector<std::vector<TileType>>* tileMap, EnemyList& enemyList);
     ~Gun();
     void SetLineCoordinates(sf::Vector2f playerPos, sf::Vector2f cursorPos);
-    void Fire();
+    void Fire(sf::Vector2f& from, sf::Vector2f& to);
     void Update(float* deltaTime);
 };
+
+#endif
