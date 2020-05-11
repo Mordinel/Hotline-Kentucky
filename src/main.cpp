@@ -13,6 +13,8 @@
 #include "Enemy.h"
 #include "EntityList.h"
 #include "EnemyList.h"
+#include "Item.h"
+#include "ItemType.h"
 
 #define ZOOM_INCREMENTS 0.2f
 #define ZOOM_MIN 0.6f
@@ -101,6 +103,11 @@ int main()
     }
 
     Gun gun(&map, enemyList);
+    sf::Texture* coinTexture = new sf::Texture();
+    if (!coinTexture->loadFromFile("../assets/sprites/coin.png")) return 1;
+    Item coin(coinTexture, &window, sf::Vector2u(4, 1), 0.2f, 0.0f, &map, ItemType::Treasure);
+    sf::Vector2f coinSpawn = rooms[3]->GetCenter() * (float)tileSize;
+    coin.SetPosition(&coinSpawn);
 
     float deltaTime = 0.0f;
     sf::Clock* clock = new sf::Clock();
@@ -145,9 +152,11 @@ int main()
         enemyList.DeleteDead();
         enemyList.Update(&deltaTime);
         enemyList.CheckCollision(player, 0.7f);
+        coin.Update(&deltaTime);
 
         std::vector<std::vector<bool>> fogOfWar = tm.LitMaskToFogOfWar();
         
+        coin.Draw(&window);
         window.draw(gun);
         enemyList.Draw(&window, fogOfWar);
         player.Draw(&window);
