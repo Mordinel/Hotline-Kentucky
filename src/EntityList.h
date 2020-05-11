@@ -21,6 +21,7 @@ public:
     virtual void Draw(sf::RenderWindow* window);
     virtual void DeleteAll();
     virtual int EntityCount();
+    virtual void CheckCollision(Entity& ent, float push);
 
     virtual Entity* GetHead() { return head; }
     virtual Entity* GetTail() { return tail; }

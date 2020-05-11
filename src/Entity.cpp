@@ -46,3 +46,7 @@ void Entity::SetPosition(sf::Vector2f* position) {
     body.setPosition(*position);
 }
 
+void Entity::SetPosition(sf::Vector2f position) {
+    body.setPosition(position);
+}
+

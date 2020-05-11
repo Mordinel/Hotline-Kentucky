@@ -18,6 +18,7 @@ public:
 
     virtual sf::Vector2f GetPosition() { return body.getPosition(); }
     virtual void SetPosition(sf::Vector2f* position);
+    virtual void SetPosition(sf::Vector2f position);
 
     Entity* Next;
 protected:
