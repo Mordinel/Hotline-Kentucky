@@ -41,6 +41,7 @@ public:
 
 	void SetTiles(std::vector<std::vector<TileType>> newTiles);
     void CastLight(float playerX, float playerY);
+	std::vector<std::vector<bool>> LitMaskToFogOfWar();
 	
 };
 

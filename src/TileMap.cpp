@@ -70,19 +70,6 @@ void TileMap::SetTiles(std::vector<std::vector<TileType>> newTiles)
     litMask = newTiles;
 
     init();
-
-    height = tiles.size();
-	width = tiles[0].size();
-
-	vertices.resize(width * height * 4);
-
-    // make lit mask fully unlit
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            litMask[i][j] = TileType::Unlit;
-        }
-    }
-    
 }
 
 void TileMap::CastLight(float playerX, float playerY) {
@@ -162,3 +149,29 @@ void TileMap::CastLight(float playerX, float playerY) {
     load();
 }
 
+std::vector<std::vector<bool>> TileMap::LitMaskToFogOfWar() {
+    std::vector<std::vector<bool>> fogOfWar;
+
+    for (int i = 0; i < height; i++) {
+        std::vector<bool> row;
+
+        for (int j = 0; j < width; j++) {
+
+            switch (litMask[i][j]) {
+                case TileType::FloorDark:
+                case TileType::WallDark:
+                case TileType::Void:
+                case TileType::Unlit:
+                    row.push_back(false);
+                    break;
+                default:
+                    row.push_back(true);
+                    break;
+            }   
+        }
+
+        fogOfWar.push_back(row);
+    }
+
+    return fogOfWar;
+}

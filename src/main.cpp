@@ -10,6 +10,7 @@
 #include "TileType.h"
 #include "TileMap.h"
 #include "Gun.h"
+#include "Enemy.h"
 
 #define ZOOM_INCREMENTS 0.2f
 #define ZOOM_MIN 0.6f
@@ -84,6 +85,13 @@ int main()
     sf::RectangleShape shp(sf::Vector2f(1.0f, 1.0f));
     Collider c(shp, &map);
 
+    sf::Texture* enemyTexture = new sf::Texture();
+    if (!enemyTexture->loadFromFile("../assets/sprites/evil-chicken.png")) return 1;
+    Enemy enemy(enemyTexture, &window, sf::Vector2u(8, 8), 0.125f, 300.0f, &map);
+    sf::Vector2f enemySpawn = rooms[1]->GetCenter() * (float)tileSize;
+    enemy.SetPosition(&enemySpawn);
+
+
     float deltaTime = 0.0f;
     sf::Clock* clock = new sf::Clock();
     // while window is open
@@ -116,12 +124,18 @@ int main()
         window.draw(tm);
 
         player.Update(&deltaTime);
-
         sf::Vector2i cursorPos = sf::Mouse::getPosition(window);
         sf::Vector2f relativeCursorPos = window.mapPixelToCoords(cursorPos);
         gun.SetLineCoordinates(player.GetPosition(), relativeCursorPos);
         gun.Update(&deltaTime);
+        enemy.Update(&deltaTime);
+        player.CheckCollision(enemy, 0.1f);
+
+        
+        std::vector<std::vector<bool>> fogOfWar = tm.LitMaskToFogOfWar();
+        
         window.draw(gun);
+        enemy.Draw(&window, fogOfWar);
         player.Draw(&window);
         view.setSize(viewSize * viewZoom);
 
@@ -141,8 +155,10 @@ int main()
             map = d.GenMap();
             rooms = d.GetRooms();
             tm.SetTiles(map);
+
             spawnLocation = rooms[0]->GetCenter() * (float)tileSize;
             player.SetPosition(&spawnLocation);
+
             exitLocation = d.GetExitLocation() * (float)tileSize;
             exitRect.setPosition(exitLocation);
 
