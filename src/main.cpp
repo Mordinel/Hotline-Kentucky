@@ -15,6 +15,7 @@
 #include "EnemyManager.h"
 #include "Item.h"
 #include "ItemType.h"
+#include "GameManager.h"
 
 #define ZOOM_INCREMENTS 0.2f
 #define ZOOM_MIN 0.6f
@@ -40,170 +41,33 @@ void setViewZoom(float* viewZoom, int mouseDelta) {
 
 int main()
 {
-    int i;
-    float viewZoom = ZOOM_DEFAULT;
+    // Set up
+    std::srand(random_seed);
 
-    int levelCount = 1;
-    sf::Font font;
-    font.loadFromFile("../assets/font.ttf");
-    std::string levelString = "Level: " + std::to_string(levelCount);
-    sf::Text levelText;
-    levelText.setFont(font);
-    levelText.setString(levelString);
-    levelText.setCharacterSize(16);
-    levelText.setFillColor(sf::Color::White);
-
-    //create render window
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "Roguelike", sf::Style::Titlebar | sf::Style::Close /*sf::Style::None/* | sf::Style::Fullscreen*/);
+    sf::RenderWindow window(sf::VideoMode(1600, 900), "Roguelike", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
     sf::Vector2f viewSize(window.getSize().x, window.getSize().y);
     sf::View view(sf::Vector2f(0.0f, 0.0f), viewSize);
-    
-    std::srand(random_seed);
 
-    Dungeon d;
-    std::vector<Room*> rooms = d.GetRooms();
+    sf::Texture playerTexture;
+    if (!playerTexture.loadFromFile("../assets/sprites/chicken.png")) return 1;
 
-    sf::Vector2f spawnLocation = rooms[0]->GetCenter() * (float)tileSize;
+    sf::Font font;
+    if(!font.loadFromFile("../assets/font.ttf")) return 1;
 
-    // Dungeon Exit Code
-    sf::RectangleShape exitRect(sf::Vector2f(tileSize, tileSize));
-    sf::Vector2f exitLocation = d.GetExitLocation() * (float)tileSize;
-    exitRect.setPosition(exitLocation);
-
-    std::vector<std::vector<TileType>> map = d.GenMap();
-
-    sf::Texture* playerTexture = new sf::Texture();
-    if (!playerTexture->loadFromFile("../assets/sprites/chicken.png")) return 1;
-
-    Player player(playerTexture, &window, sf::Vector2u(8, 8), 0.125f, 300.0f, &map);
-    sf::Vector2f playerPos;
-    player.SetPosition(&spawnLocation);
-
-    sf::Texture tileTexture;
-    tileTexture.loadFromFile("../assets/sprites/tiles.png");
-    TileMap tm(map, tileSize, tileTexture);
-
-    sf::RectangleShape shp(sf::Vector2f(1.0f, 1.0f));
-    Collider c(shp, &map);
-
-    sf::Texture* enemyTexture = new sf::Texture();
-    if (!enemyTexture->loadFromFile("../assets/sprites/evil-chicken.png")) return 1;
-
-    EnemyManager enemyManager;
-    for (i = 1; i < rooms.size() - 1; i++) {
-        if (std::rand() % 2 == 0) {
-            Enemy* tmp = new Enemy(enemyTexture, &window, sf::Vector2u(8, 8), 0.125f, 200.0f, &map);
-            sf::Vector2f tmpSpawn = rooms[i]->GetCenter() * (float)tileSize;
-            tmp->SetPosition(tmpSpawn);
-            enemyManager.Append(tmp);
-        }
-
-    }
-
-    Gun gun(&map, &enemyManager);
-    sf::Texture* coinTexture = new sf::Texture();
-    if (!coinTexture->loadFromFile("../assets/sprites/coin.png")) return 1;
-    Item coin(coinTexture, &window, sf::Vector2u(4, 1), 0.2f, 0.0f, &map, ItemType::Treasure);
-    sf::Vector2f coinSpawn = rooms[3]->GetCenter() * (float)tileSize;
-    coin.SetPosition(&coinSpawn);
+    GameManager gm(&window, view, &playerTexture, font);
 
     float deltaTime = 0.0f;
     sf::Clock* clock = new sf::Clock();
-    // while window is open
+
+    // Game Loop
     while (window.isOpen()) {
         deltaTime = clock->restart().asSeconds();
-
-        sf::Event evnt;
-
-        window.clear(sf::Color(29, 32, 33));
-        playerPos = player.GetPosition();
-        tm.CastLight(playerPos.x, playerPos.y);
-        window.draw(tm);
-
-        // poll the window for events
-        while (window.pollEvent(evnt)) {
-
-            // switch on the event type
-            switch(evnt.type) {
-                case sf::Event::Closed:
-                    window.close();
-                    break;
-                case sf::Event::MouseWheelMoved:
-                    setViewZoom(&viewZoom, evnt.mouseWheel.delta);
-                    break;
-                case sf::Event::MouseButtonPressed:
-                    sf::Vector2i cursorPos = sf::Mouse::getPosition(window);
-                    sf::Vector2f relativeCursorPos = window.mapPixelToCoords(cursorPos);
-                    sf::Vector2f playerPos = player.GetPosition();
-                    gun.SetLineCoordinates(player.GetPosition(), relativeCursorPos);
-                    gun.Fire(playerPos, relativeCursorPos, &window);
-                    break;
-            }
-        }
-
-        
-
-        player.Update(&deltaTime);
-        sf::Vector2i cursorPos = sf::Mouse::getPosition(window);
-        sf::Vector2f relativeCursorPos = window.mapPixelToCoords(cursorPos);
-        //gun.SetLineCoordinates(player.GetPosition(), relativeCursorPos);
-        gun.Update(&deltaTime);
-        enemyManager.DeleteDead();
-        enemyManager.Update(&deltaTime);
-        enemyManager.CheckCollision(player, 0.7f);
-        coin.Update(&deltaTime);
-
-        std::vector<std::vector<bool>> fogOfWar = tm.LitMaskToFogOfWar();
-        
-        coin.Draw(&window);
-        //window.draw(gun);
-        enemyManager.Draw(&window, fogOfWar);
-        player.Draw(&window);
-        view.setSize(viewSize * viewZoom);
-
-        view.setCenter(player.GetPosition());
-        window.setView(view);
-
-        levelText.setPosition(window.mapPixelToCoords(sf::Vector2i(20, 20)));
-        window.draw(levelText);
-        
-        // display the window
-        window.display();
-
-        // Did the player reach the exit?
-        if (player.CheckCollision(exitRect, 0.0f))
-        {
-            d.NextDungeon();
-            map = d.GenMap();
-            rooms = d.GetRooms();
-            tm.SetTiles(map);
-
-            spawnLocation = rooms[0]->GetCenter() * (float)tileSize;
-            player.SetPosition(&spawnLocation);
-
-            exitLocation = d.GetExitLocation() * (float)tileSize;
-            exitRect.setPosition(exitLocation);
-
-            levelCount++;
-            levelString = "Level: " + std::to_string(levelCount);
-            levelText.setString(levelString);
-
-            enemyManager.DeleteAll();
-            for (i = 1; i < rooms.size() - 1; i++) {
-                //if (std::rand() % 2 == 0) {
-                    Enemy* tmp = new Enemy(enemyTexture, &window, sf::Vector2u(8, 8), 0.125f, 200.0f, &map);
-                    sf::Vector2f tmpSpawn = rooms[i]->GetCenter() * (float)tileSize;
-                    tmp->SetPosition(tmpSpawn);
-                    enemyManager.Append(tmp);
-                //}
-
-            }
-
-        }
+        gm.Update(deltaTime);
+        gm.Draw();
     }
-    
+
     return 0;
 }
 

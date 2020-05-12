@@ -27,18 +27,27 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
     tileTex.loadFromFile("../assets/sprites/tiles.png");
     tileMap = new TileMap(map, TILE_SIZE, tileTex);
 
+    enemyTexture = new sf::Texture();
+    enemyTexture->loadFromFile("../assets/sprites/evil-chicken.png");
+
     // Setting up the player
     player = new Player(playerTex, window, sf::Vector2u(CHICKEN_ANIMATION_SIZE, CHICKEN_ANIMATIONS), ANIMATION_SWITCH_TIME, PLAYER_SPEED, &map);
 
+    enemyManager = new EnemyManager();;
+
     Init();
+
+    gun = new Gun(&map, enemyManager);
 }
 
 GameManager::~GameManager() {
     delete tileMap;
     delete player;
+    delete enemyManager;
 }
 
 void GameManager::Init() {
+    int i;
     map = dungeon.GenMap();
     rooms = dungeon.GetRooms();
 
@@ -52,6 +61,14 @@ void GameManager::Init() {
 
     levelString = "Level: " + std::to_string(levelCount);
     levelText.setString(levelString);
+    
+    enemyManager->DeleteAll();
+    for (i = 1; i < rooms.size() - 1; i++) {
+        Enemy* tmpEnemy = new Enemy(enemyTexture, window, sf::Vector2u(8, 8), 0.125f, 200.0f, &map);
+        sf::Vector2f tmpSpawn = rooms[i]->GetCenter() * (float)TILE_SIZE;
+        tmpEnemy->SetPosition(tmpSpawn);
+        enemyManager->Append(tmpEnemy);
+    }
 }
 
 void GameManager::Update(float deltaTime) {
@@ -62,6 +79,12 @@ void GameManager::Update(float deltaTime) {
 
     tileMap->CastLight(playerPos.x, playerPos.y);
     fogOfWar = tileMap->LitMaskToFogOfWar();
+
+    //gun->SetLineCoordinates(playerPos, relativeCursorPos);
+    gun->Update(&deltaTime);
+    enemyManager->DeleteDead();
+    enemyManager->Update(&deltaTime);
+    enemyManager->CheckCollision(*player, 0.7f);
 
     // Update view
     sf::Vector2f viewSize(window->getSize().x, window->getSize().y);
@@ -80,6 +103,8 @@ void GameManager::Draw() {
     window->setView(view);
     window->clear(BACKGROUND_COLOR);
     window->draw(*tileMap);
+    window->draw(*gun);
+    enemyManager->Draw(window, fogOfWar);
     player->Draw(window);
 
     window->setView(window->getDefaultView());
@@ -101,6 +126,14 @@ void GameManager::handleWindowEvents() {
             case sf::Event::MouseWheelMoved:
                 setViewZoom(evnt.mouseWheel.delta);
                 break;
+            case sf::Event::MouseButtonPressed:
+                sf::Vector2i cursorPos = sf::Mouse::getPosition(*window); 
+                sf::Vector2f relativeCursorPos = window->mapPixelToCoords(cursorPos);
+                sf::Vector2f playerPos = player->GetPosition();
+                gun->SetLineCoordinates(player->GetPosition(), relativeCursorPos);
+                gun->Fire(playerPos, relativeCursorPos, window);
+                break;
+
         }
     } 
 }

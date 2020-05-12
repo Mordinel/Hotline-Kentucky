@@ -46,6 +46,9 @@ private:
     TileMap* tileMap;
     Player* player;
     std::vector<std::vector<bool>> fogOfWar;
+    EnemyManager* enemyManager;
+    sf::Texture* enemyTexture;
+    Gun* gun;
 
     void handleWindowEvents();
     void setViewZoom(int mouseDelta);
