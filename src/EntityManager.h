@@ -1,30 +1,24 @@
-#ifndef ENTLIST_H
-#define ENTLIST_H
+#ifndef ENTMANAGER_H
+#define ENTMANAGER_H
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 #include "Entity.h"
 
-// define linkedlist of entities
-class EntityList {
+class EntityManager {
 protected:
-    Entity* head;
-    Entity* tail;
-    
-public:
-    EntityList();
-    ~EntityList();
+    std::vector<Entity*> entityList;
 
+public:
+    EntityManager();
+    ~EntityManager();
     virtual void Append(Entity* entity);
     virtual void Delete(Entity* entity);
     virtual void Update(float* deltaTime);
     virtual void Draw(sf::RenderWindow* window);
     virtual void DeleteAll();
-    virtual int EntityCount();
     virtual void CheckCollision(Entity& ent, float push);
-
-    virtual Entity* GetHead() { return head; }
-    virtual Entity* GetTail() { return tail; }
 };
 
 #endif

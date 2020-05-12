@@ -1,14 +1,14 @@
-#ifndef ENEMYLIST_H
-#define ENEMYLIST_H
+#ifndef ENEMYMANAGER_H
+#define ENEMYMANAGER_H
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "EntityList.h"
+#include "EntityManager.h"
 #include "Enemy.h"
+#include "Entity.h"
 #include "EnemyState.h"
 
-class EnemyList : public EntityList {
-
+class EnemyManager : public EntityManager {
     public:
         EnemyList();
         ~EnemyList();
