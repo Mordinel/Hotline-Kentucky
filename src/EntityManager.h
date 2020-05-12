@@ -13,6 +13,7 @@ protected:
 public:
     EntityManager();
     ~EntityManager();
+
     virtual void Append(Entity* entity);
     virtual void Delete(Entity* entity);
     virtual void Update(float* deltaTime);

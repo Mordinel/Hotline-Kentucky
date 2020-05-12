@@ -3,4 +3,4 @@ all:
 
 
 linux:
-	g++ src/* -o bin/main-linux -lsfml-graphics -lsfml-window -lsfml-system -lm
+	g++ src/* -o bin/main-linux -lsfml-graphics -lsfml-window -lsfml-system -lm -ggdb

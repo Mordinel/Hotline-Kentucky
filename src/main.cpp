@@ -11,8 +11,8 @@
 #include "TileMap.h"
 #include "Gun.h"
 #include "Enemy.h"
-#include "EntityList.h"
-#include "EnemyList.h"
+#include "EntityManager.h"
+#include "EnemyManager.h"
 #include "Item.h"
 #include "ItemType.h"
 
@@ -91,18 +91,18 @@ int main()
     sf::Texture* enemyTexture = new sf::Texture();
     if (!enemyTexture->loadFromFile("../assets/sprites/evil-chicken.png")) return 1;
 
-    EnemyList enemyList;
+    EnemyManager enemyManager;
     for (i = 1; i < rooms.size() - 1; i++) {
         if (std::rand() % 2 == 0) {
             Enemy* tmp = new Enemy(enemyTexture, &window, sf::Vector2u(8, 8), 0.125f, 200.0f, &map);
             sf::Vector2f tmpSpawn = rooms[i]->GetCenter() * (float)tileSize;
             tmp->SetPosition(tmpSpawn);
-            enemyList.Append(tmp);
+            enemyManager.Append(tmp);
         }
 
     }
 
-    Gun gun(&map, enemyList);
+    Gun gun(&map, &enemyManager);
     sf::Texture* coinTexture = new sf::Texture();
     if (!coinTexture->loadFromFile("../assets/sprites/coin.png")) return 1;
     Item coin(coinTexture, &window, sf::Vector2u(4, 1), 0.2f, 0.0f, &map, ItemType::Treasure);
@@ -150,16 +150,16 @@ int main()
         sf::Vector2f relativeCursorPos = window.mapPixelToCoords(cursorPos);
         //gun.SetLineCoordinates(player.GetPosition(), relativeCursorPos);
         gun.Update(&deltaTime);
-        enemyList.DeleteDead();
-        enemyList.Update(&deltaTime);
-        enemyList.CheckCollision(player, 0.7f);
+        enemyManager.DeleteDead();
+        enemyManager.Update(&deltaTime);
+        enemyManager.CheckCollision(player, 0.7f);
         coin.Update(&deltaTime);
 
         std::vector<std::vector<bool>> fogOfWar = tm.LitMaskToFogOfWar();
         
         coin.Draw(&window);
-        window.draw(gun);
-        enemyList.Draw(&window, fogOfWar);
+        //window.draw(gun);
+        enemyManager.Draw(&window, fogOfWar);
         player.Draw(&window);
         view.setSize(viewSize * viewZoom);
 
@@ -190,14 +190,14 @@ int main()
             levelString = "Level: " + std::to_string(levelCount);
             levelText.setString(levelString);
 
-            enemyList.DeleteAll();
+            enemyManager.DeleteAll();
             for (i = 1; i < rooms.size() - 1; i++) {
-                if (std::rand() % 2 == 0) {
+                //if (std::rand() % 2 == 0) {
                     Enemy* tmp = new Enemy(enemyTexture, &window, sf::Vector2u(8, 8), 0.125f, 200.0f, &map);
                     sf::Vector2f tmpSpawn = rooms[i]->GetCenter() * (float)tileSize;
                     tmp->SetPosition(tmpSpawn);
-                    enemyList.Append(tmp);
-                }
+                    enemyManager.Append(tmp);
+                //}
 
             }
 

@@ -39,14 +39,16 @@ void EntityManager::Draw(sf::RenderWindow* window) {
 void EntityManager::DeleteAll() {
     int i;
     for (i = 0; i < entityList.size(); i++) {
-        entityList.erase(entityList.end() - i);
+        delete entityList[i];
     }
+
+    entityList.clear();
 }
 
 void EntityManager::CheckCollision(Entity& ent, float push) {
     int i;    
     for (i = 0; i < entityList.size(); i++) {
-        entityList[i]->CheckCollsion(ent, push);
+        entityList[i]->CheckCollision(ent, push);
     }
 }
 

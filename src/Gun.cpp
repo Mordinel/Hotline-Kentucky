@@ -1,8 +1,8 @@
 #include "Gun.h"
 
-Gun::Gun(std::vector<std::vector<TileType>>* tileMap, EnemyList& enemyList) {
+Gun::Gun(std::vector<std::vector<TileType>>* tileMap, EnemyManager* enemyManager) {
     this->tileMap = tileMap;
-    this->enemyList = enemyList;
+    this->enemyManager= enemyManager;
     sightLine.setPrimitiveType(sf::Lines);
     sightLine.resize(LINE_VERTEX_COUNT);
     isFiring = false;
@@ -33,9 +33,9 @@ void Gun::Fire(sf::Vector2f& from, sf::Vector2f& to, sf::RenderWindow* window) {
     sf::Vector2f aimDir = to - from;
     sf::Vector2f aimDirNorm = aimDir / (float)sqrt(pow(aimDir.x, 2) + pow(aimDir.y, 2));
 
-    sf::RectangleShape tracer(sf::Vector2f(16.0f, 16.0f));
+    sf::RectangleShape tracer(sf::Vector2f(2.0f, 2.0f));
     tracer.setPosition(from);
-    tracer.setFillColor(sf::Color::Magenta);
+    tracer.setFillColor(sf::Color::Green);
 
     sf::Vector2f tracerPos = tracer.getPosition();
 
@@ -43,7 +43,7 @@ void Gun::Fire(sf::Vector2f& from, sf::Vector2f& to, sf::RenderWindow* window) {
         window->draw(tracer);
         tracerPos += aimDirNorm;
         tracer.setPosition(tracerPos);
-        enemyList.Shoot(tracer);
+        enemyManager->Shoot(tracer);
     }
 
     /*float shootAngle;
