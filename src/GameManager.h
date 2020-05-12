@@ -27,13 +27,19 @@
 #define ZOOM_MIN 0.6f
 #define ZOOM_MAX 100.0f
 #define ZOOM_DEFAULT 1.0f
+#define TEXT_SIZE 14
+#define TEXT_LOCATION 10, 10
 
 class GameManager {
 private:
     sf::RenderWindow* window;
     sf::View view;
+    sf::Font font;
+    sf::Text levelText;
+    std::string levelString;
     float viewZoom;
     Dungeon dungeon;
+    int levelCount;
     std::vector<std::vector<TileType>> map;
     std::vector<Room*> rooms;
     sf::RectangleShape exitRect;
@@ -45,11 +51,11 @@ private:
     void setViewZoom(int mouseDelta);
 
 public:
-    GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::Texture* playerTex);
+    GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::Texture* playerTex, sf::Font startFont);
     ~GameManager();
+    void Init();
     void Update(float deltaTime);
     void Draw();
-
 };
 
 #endif
