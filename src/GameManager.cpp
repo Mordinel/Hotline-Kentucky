@@ -35,15 +35,17 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
 
     enemyManager = new EnemyManager();;
 
-    Init();
-
     gun = new Gun(&map, enemyManager);
+
+    Init();
 }
 
 GameManager::~GameManager() {
     delete tileMap;
     delete player;
     delete enemyManager;
+    delete enemyTexture;
+    delete gun;
 }
 
 void GameManager::Init() {
