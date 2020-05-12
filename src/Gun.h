@@ -26,7 +26,7 @@ public:
     Gun(std::vector<std::vector<TileType>>* tileMap, EnemyList& enemyList);
     ~Gun();
     void SetLineCoordinates(sf::Vector2f playerPos, sf::Vector2f cursorPos);
-    void Fire(sf::Vector2f& from, sf::Vector2f& to);
+    void Fire(sf::Vector2f& from, sf::Vector2f& to, sf::RenderWindow* window);
     void Update(float* deltaTime);
 };
 

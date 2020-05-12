@@ -117,6 +117,11 @@ int main()
 
         sf::Event evnt;
 
+        window.clear(sf::Color(29, 32, 33));
+        playerPos = player.GetPosition();
+        tm.CastLight(playerPos.x, playerPos.y);
+        window.draw(tm);
+
         // poll the window for events
         while (window.pollEvent(evnt)) {
 
@@ -133,16 +138,12 @@ int main()
                     sf::Vector2f relativeCursorPos = window.mapPixelToCoords(cursorPos);
                     sf::Vector2f playerPos = player.GetPosition();
                     gun.SetLineCoordinates(player.GetPosition(), relativeCursorPos);
-                    gun.Fire(playerPos, relativeCursorPos);
+                    gun.Fire(playerPos, relativeCursorPos, &window);
                     break;
             }
         }
 
-        playerPos = player.GetPosition();
-        tm.CastLight(playerPos.x, playerPos.y);
-
-        window.clear(sf::Color(29, 32, 33));
-        window.draw(tm);
+        
 
         player.Update(&deltaTime);
         sf::Vector2i cursorPos = sf::Mouse::getPosition(window);

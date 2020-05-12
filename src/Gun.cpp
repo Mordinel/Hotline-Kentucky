@@ -27,16 +27,32 @@ void Gun::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     }
 }
 
-void Gun::Fire(sf::Vector2f& from, sf::Vector2f& to) {
+void Gun::Fire(sf::Vector2f& from, sf::Vector2f& to, sf::RenderWindow* window) {
     isFiring = true;
 
-    float shootAngle;
+    sf::Vector2f aimDir = to - from;
+    sf::Vector2f aimDirNorm = aimDir / (float)sqrt(pow(aimDir.x, 2) + pow(aimDir.y, 2));
+
+    sf::RectangleShape tracer(sf::Vector2f(16.0f, 16.0f));
+    tracer.setPosition(from);
+    tracer.setFillColor(sf::Color::Magenta);
+
+    sf::Vector2f tracerPos = tracer.getPosition();
+
+    while((*tileMap)[(int)tracer.getPosition().y / 32][(int)tracer.getPosition().x / 32] != TileType::Wall) {
+        window->draw(tracer);
+        tracerPos += aimDirNorm;
+        tracer.setPosition(tracerPos);
+        enemyList.Shoot(tracer);
+    }
+
+    /*float shootAngle;
     float x;
     float y;
     float n;
 
-    float ox = from.x / 32.0f;
-    float oy = from.y / 32.0f;
+    float ox = from.x;
+    float oy = from.y;
 
     float fromY = from.y;
     float fromX = from.x;
@@ -51,25 +67,31 @@ void Gun::Fire(sf::Vector2f& from, sf::Vector2f& to) {
 
     x = std::cos(shootAngle); 
     y = std::sin(shootAngle);
-
+    std::cout << "X: " << x << " Y: " << y << std::endl; 
     do {
-        if ((int)oy > (*tileMap).size() || (int)ox > (*tileMap)[0].size()) {
+        if ((int)oy > toY || (int)ox > toX) {
             return;
         }
 
         if ((int)oy < 0 || (int)ox < 0) {
             return;
         }
+        std::cout << "OX: " << ox << " OY: " << oy << std::endl; 
 
         sf::RectangleShape tmpRect; 
-        tmpRect.setSize(sf::Vector2f(1.0f, 1.0f));
-        tmpRect.setPosition(sf::Vector2f(ox * 32.0f, oy * 32.0f));
+        tmpRect.setSize(sf::Vector2f(4.0f, 4.0f));
+        tmpRect.setPosition(sf::Vector2f(ox, oy));
+        tmpRect.setFillColor(sf::Color::Green);
+        window->draw(tmpRect);
+
+        
+        enemyList.Shoot(tmpRect);
 
         ox += x;
         oy += y;
-    } while((*tileMap)[(int)oy][(int)ox] != TileType::Wall); // while tile not wall
+    } while((*tileMap)[(int)oy / 32][(int)ox / 32] != TileType::Wall); // while tile not wall*/
 
-    SetLineCoordinates(sightLine[0].position, sf::Vector2f(ox * 32.0f, oy * 32.0f));
+    SetLineCoordinates(to, from);
 }
 
 void Gun::Update(float* deltaTime) {
