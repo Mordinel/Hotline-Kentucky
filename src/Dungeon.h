@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Filename: Dungeon.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 29/04/2020
+ * Description: Handles the generation of dungeons in the game.
+ *****************************************************************************/
+
 #ifndef DUNGEON_H
 #define DUNGEON_H
 

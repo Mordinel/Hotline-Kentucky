@@ -1,9 +1,9 @@
 /******************************************************************************
- * Filename: .cpp
+ * Filename: Dungeon.cpp
  * FileType: C++ Source File
  * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
  * Created On: 29/04/2020
- * Description: Entry point of the program. Creates and runs the game loop.
+ * Description: Handles the generation of dungeons in the game.
  *****************************************************************************/
 
 #include <iostream>

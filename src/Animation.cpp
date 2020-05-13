@@ -1,6 +1,12 @@
-// Animation.cpp
-#include <SFML/Graphics.hpp>
+/******************************************************************************
+ * Filename: Animation.cpp
+ * FileType: C++ Source File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 01/05/2020
+ * Description: Handles the animations in the game.
+ *****************************************************************************/
 
+#include <SFML/Graphics.hpp>
 #include "Animation.h"
 
 // construct the animation class
