@@ -16,12 +16,8 @@ int main()
     // Set up
     std::srand(random_seed);
 
-<<<<<<< HEAD
     // Creates the game window
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "Roguelike", sf::Style::Titlebar | sf::Style::Close);
-=======
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Hotline Kentucky", sf::Style::Titlebar | sf::Style::Close);
->>>>>>> bf496ac49fe941421f53f53d1b98bba02d757ce6
     window.setVerticalSyncEnabled(true);
 
     // Creates the viewport of the game world
