@@ -20,6 +20,7 @@ public:
     virtual void Draw(sf::RenderWindow* window);
     virtual void DeleteAll();
     virtual void CheckCollision(Entity& ent, float push);
+    virtual void CollideWithEntities();
 };
 
 #endif

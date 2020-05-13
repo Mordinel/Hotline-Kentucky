@@ -8,7 +8,7 @@
 
 #include "TileType.h"
 
-#define VIEW_DISTANCE 20
+#define VIEW_DISTANCE 12
 
 class TileMap : public sf::Drawable, public sf::Transformable
 {

@@ -50,6 +50,8 @@ GameManager::~GameManager() {
 
 void GameManager::Init() {
     int i;
+    int j;
+    int chickens;
     map = dungeon.GenMap();
     rooms = dungeon.GetRooms();
 
@@ -68,10 +70,16 @@ void GameManager::Init() {
     
     enemyManager->DeleteAll();
     for (i = 1; i < rooms.size() - 1; i++) {
-        Enemy* tmpEnemy = new Enemy(enemyTexture, window, sf::Vector2u(8, 8), 0.125f, 2.6f, &map);
-        sf::Vector2f tmpSpawn = rooms[i]->GetCenter() * (float)TILE_SIZE;
-        tmpEnemy->SetPosition(tmpSpawn);
-        enemyManager->Append(tmpEnemy);
+        chickens = std::rand() % 30 + 1;
+        for(j = 0; j < chickens; j++) {
+            Enemy* tmpEnemy = new Enemy(enemyTexture, window, sf::Vector2u(8, 8), 0.125f, 2.6f, &map);
+            sf::Vector2f tmpSpawn = rooms[i]->GetCenter();
+            //tmpSpawn = sf::Vector2f(tmpSpawn.x + (std::rand() % (int)((rooms[i]->Width - 2)) - rooms[i]->Width / 2.0f),
+            //                        tmpSpawn.y + (std::rand() % (int)((rooms[i]->Height - 2)) - rooms[i]->Height / 2.0f));
+            tmpSpawn *= (float)TILE_SIZE;
+            tmpEnemy->SetPosition(tmpSpawn);
+            enemyManager->Append(tmpEnemy);
+        }
     }
 }
 
@@ -90,6 +98,7 @@ void GameManager::Update(float deltaTime) {
     gun->Update(&deltaTime);
     enemyManager->DeleteDead();
     enemyManager->Update(&deltaTime, player->GetPosition());
+    enemyManager->CollideWithEntities();
     enemyManager->CheckCollision(*player, 0.5f);
 
     // Update view

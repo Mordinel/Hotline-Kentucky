@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 Enemy::Enemy(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageCount, float switchTime, float speed, std::vector<std::vector<TileType>>* tileMap) : Entity(texture, window, imageCount, switchTime, speed, tileMap) {
-    state = (EnemyState)(std::rand() % 2);
+    state = EnemyState::Wander;
     lastMovement = sf::Vector2f(0.0f, 0.0f);
 }
 
@@ -15,7 +15,7 @@ void Enemy::Update(float* deltaTime, sf::Vector2f playerPos) {
     float xMove = 0.0f;
     float yMove = 0.0f;
 
-    if (GetDistanceBetween(playerPos) < 300.0f) {
+    if (GetDistanceBetween(playerPos) < (10.0f * 32.0f)) {
         state = EnemyState::Attack;
     }
 

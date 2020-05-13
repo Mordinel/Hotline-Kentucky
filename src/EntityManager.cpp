@@ -52,3 +52,16 @@ void EntityManager::CheckCollision(Entity& ent, float push) {
     }
 }
 
+void EntityManager::CollideWithEntities() {
+    int i;
+    int j;
+    for (i = 0; i < entityList.size(); i++) {
+        for (j = 0; j < entityList.size(); j++) {
+            if (i == j) continue;
+
+            Entity* tmpEnt = entityList[j];
+            entityList[i]->CheckCollisionCentered(*tmpEnt, 0.5f);
+        }
+    }
+}
+
