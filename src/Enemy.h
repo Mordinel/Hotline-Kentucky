@@ -11,6 +11,7 @@ class Enemy : public Entity {
 private:
     EnemyState state;
     sf::Vector2f startLocation;
+    sf::Vector2f lastMovement;
 public:
     Enemy(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageCount, float switchTime, float speed, std::vector<std::vector<TileType>>* tileMap);
     void Die();

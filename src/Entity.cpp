@@ -50,3 +50,16 @@ void Entity::SetPosition(sf::Vector2f position) {
     body.setPosition(position);
 }
 
+float Entity::GetDistanceBetween(sf::Vector2f location) {
+    sf::Vector2f entityPos = body.getPosition();
+
+    float x1 = entityPos.x;
+    float x2 = location.x;
+    float y1 = entityPos.y;
+    float y2 = location.y;
+
+    float distance = sqrt(pow((x1 - x2), 2) + pow((y1 - y2), 2));
+
+    return distance;
+}
+

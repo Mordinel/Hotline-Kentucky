@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "math.h"
 #include "Animation.h"
 #include "Collider.h"
 
@@ -19,6 +20,7 @@ public:
     virtual sf::Vector2f GetPosition() { return body.getPosition(); }
     virtual void SetPosition(sf::Vector2f* position);
     virtual void SetPosition(sf::Vector2f position);
+    virtual float GetDistanceBetween(sf::Vector2f location);
 
     Entity* Next;
 protected:
