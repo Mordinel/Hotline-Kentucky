@@ -2,8 +2,6 @@
 
 #include "Entity.h"
 
-#define ENEMY_SPEED
-
 // Entity definition
 Entity::Entity(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageCount, float switchTime, float speed, std::vector<std::vector<TileType>>* tileMap) : animation(texture, imageCount, switchTime), Collider(body, tileMap) {
     this->speed = speed;
