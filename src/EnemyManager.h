@@ -15,6 +15,7 @@ class EnemyManager : public EntityManager {
         void Draw(sf::RenderWindow* window, const std::vector<std::vector<bool>>& fogOfWar);
         bool Shoot(sf::RectangleShape& rect);
         void DeleteDead();
+        void Update(float* deltaTime, sf::Vector2f playerPos);
 };
 
 #endif
