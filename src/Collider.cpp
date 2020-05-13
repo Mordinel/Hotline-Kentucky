@@ -40,13 +40,26 @@ void Collider::checkCollisionsNearBody() {
     }
 }
 
-// check for square intersecs and move objects
+
+//// Collider collisions
+
+bool Collider::CheckCollisionCentered(Collider& other, float push) {
+    sf::Vector2f thisHalfSize = GetHalfSize();   
+    sf::Vector2f thisPosition = GetColliderPosition();   
+    
+    return checkCollision(other, thisPosition, thisHalfSize, push);
+}
+
 bool Collider::CheckCollision(Collider& other, float push) {
+    sf::Vector2f thisHalfSize = GetHalfSize();   
+    sf::Vector2f thisPosition = GetColliderPosition() - thisHalfSize;   
+    
+    return checkCollision(other, thisPosition, thisHalfSize, push);
+}
+
+bool Collider::checkCollision(Collider& other, sf::Vector2f& thisPosition, sf::Vector2f& thisHalfSize, float push) {
     sf::Vector2f otherPosition = other.GetColliderPosition();   
     sf::Vector2f otherHalfSize = other.GetHalfSize();   
-
-    sf::Vector2f thisPosition = GetColliderPosition();   
-    sf::Vector2f thisHalfSize = GetHalfSize();   
 
     float deltaX = otherPosition.x - thisPosition.x;
     float deltaY = otherPosition.y - thisPosition.y;
@@ -81,12 +94,25 @@ bool Collider::CheckCollision(Collider& other, float push) {
     return false;
 }
 
-bool Collider::CheckCollision(sf::RectangleShape rect, float push) {
-    sf::Vector2f otherPosition = rect.getPosition();
-    sf::Vector2f otherHalfSize = rect.getSize() / 2.0f;   
+//// Rectangle collisions
 
+bool Collider::CheckCollisionCentered(sf::RectangleShape& rect, float push) {
     sf::Vector2f thisHalfSize = GetHalfSize();   
-    sf::Vector2f thisPosition = GetColliderPosition() - thisHalfSize;
+    sf::Vector2f thisPosition = GetColliderPosition();   
+    
+    return checkCollision(rect, thisPosition, thisHalfSize, push);
+}
+
+bool Collider::CheckCollision(sf::RectangleShape& rect, float push) {
+    sf::Vector2f thisHalfSize = GetHalfSize();   
+    sf::Vector2f thisPosition = GetColliderPosition() - thisHalfSize;   
+    
+    return checkCollision(rect, thisPosition, thisHalfSize, push);
+}
+
+bool Collider::checkCollision(sf::RectangleShape& rect, sf::Vector2f& thisPosition, sf::Vector2f& thisHalfSize, float push) {
+    sf::Vector2f otherHalfSize = rect.getSize() / 2.0f;   
+    sf::Vector2f otherPosition = rect.getPosition();
 
     float deltaX = otherPosition.x - thisPosition.x;
     float deltaY = otherPosition.y - thisPosition.y;

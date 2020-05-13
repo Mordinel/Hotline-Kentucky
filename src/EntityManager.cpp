@@ -48,7 +48,7 @@ void EntityManager::DeleteAll() {
 void EntityManager::CheckCollision(Entity& ent, float push) {
     int i;    
     for (i = 0; i < entityList.size(); i++) {
-        entityList[i]->CheckCollision(ent, push);
+        entityList[i]->CheckCollisionCentered(ent, push);
     }
 }
 

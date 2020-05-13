@@ -15,15 +15,18 @@ void EnemyManager::Draw(sf::RenderWindow* window, const std::vector<std::vector<
     }
 }
 
-void EnemyManager::Shoot(sf::RectangleShape& rect) {
+bool EnemyManager::Shoot(sf::RectangleShape& rect) {
     int i;
     for (i = 0; i < entityList.size(); i++) {
         if ( ((Enemy*)entityList[i])->GetState() != EnemyState::Dead ) {
-            if ( ((Enemy*)entityList[i])->CheckCollision(rect, 1.0f) ) {
+            if ( ((Enemy*)entityList[i])->CheckCollisionCentered(rect, 1.0f) ) {
                 ((Enemy*)entityList[i])->Die();
+                return true;
             }
         }
     }
+
+    return false;
 }
 
 void EnemyManager::DeleteDead() {
