@@ -116,7 +116,7 @@ void TileMap::CastLight(float playerX, float playerY) {
         oy = playerY;
 
         // walk the ray from the player, setting each tile to be lit until a wall or the limit is reached.
-        for (j = 0; j < 25; j++) {
+        for (j = 0; j < VIEW_DISTANCE; j++) {
 
             // if the tile exceeds the bounds,  break
             if ((int)oy >= height || (int)ox >= width) {
