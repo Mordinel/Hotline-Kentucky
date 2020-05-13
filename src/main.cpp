@@ -16,6 +16,7 @@ int main()
     // Set up
     std::srand(random_seed);
 
+    // Creates the game window
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Hotline Kentucky", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
