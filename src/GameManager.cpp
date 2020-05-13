@@ -55,6 +55,8 @@ void GameManager::Init() {
 
     tileMap->SetTiles(map);
 
+    fogOfWar = tileMap->LitMaskToFogOfWar();
+
     sf::Vector2f exitLocation = dungeon.GetExitLocation();
     exitRect.setPosition(exitLocation * (float)TILE_SIZE);
 
@@ -111,7 +113,6 @@ void GameManager::Draw() {
     player->Draw(window);
 
     window->setView(window->getDefaultView());
-    //levelText.setPosition(window->mapPixelToCoords(sf::Vector2i(20, 20)));
     levelText.setPosition(TEXT_LOCATION);
     window->draw(levelText);
 
