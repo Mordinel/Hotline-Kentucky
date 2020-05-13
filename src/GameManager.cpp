@@ -74,6 +74,8 @@ void GameManager::Init() {
 }
 
 void GameManager::Update(float deltaTime) {
+    window->setView(view); // For logic dependant on knowing where things are relative to the screen such as the mouse.
+
     handleWindowEvents();
 
     player->Update(&deltaTime);
@@ -102,7 +104,6 @@ void GameManager::Update(float deltaTime) {
 }
 
 void GameManager::Draw() {
-    window->setView(view);
     window->clear(BACKGROUND_COLOR);
     window->draw(*tileMap);
     window->draw(*gun);
