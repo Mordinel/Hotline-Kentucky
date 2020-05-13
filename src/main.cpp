@@ -10,7 +10,7 @@ int main()
     // Set up
     std::srand(random_seed);
 
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "Roguelike", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(1600, 900), "Hotline Kentucky", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
     sf::Vector2f viewSize(window.getSize().x, window.getSize().y);
