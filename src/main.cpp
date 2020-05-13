@@ -1,6 +1,12 @@
-// main.cpp
-#include <SFML/Graphics.hpp>
+/******************************************************************************
+ * Filename: main.cpp
+ * FileType: C++ Source File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 29/04/2020
+ * Description: Entry point of the program. Creates and runs the game loop.
+ *****************************************************************************/
 
+#include <SFML/Graphics.hpp>
 #include "GameManager.h"
 
 const unsigned int random_seed = static_cast<unsigned int>(time(NULL));
