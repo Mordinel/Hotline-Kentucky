@@ -16,15 +16,19 @@ int main()
     // Set up
     std::srand(random_seed);
 
+    // Creates the game window
     sf::RenderWindow window(sf::VideoMode(1600, 900), "Roguelike", sf::Style::Titlebar | sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
+    // Creates the viewport of the game world
     sf::Vector2f viewSize(window.getSize().x, window.getSize().y);
     sf::View view(sf::Vector2f(0.0f, 0.0f), viewSize);
 
+    // Loads the player texture
     sf::Texture playerTexture;
     if (!playerTexture.loadFromFile("../assets/sprites/chicken.png")) return 1;
 
+    // Loads the font used for text rendering
     sf::Font font;
     if(!font.loadFromFile("../assets/font.ttf")) return 1;
 
