@@ -16,6 +16,7 @@
 #include "Enemy.h"
 #include "Item.h"
 #include "ItemType.h"
+#include "EnemyType.h"
 
 #define TILE_SIZE 32.0f
 #define CHICKEN_ANIMATION_SIZE 8
@@ -47,7 +48,9 @@ private:
     Player* player;
     std::vector<std::vector<bool>> fogOfWar;
     EnemyManager* enemyManager;
-    sf::Texture* enemyTexture;
+    sf::Texture* evilTexture;
+    sf::Texture* mechaTexture;
+    sf::Texture* goodTexture;
     Gun* gun;
 
     void handleWindowEvents();
@@ -59,6 +62,7 @@ public:
     void Init();
     void Update(float deltaTime);
     void Draw();
+    void SpawnThings();
 };
 
 #endif

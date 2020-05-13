@@ -27,8 +27,14 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
     tileTex.loadFromFile("../assets/sprites/tiles.png");
     tileMap = new TileMap(map, TILE_SIZE, tileTex);
 
-    enemyTexture = new sf::Texture();
-    enemyTexture->loadFromFile("../assets/sprites/evil-chicken.png");
+    evilTexture = new sf::Texture();
+    evilTexture->loadFromFile("../assets/sprites/evil-chicken.png");
+
+    mechaTexture = new sf::Texture();
+    mechaTexture->loadFromFile("../assets/sprites/mecha-chicken.png");
+
+    goodTexture = new sf::Texture();
+    goodTexture->loadFromFile("../assets/sprites/good-chicken.png");
 
     // Setting up the player
     player = new Player(playerTex, window, sf::Vector2u(CHICKEN_ANIMATION_SIZE, CHICKEN_ANIMATIONS), ANIMATION_SWITCH_TIME, PLAYER_SPEED, &map);
@@ -44,14 +50,13 @@ GameManager::~GameManager() {
     delete tileMap;
     delete player;
     delete enemyManager;
-    delete enemyTexture;
+    delete evilTexture;
+    delete mechaTexture;
+    delete goodTexture;
     delete gun;
 }
 
 void GameManager::Init() {
-    int i;
-    int j;
-    int chickens;
     map = dungeon.GenMap();
     rooms = dungeon.GetRooms();
 
@@ -69,18 +74,35 @@ void GameManager::Init() {
     levelText.setString(levelString);
     
     enemyManager->DeleteAll();
+
+    SpawnThings();
+}
+
+void GameManager::SpawnThings() {
+    int i;
+    int j;
+    int chickens;
+
     for (i = 1; i < rooms.size() - 1; i++) {
         chickens = std::rand() % 30 + 1;
         for(j = 0; j < chickens; j++) {
-            Enemy* tmpEnemy = new Enemy(enemyTexture, window, sf::Vector2u(8, 8), 0.125f, 2.6f, &map);
+
+            int randomVal = std::rand() % 50;
+
+            Enemy* tmpEnemy;
+
+            if (randomVal >= 0 && randomVal <= 15) {
+                tmpEnemy = new Enemy(goodTexture, window, sf::Vector2u(8, 8), 0.125f, 2.6f, &map, EnemyType::Good);
+            } else {
+                tmpEnemy = new Enemy(evilTexture, window, sf::Vector2u(8, 8), 0.125f, 2.6f, &map, EnemyType::Evil);
+            }
+
             sf::Vector2f tmpSpawn = rooms[i]->GetCenter();
-            //tmpSpawn = sf::Vector2f(tmpSpawn.x + (std::rand() % (int)((rooms[i]->Width - 2)) - rooms[i]->Width / 2.0f),
-            //                        tmpSpawn.y + (std::rand() % (int)((rooms[i]->Height - 2)) - rooms[i]->Height / 2.0f));
             tmpSpawn *= (float)TILE_SIZE;
             tmpEnemy->SetPosition(tmpSpawn);
             enemyManager->Append(tmpEnemy);
         }
-    }
+    }   
 }
 
 void GameManager::Update(float deltaTime) {
