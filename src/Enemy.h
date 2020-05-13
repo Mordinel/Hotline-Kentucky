@@ -14,6 +14,7 @@ private:
 public:
     Enemy(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageCount, float switchTime, float speed, std::vector<std::vector<TileType>>* tileMap);
     void Die();
+    void Update(float* deltaTime, sf::Vector2f playerPos);
 
     EnemyState GetState() {
         return this->state;

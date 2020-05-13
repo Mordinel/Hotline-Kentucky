@@ -38,3 +38,9 @@ void EnemyManager::DeleteDead() {
     }
 }
 
+void EnemyManager::Update(float* deltaTime, sf::Vector2f playerPos) {
+    int i;
+    for (i = 0; i < entityList.size(); i++) {
+        ((Enemy*)entityList[i])->Update(deltaTime, playerPos);
+    }
+}

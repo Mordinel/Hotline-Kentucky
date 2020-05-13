@@ -68,7 +68,7 @@ void GameManager::Init() {
     
     enemyManager->DeleteAll();
     for (i = 1; i < rooms.size() - 1; i++) {
-        Enemy* tmpEnemy = new Enemy(enemyTexture, window, sf::Vector2u(8, 8), 0.125f, 200.0f, &map);
+        Enemy* tmpEnemy = new Enemy(enemyTexture, window, sf::Vector2u(8, 8), 0.125f, 2.6f, &map);
         sf::Vector2f tmpSpawn = rooms[i]->GetCenter() * (float)TILE_SIZE;
         tmpEnemy->SetPosition(tmpSpawn);
         enemyManager->Append(tmpEnemy);
@@ -89,8 +89,8 @@ void GameManager::Update(float deltaTime) {
     //gun->SetLineCoordinates(playerPos, relativeCursorPos);
     gun->Update(&deltaTime);
     enemyManager->DeleteDead();
-    enemyManager->Update(&deltaTime);
-    enemyManager->CheckCollision(*player, 0.7f);
+    enemyManager->Update(&deltaTime, player->GetPosition());
+    enemyManager->CheckCollision(*player, 0.5f);
 
     // Update view
     sf::Vector2f viewSize(window->getSize().x, window->getSize().y);
