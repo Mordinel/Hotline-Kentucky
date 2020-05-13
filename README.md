@@ -32,9 +32,9 @@ main-linux should appear in bin/
 | Fog	of	war	reveals	the	dungeon	as	the	player	character	progressively	navigates	through	the	dungeon	| :heavy_check_mark: |
 | One	or	more	player	characters	are	controlled	by	user	keyword	| :heavy_check_mark: |
 | Two	distinct	animated	enemies | :x: |
-| Careful	sprite	and	terrain	collision	detection,	e.g.,	sprite	to	enemy,	sprite	to	wall	collision	detection | :x: |
+| Careful	sprite	and	terrain	collision	detection,	e.g.,	sprite	to	enemy,	sprite	to	wall	collision	detection | :heavy_check_mark: |
 | Careful	collision	detection that	affects	the	score	and	condition,	e.g.,	sprite	to	coin,	sprite	to	health	potion | :x: |
-| Working	battle	system,	e.g.,	turn-based	or/and to-the death | :x: |
+| Working	battle	system,	e.g.,	turn-based	or/and to-the death | :heavy_check_mark: |
 | Immediate	gameplay	feedback	including	battle	system	feedback,	score,	win	and	loss | :x: |
-| One	enemy	that	exhibits	artificial	intelligence	behaviour.	This	may	be	implemented	using	trigonometry | :x: |
+| One	enemy	that	exhibits	artificial	intelligence	behaviour.	This	may	be	implemented	using	trigonometry | :heavy_check_mark: |
 
