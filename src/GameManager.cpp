@@ -97,8 +97,11 @@ void GameManager::Update(float deltaTime) {
     view.setSize(viewSize * viewZoom);
     view.setCenter(playerPos);
 
+    sf::RectangleShape newRect;
+    newRect.setSize(exitRect.getSize());
+    newRect.setPosition(exitRect.getPosition() - (exitRect.getSize() / 2.0f));
     // Has player reached the exit?
-    if (player->CheckCollision(exitRect, 0.0f)) {
+    if (player->CheckCollision(newRect, 0.0f)) {
         levelCount++;
         dungeon.NextDungeon();
         Init(); // Re-Initialize
