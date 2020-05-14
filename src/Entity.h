@@ -15,6 +15,9 @@
 #include "Animation.h"
 #include "Collider.h"
 
+#define TILE_SIZE 32.0f
+#define TILE_SIZE_INT 32
+
 // define entity class
 class Entity : public Collider {
 public:

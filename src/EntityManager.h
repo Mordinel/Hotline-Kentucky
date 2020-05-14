@@ -14,6 +14,8 @@
 
 #include "Entity.h"
 
+#define HALF_OFFSET 0.5f
+
 class EntityManager {
 protected:
     std::vector<Entity*> entityList;
