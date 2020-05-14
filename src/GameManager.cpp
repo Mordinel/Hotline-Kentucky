@@ -144,22 +144,22 @@ void GameManager::spawnEnemies() {
     // for each room
     for (i = 1; i < rooms.size() - 1; i++) {
         // add chickens up to 40 per room
-        chickens = std::rand() % 40 + 1;
+        chickens = std::rand() % MAX_CHICKEN_PER_ROOM + 1;
         for(j = 0; j < chickens; j++) {
 
-            int randomVal = std::rand() % 50;
+            int randomVal = std::rand() % CHICKEN_DENOM;
 
             Enemy* tmpEnemy;
 
             // 8 / 50 will be good
-            if (randomVal >= 2 && randomVal <= 10) {
-                tmpEnemy = new Enemy(goodTexture, window, sf::Vector2u(8, 8), 0.2f, 1.4f, &map, EnemyType::Good);
+            if (randomVal >= GOOD_MIN && randomVal <= GOOD_MAX) {
+                tmpEnemy = new Enemy(goodTexture, window, sf::Vector2u(ENEMY_FRAMES), GOOD_FRAMESPEED, GOOD_SPEED, &map, EnemyType::Good);
             // 2 / 50 will be mecha
-            } else if (randomVal >= 0 && randomVal < 2) {
-                tmpEnemy = new Enemy(mechaTexture, window, sf::Vector2u(8, 8), 0.3f, 5.0f, &map, EnemyType::Mecha);
+            } else if (randomVal >= MECHA_MIN && randomVal < MECHA_MAX) {
+                tmpEnemy = new Enemy(mechaTexture, window, sf::Vector2u(ENEMY_FRAMES), MECHA_FRAMESPEED, MECHA_SPEED, &map, EnemyType::Mecha);
             // the rest will be evil (normal enemies)
             } else {
-                tmpEnemy = new Enemy(evilTexture, window, sf::Vector2u(8, 8), 0.2f, 1.4f, &map, EnemyType::Evil);
+                tmpEnemy = new Enemy(evilTexture, window, sf::Vector2u(ENEMY_FRAMES), EVIL_FRAMESPEED, EVIL_SPEED, &map, EnemyType::Evil);
             }
 
             // place it within the room
@@ -182,9 +182,9 @@ void GameManager::spawnItems() {
             Item* tmpItem;
 
             if (std::rand() % 2 == 0) {
-                tmpItem = new Item(speedTexture, window, sf::Vector2u(1, 1), 0.2f, 0.0f, &map, ItemType::Speed);
+                tmpItem = new Item(speedTexture, window, sf::Vector2u(1, 1), ITEM_FRAMESPEED, 0.0f, &map, ItemType::Speed);
             } else {
-                tmpItem = new Item(visibilityTexture, window, sf::Vector2u(1, 1), 0.2f, 0.0f, &map, ItemType::Vision);
+                tmpItem = new Item(visibilityTexture, window, sf::Vector2u(1, 1), ITEM_FRAMESPEED, 0.0f, &map, ItemType::Vision);
             }
 
             sf::Vector2f spawnLocation = getRandomLocationInRoom(rooms[i]);
@@ -199,7 +199,7 @@ void GameManager::spawnItems() {
         int coinCount = std::rand() % ROOM_COIN_COUNT;
 
         for (int i = 0; i < coinCount; i++) {
-            Item* tmpItem = new Item(coinTexture, window, sf::Vector2u(4, 1), 0.2f, 0.0f, &map, ItemType::Coin);
+            Item* tmpItem = new Item(coinTexture, window, sf::Vector2u(COIN_FRAMES), ITEM_FRAMESPEED, 0.0f, &map, ItemType::Coin);
 
             int xPos, yPos;
 
@@ -260,13 +260,13 @@ void GameManager::Update(float deltaTime) {
     for (i = 0; i < dead->size(); i++) {
         switch ((*dead)[i]->GetType()) {
             case EnemyType::Good:
-                score -= 500;
+                score -= GOOD_POINTS;
                 break;
             case EnemyType::Evil:
-                score += 50;
+                score += EVIL_POINTS;
                 break;
             case EnemyType::Mecha:
-                score += 150;
+                score += MECHA_POINTS;
                 break;
         }
     }
@@ -276,7 +276,7 @@ void GameManager::Update(float deltaTime) {
     enemyManager->DeleteDead();
     enemyManager->Update(&deltaTime, player->GetPosition());
     enemyManager->CollideWithEntities();
-    newGame = enemyManager->CheckCollisionPlayer(*player, 0.4f);
+    newGame = enemyManager->CheckCollisionPlayer(*player, PLAYER_ENEMY_PUSH);
 
     // call itemManager functions
     itemManager->DeleteConsumed();
@@ -286,7 +286,7 @@ void GameManager::Update(float deltaTime) {
     // score or apply perks based on the item picked up.
     switch (pickedUpItem) {
         case ItemType::Coin:
-            score += 100;
+            score += COIN_POINTS;
             break;
         case ItemType::Speed:
             player->GiveSpeed();
