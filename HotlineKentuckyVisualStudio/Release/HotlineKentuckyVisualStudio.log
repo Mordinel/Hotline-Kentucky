@@ -1,0 +1,269 @@
+﻿  Animation.cpp
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Animation.cpp(26,41): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Animation.cpp(27,42): warning C4244: '=': conversion from 'float' to 'T', possible loss of data
+          with
+          [
+              T=int
+          ]
+  Collider.cpp
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Collider.cpp(46,18): warning C4018: '>=': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Collider.cpp(47,18): warning C4018: '>=': signed/unsigned mismatch
+  Dungeon.cpp
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(70,62): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(71,65): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(74,65): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(75,62): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(78,62): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(79,65): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(82,65): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(83,62): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(95,49): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(137,23): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(202,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(232,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(237,29): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(238,32): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(239,30): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(240,31): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(270,23): warning C4244: 'argument': conversion from 'T' to 'const unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(270,41): warning C4244: 'argument': conversion from 'T' to 'const unsigned int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(183,9): warning C4101: 'd': unreferenced local variable
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(293,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Dungeon.cpp(313,23): warning C4018: '<': signed/unsigned mismatch
+  Enemy.cpp
+  EnemyManager.cpp
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\EnemyManager.cpp(34,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\EnemyManager.cpp(47,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\EnemyManager.cpp(100,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\EnemyManager.cpp(120,19): warning C4018: '<': signed/unsigned mismatch
+  Entity.cpp
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Entity.cpp(80,48): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\Entity.cpp(80,112): warning C4018: '<': signed/unsigned mismatch
+  EntityManager.cpp
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\EntityManager.cpp(45,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\EntityManager.cpp(61,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\EntityManager.cpp(74,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\EntityManager.cpp(85,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\EntityManager.cpp(102,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\EntityManager.cpp(113,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\EntityManager.cpp(114,23): warning C4018: '<': signed/unsigned mismatch
+  GameManager.cpp
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(50,22): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(52,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(52,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(63,32): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(156,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(191,23): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(209,23): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(217,78): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(218,79): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(240,62): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(241,63): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(243,31): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(243,25): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(276,19): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(335,65): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\GameManager.cpp(335,44): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  Gun.cpp
+  Item.cpp
+  ItemManager.cpp
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\ItemManager.cpp(25,23): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\ItemManager.cpp(34,23): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\ItemManager.cpp(49,23): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\ItemManager.cpp(65,23): warning C4018: '<': signed/unsigned mismatch
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\ItemManager.cpp(80,23): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\main.cpp(30,63): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\main.cpp(30,43): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  Player.cpp
+  Room.cpp
+  TileMap.cpp
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(76,52): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(76,38): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(77,58): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(77,44): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(78,64): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(78,44): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(79,58): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(79,38): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(82,61): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(82,53): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(83,61): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(83,46): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(84,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(84,46): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(85,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Development\New folder\prog-4-roguelike-Bitlus\src\TileMap.cpp(85,53): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 710 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  HotlineKentuckyVisualStudio.vcxproj -> C:\Development\New folder\prog-4-roguelike-Bitlus\HotlineKentuckyVisualStudio\Release\HotlineKentuckyVisualStudio.exe
