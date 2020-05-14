@@ -9,7 +9,14 @@
 #include <SFML/Graphics.hpp>
 #include "Animation.h"
 
-// construct the animation class
+/*
+ * Constructor for the Animation class
+ * 
+ * Parameters:
+ *      texture - the texture that contain the animation frames
+ *      imageCount - a vector storing how many rows and cols of frames are in the texture
+ *      switchTime - the amount of time a frame is displayed before it goes to the next frame 
+ */
 Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime) {
     this->imageCount = imageCount;
     this->switchTime = switchTime;
@@ -20,11 +27,21 @@ Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switch
     uvRect.height = texture->getSize().y / float(imageCount.y);
 }
 
+/*
+ * Destructor for the Animation class
+ */
 Animation::~Animation() {
     
 }
 
-// update the animation
+/*
+ * Updates the animation frame by moving the texture coordinates to the next part of the texture
+ * when it's time. (total time elaspsed since last frame is larger than switch time)
+ * 
+ * Parameters:
+ *      row - the row of the texture that should be displayed
+ *      deltaTime - how much time has passed since last game loop
+ */
 void Animation::Update(int row, float* deltaTime) {
     currentImage.y = row;
     totalTime += *deltaTime;
