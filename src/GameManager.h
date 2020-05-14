@@ -31,8 +31,25 @@
 #define TILE_SIZE 32.0f
 #define CHICKEN_ANIMATION_SIZE 8
 #define CHICKEN_ANIMATIONS 8
+#define CHICKEN_DENOM 50
+#define GOOD_MIN 2
+#define GOOD_MAX 10
+#define GOOD_FRAMESPEED 0.2f
+#define GOOD_SPEED 1.4f
+#define GOOD_POINTS 500;
+#define MECHA_MIN 0
+#define MECHA_MAX 2
+#define MECHA_FRAMESPEED 0.3f
+#define MECHA_SPEED 5.0f
+#define MECHA_POINTS 150
+#define EVIL_FRAMESPEED 0.2f
+#define EVIL_SPEED 1.4f
+#define EVIL_POINTS 50
+#define ENEMY_FRAMES 8, 8
+#define MAX_CHICKEN_PER_ROOM 40
 #define ANIMATION_SWITCH_TIME 0.125f
 #define PLAYER_SPEED 200.0f
+#define PLAYER_ENEMY_PUSH 0.4f
 #define BACKGROUND_COLOR sf::Color(29, 32, 33)
 #define ZOOM_INCREMENTS 0.2f
 #define ZOOM_MIN 0.6f
@@ -41,6 +58,9 @@
 #define TEXT_SIZE 24
 #define TEXT_LOCATION 10, 10
 #define ITEM_SPAWN_CHANCE 4 // 1 in 4
+#define ITEM_FRAMESPEED 0.2f
+#define COIN_FRAMES 4, 1
+#define COIN_POINTS 100
 #define ROOM_COIN_COUNT 5
 
 class GameManager {
