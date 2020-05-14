@@ -1,3 +1,10 @@
+/******************************************************************************
+ * Filename: Entity.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 01/05/2020
+ * Description: Implements movement, drawing and animation of all sprites, inherits collider.
+ *****************************************************************************/
 
 #ifndef ENTITY_H
 #define ENTITY_H

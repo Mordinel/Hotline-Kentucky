@@ -1,8 +1,26 @@
+/******************************************************************************
+ * Filename: Entity.cpp
+ * FileType: C++ Source File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 01/05/2020
+ * Description: Implements movement, animation, of all entities, inherits collider.
+ *****************************************************************************/
+
 #include <SFML/Graphics.hpp>
 
 #include "Entity.h"
 
-// Entity definition
+/*
+ * Entity Constructor
+ *
+ * Parameters:
+ *      texture - the texture to be rendered
+ *      window - the window to be drawn to
+ *      imagecount - the image dimensions of the texturemap
+ *      switchtime - the speed at which the animation frames switch
+ *      speed - the speed the entity moves at
+ *      tileMap - a matrix of TileType for collision
+ */
 Entity::Entity(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageCount, float switchTime, float speed, std::vector<std::vector<TileType>>* tileMap) : animation(texture, imageCount, switchTime), Collider(body, tileMap) {
     this->speed = speed;
     this->window = window;
@@ -15,11 +33,20 @@ Entity::Entity(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imag
     body.setTexture(texture);
 }
 
+/*
+ * Entity destructor
+ */
 Entity::~Entity() {
 
 }
 
-// update entity animation and movement
+/*
+ * Entity updater
+ * updates movement, updates animation.
+ *
+ * parameters:
+ *      deltaTime - determines what animation frame is to be rendered.
+ */
 void Entity::Update(float* deltaTime) {
     sf::Vector2f movement(0.0f, 0.0f);
 
@@ -29,11 +56,23 @@ void Entity::Update(float* deltaTime) {
     checkCollisionsNearBody();
 }
 
-// draw entity to window
+/*
+ * tells the window to draw the entity.
+ *
+ * Parameters:
+ *      window - the window to be drawn to
+ */
 void Entity::Draw(sf::RenderWindow* window) {
     window->draw(body);
 }
 
+/*
+ * tells the window to draw the entity taking into account the fog of war
+ *
+ * Parameters:
+ *      window - the window to be drawn to
+ *      fogOfWar - the fog of war map to determine visibility
+ */
 void Entity::Draw(sf::RenderWindow* window, const std::vector<std::vector<bool>>& fogOfWar) {
     sf::Vector2i positionOnMap = (sf::Vector2i)GetPosition() / 32;
 
@@ -47,14 +86,35 @@ void Entity::Draw(sf::RenderWindow* window, const std::vector<std::vector<bool>>
     
 }
 
+/*
+ * Sets the entity's body position
+ *
+ * Parameters:
+ *      position - the position vector pointer to set the entity position to
+ */
 void Entity::SetPosition(sf::Vector2f* position) {
     body.setPosition(*position);
 }
 
+/*
+ * Sets the entity's body position
+ *
+ * Parameters:
+ *      position - the position vector to set the entity position to
+ */
 void Entity::SetPosition(sf::Vector2f position) {
     body.setPosition(position);
 }
 
+/*
+ * Gets the euclidean distance between this entity and a position
+ *
+ * Parameter:
+ *      location - the point to get the distance to
+ *
+ * Returns:
+ *      float distance to the location
+ */
 float Entity::GetDistanceBetween(sf::Vector2f location) {
     sf::Vector2f entityPos = body.getPosition();
 
