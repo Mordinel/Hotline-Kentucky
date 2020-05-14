@@ -1,8 +1,8 @@
 #ifndef ITEMTYPE_H
 #define ITEMTYPE_H
 
-enum ItemType {
-    Ammo,
+enum class ItemType {
+    Vision,
     Speed,
     Treasure
 };

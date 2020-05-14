@@ -1,7 +1,7 @@
 #ifndef TILETYPE_H
 #define TILETYPE_H
 
-enum TileType {
+enum class TileType {
     Void,
     Unlit,
     Stairs,

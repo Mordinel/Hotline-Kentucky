@@ -99,13 +99,17 @@ void Enemy::walkAttack(sf::Vector2f& playerPos, float& xMove, float& yMove) {
     sf::Vector2f currentPos = body.getPosition();
     sf::Vector2f deltaPos = playerPos - currentPos;
 
-    if (deltaPos.x > 0) {
+    if (deltaPos.x > 0 && deltaPos.x < 16) {
+        xMove = 0;
+    } else if (deltaPos.x > 0) {
         xMove = speed;
     } else {
         xMove = speed * -1;
     }
 
-    if (deltaPos.y > 0) {
+    if (deltaPos.y > 0 && deltaPos.y < 16) {
+        yMove = 0;
+    } else if (deltaPos.y > 0) {
         yMove = speed;
     } else {
         yMove = speed * -1;
