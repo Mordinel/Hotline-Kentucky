@@ -33,6 +33,7 @@ void EnemyManager::DeleteDead() {
     int i;
     for (i = entityList.size() - 1; i >= 0; i--) {
         if ( ((Enemy*)entityList[i])->GetState() == EnemyState::Dead ) {
+            delete entityList[i];
             entityList.erase(entityList.begin() + i);
         }
     }
