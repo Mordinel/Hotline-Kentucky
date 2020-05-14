@@ -72,7 +72,8 @@ void Collider::checkCollisionsNearBody() {
  *      other - the other collider to collide with
  *      push - the amount the other collider will resist the collision
  *
- * Returns true if collision happens.
+ * Returns: 
+ *      true or false depending on if a collision happens (true if it does happen).
  */
 bool Collider::CheckCollisionCentered(Collider& other, float push) {
     sf::Vector2f thisHalfSize = GetHalfSize();   
@@ -88,7 +89,8 @@ bool Collider::CheckCollisionCentered(Collider& other, float push) {
  *      other - the other collider to collide with
  *      push - the amount the other collider will resist the collision
  *
- * Returns true if collision happens.
+ * Returns: 
+ *      true or false depending on if a collision happens (true if it does happen).
  */
 bool Collider::CheckCollision(Collider& other, float push) {
     sf::Vector2f thisHalfSize = GetHalfSize();   
@@ -107,7 +109,8 @@ bool Collider::CheckCollision(Collider& other, float push) {
  *      thisHalfSize - half of the current body size
  *      push - the amount the other collider will resist the collision
  *
- * Returns true if collision happens.
+ * Returns: 
+ *      true or false depending on if a collision happens (true if it does happen).
  */
 bool Collider::checkCollision(Collider& other, sf::Vector2f& thisPosition, sf::Vector2f& thisHalfSize, float push) {
     sf::Vector2f otherPosition = other.GetColliderPosition();   

@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Filename: Collider.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 07/05/2020
+ * Description: Handles all entity->entity collision and entity->tilemap collision.
+ *****************************************************************************/
+
 #ifndef COLLIDER_H
 #define COLLIDER_H
 
