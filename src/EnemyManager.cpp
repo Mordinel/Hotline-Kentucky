@@ -44,3 +44,21 @@ void EnemyManager::Update(float* deltaTime, sf::Vector2f playerPos) {
         ((Enemy*)entityList[i])->Update(deltaTime, playerPos);
     }
 }
+
+bool EnemyManager::CheckCollisionPlayer(Entity& ent, float push) {
+    int i;
+    bool collided = false;
+
+    for (i = 0; i < entityList.size(); i++) {
+
+        collided = entityList[i]->CheckCollisionCentered(ent, push);
+
+        if ( ((Enemy*)entityList[i])->GetType() == EnemyType::Evil) {
+            if (collided) return collided;
+        }
+
+    }
+
+    return collided;
+}
+

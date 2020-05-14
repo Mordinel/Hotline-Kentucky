@@ -40,7 +40,7 @@ public:
     Dungeon();
     ~Dungeon();
 
-    void NextDungeon();
+    void NextDungeon(bool restart);
     std::vector<Room*> GetRooms();
     std::vector<std::vector<TileType>> GenMap();
     sf::Vector2f GetExitLocation();

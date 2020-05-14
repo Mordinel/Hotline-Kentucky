@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "Entity.h"
 #include "EnemyState.h"
+#include "EnemyType.h"
 
 class EnemyManager : public EntityManager {
     public:
@@ -16,6 +17,7 @@ class EnemyManager : public EntityManager {
         bool Shoot(sf::RectangleShape& rect);
         void DeleteDead();
         void Update(float* deltaTime, sf::Vector2f playerPos);
+        bool CheckCollisionPlayer(Entity& ent, float push);
 };
 
 #endif

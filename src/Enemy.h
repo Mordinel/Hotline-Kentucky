@@ -30,6 +30,10 @@ public:
     EnemyState GetState() {
         return this->state;
     }
+
+    EnemyType GetType() {
+        return this->type;
+    }
 };
 
 #endif

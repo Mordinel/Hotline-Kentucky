@@ -117,9 +117,15 @@ void Dungeon::clearRooms() {
     }
 }
 
-void Dungeon::NextDungeon() {
+void Dungeon::NextDungeon(bool reset) {
     clearRooms();
-    roomCount += ROOM_INCREASE;
+
+    if (reset) {
+        roomCount = INITIAL_ROOM_COUNT;
+    } else {
+        roomCount += ROOM_INCREASE;
+    }
+
     genRooms(roomCount);
     translateRooms();
 }

@@ -106,6 +106,8 @@ void GameManager::SpawnThings() {
 }
 
 void GameManager::Update(float deltaTime) {
+    bool newGame = false;
+
     window->setView(view); // For logic dependant on knowing where things are relative to the screen such as the mouse.
 
     handleWindowEvents();
@@ -121,7 +123,7 @@ void GameManager::Update(float deltaTime) {
     enemyManager->DeleteDead();
     enemyManager->Update(&deltaTime, player->GetPosition());
     enemyManager->CollideWithEntities();
-    enemyManager->CheckCollision(*player, 0.5f);
+    newGame = enemyManager->CheckCollisionPlayer(*player, 0.4f);
 
     // Update view
     sf::Vector2f viewSize(window->getSize().x, window->getSize().y);
@@ -131,10 +133,10 @@ void GameManager::Update(float deltaTime) {
     sf::RectangleShape newRect;
     newRect.setSize(exitRect.getSize());
     newRect.setPosition(exitRect.getPosition() - (exitRect.getSize() / 2.0f));
-    // Has player reached the exit?
-    if (player->CheckCollision(newRect, 0.0f)) {
-        levelCount++;
-        dungeon.NextDungeon();
+    // Has player reached the exit or died?
+    if (player->CheckCollision(newRect, 0.0f) || newGame) {
+        newGame ? levelCount = 1 : levelCount++;
+        dungeon.NextDungeon(newGame);
         Init(); // Re-Initialize
     }
 }
