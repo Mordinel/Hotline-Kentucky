@@ -18,6 +18,7 @@ class EnemyManager : public EntityManager {
         void DeleteDead();
         void Update(float* deltaTime, sf::Vector2f playerPos);
         bool CheckCollisionPlayer(Entity& ent, float push);
+        std::vector<Enemy*>* GetDead();
 };
 
 #endif

@@ -29,6 +29,19 @@ bool EnemyManager::Shoot(sf::RectangleShape& rect) {
     return false;
 }
 
+std::vector<Enemy*>* EnemyManager::GetDead() {
+    int i;
+    std::vector<Enemy*>* dead = new std::vector<Enemy*>();
+
+    for (i = entityList.size() - 1; i >= 0; i--) {
+        if ( ((Enemy*)entityList[i])->GetState() == EnemyState::Dead ) {
+            dead->push_back((Enemy*)entityList[i]);
+        }
+    }
+
+    return dead;
+}
+
 void EnemyManager::DeleteDead() {
     int i;
     for (i = entityList.size() - 1; i >= 0; i--) {

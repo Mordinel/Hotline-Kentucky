@@ -71,6 +71,7 @@ GameManager::~GameManager() {
     delete coinTexture;
     delete speedTexture;
     delete visibilityTexture;
+    delete itemManager;
 }
 
 void GameManager::Init() {
@@ -169,6 +170,7 @@ void GameManager::spawnItems() {
 }
 
 void GameManager::Update(float deltaTime) {
+    int i;
     bool newGame = false;
 
     window->setView(view); // For logic dependant on knowing where things are relative to the screen such as the mouse.
@@ -182,8 +184,27 @@ void GameManager::Update(float deltaTime) {
     tileMap->CastLight(playerPos.x, playerPos.y, increaseVision);
     fogOfWar = tileMap->LitMaskToFogOfWar();
 
-    //gun->SetLineCoordinates(playerPos, relativeCursorPos);
     gun->Update(&deltaTime);
+
+    std::vector<Enemy*>* dead = enemyManager->GetDead();
+
+    for (i = 0; i < dead->size(); i++) {
+        switch ((*dead)[i]->GetType()) {
+            case EnemyType::Good:
+                score -= 500;
+                break;
+            case EnemyType::Evil:
+                score += 50;
+                break;
+            case EnemyType::Mecha:
+                score += 150;
+                break;
+        }
+        std::cout << "Score: " << score << std::endl;
+    }
+
+    delete dead;
+
     enemyManager->DeleteDead();
     enemyManager->Update(&deltaTime, player->GetPosition());
     enemyManager->CollideWithEntities();
