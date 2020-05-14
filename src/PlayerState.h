@@ -9,7 +9,7 @@
 #ifndef PLAYERSTATE_H
 #define PLAYERSTATE_H
 
-enum PlayerState {
+enum class PlayerState {
     Normal,
     IncreasedVision,
     IncreasedSpeed,
