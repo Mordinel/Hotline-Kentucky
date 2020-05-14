@@ -14,7 +14,7 @@
 
 #include "Entity.h"
 
-#define HALF_OFFSET 0.5f
+#define PUSH_BACK_VALUE 0.5f
 
 class EntityManager {
 protected:
