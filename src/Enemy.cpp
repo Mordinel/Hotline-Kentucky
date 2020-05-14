@@ -1,5 +1,25 @@
+/******************************************************************************
+ * Filename: Enemy.cpp
+ * FileType: C++ Source File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 10/04/2020
+ * Description: Class representing an enemy in the game
+ *****************************************************************************/
+
 #include "Enemy.h"
 
+/*
+ * Enemy Constructor
+ *
+ * Parameters:
+ *      texture - the texture for the enemy
+ *      window - the window the enemy will be drawn to
+ *      imageCount - the image count of the texture
+ *      switchTime - the speed of the animation transitions
+ *      speed - the speed of the enemy
+ *      tileMap - a matrix of tileTypes
+ *      itemType- the type of item
+ */
 Enemy::Enemy(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageCount, float switchTime, float speed, std::vector<std::vector<TileType>>* tileMap, EnemyType type) : Entity(texture, window, imageCount, switchTime, speed, tileMap) {
     state = EnemyState::Wander;
     lastMovement = sf::Vector2f(0.0f, 0.0f);
@@ -10,10 +30,20 @@ Enemy::Enemy(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageC
     }
 }
 
+/*
+ * Sets the enemy's state to dead
+ */
 void Enemy::Die() {
     this->state = EnemyState::Dead;
 }
 
+/*
+ * Updates the enemy
+ *
+ * Parameters:
+ *      deltaTime - time passed since last game loop
+ *      playerPos - the position of the player used for the "AI"
+ */
 void Enemy::Update(float* deltaTime, sf::Vector2f playerPos) {
     float xMove = 0.0f;
     float yMove = 0.0f;
@@ -63,6 +93,14 @@ void Enemy::Update(float* deltaTime, sf::Vector2f playerPos) {
     checkCollisionsNearBody();
 }
 
+/*
+ * Updates the mecha type enemy
+ *
+ * Parameters:
+ *      playerPos - the position of the player
+ *      xMove - the amount the enemy should move in the x direction
+ *      yMove - the amount the enemy should move in the y direction
+ */
 void Enemy::mechaUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove) {
     if (GetDistanceBetween(playerPos) < AGGRO_DISTANCE * 32.0f) {
         state = EnemyState::Attack;
@@ -75,6 +113,14 @@ void Enemy::mechaUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove) {
     }
 }
 
+/*
+ * Updates the evil type enemy
+ *
+ * Parameters:
+ *      playerPos - the position of the player
+ *      xMove - the amount the enemy should move in the x direction
+ *      yMove - the amount the enemy should move in the y direction
+ */
 void Enemy::evilUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove) {
     if (GetDistanceBetween(playerPos) < AGGRO_DISTANCE * 32.0f) {
         state = EnemyState::Attack;
@@ -87,12 +133,27 @@ void Enemy::evilUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove) {
     }
 }
 
+/*
+ * Updates the good type enemy
+ *
+ * Parameters:
+ *      xMove - the amount the enemy should move in the x direction
+ *      yMove - the amount the enemy should move in the y direction
+ */
 void Enemy::goodUpdate(float& xMove, float& yMove) {
     if (state == EnemyState::Wander) {
         wander(xMove, yMove);
     }
 }
 
+
+/*
+ * Makes the enemy wander in a random direction
+ *
+ * Parameters:
+ *      xMove - the amount the enemy should move in the x direction
+ *      yMove - the amount the enemy should move in the y direction
+ */
 void Enemy::wander(float& xMove, float& yMove) {
      if (std::rand() % 10 == 1) {
         int xDirection = std::rand() % 2;
@@ -111,6 +172,13 @@ void Enemy::wander(float& xMove, float& yMove) {
     }   
 }
 
+/*
+ * Updates the good type enemy
+ *
+ * Parameters:
+ *      xMove - the amount the enemy should move in the x direction
+ *      yMove - the amount the enemy should move in the y direction
+ */
 void Enemy::walkAttack(sf::Vector2f& playerPos, float& xMove, float& yMove) {
     sf::Vector2f currentPos = body.getPosition();
     sf::Vector2f deltaPos = playerPos - currentPos;
