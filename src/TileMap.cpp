@@ -1,5 +1,21 @@
+/******************************************************************************
+ * Filename: TileMap.cpp
+ * FileType: C++ Source File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 06/05/2020
+ * Description: Handles drawing of the tile map + casting light
+ *****************************************************************************/
+
 #include "TileMap.h"
 
+/*
+ * Constructor for the TileMap Class
+ *
+ * Parameters:
+ *      startTiles - The initial tile map
+ *      startTileSize - the size of the tiles in pixels
+ *      startTileSet - the tile set texture
+ */
 TileMap::TileMap(std::vector<std::vector<TileType>> startTiles, int startTileSize, sf::Texture startTileset)
 {
     litMask = startTiles;
@@ -12,8 +28,14 @@ TileMap::TileMap(std::vector<std::vector<TileType>> startTiles, int startTileSiz
 	init();
 }
 
+/*
+ * Destructor for the TileMap class
+ */
 TileMap::~TileMap(){}
 
+/*
+ * Method to initialize the tile map both from constructor and re-initializing later
+ */
 void TileMap::init()
 {
     height = tiles.size();
@@ -31,6 +53,9 @@ void TileMap::init()
     load();
 }
 
+/*
+ * Sets the texture positions of each vertex in each quad so the GPU can render the tile map.
+ */
 void TileMap::load()
 {
 	for (int i = 0; i < height; i++)
@@ -63,6 +88,9 @@ void TileMap::load()
 	}
 }
 
+/*
+ * Sets up a new tile map based on a new set of tiles
+ */
 void TileMap::SetTiles(std::vector<std::vector<TileType>> newTiles)
 {
 	tiles = newTiles;
@@ -70,7 +98,14 @@ void TileMap::SetTiles(std::vector<std::vector<TileType>> newTiles)
 
     init();
 }
-
+/*
+ * Uses ray casting to figure out which tiles should be visible to the player.
+ * 
+ * Parameters:
+ *      playerX - the players x position
+ *      playerY - the players y position
+ *      increasedDistance - Whether the ray casts distance should be increased
+ */
 void TileMap::CastLight(float playerX, float playerY, bool increasedDistance) {
     int i;
     int j;
@@ -154,6 +189,12 @@ void TileMap::CastLight(float playerX, float playerY, bool increasedDistance) {
     load();
 }
 
+/*
+ * Creates a boolean fog of war map based on what's visible to the player.
+ * 
+ * Returns:
+ *      A matrix of boolean values that represent whether a tile is visible or not to the player.
+ */
 std::vector<std::vector<bool>> TileMap::LitMaskToFogOfWar() {
     std::vector<std::vector<bool>> fogOfWar;
 

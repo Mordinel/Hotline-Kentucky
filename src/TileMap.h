@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Filename: TileMap.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 06/05/2020
+ * Description: Handles drawing of the tile map + casting light
+ *****************************************************************************/
+
 #ifndef TILEMAP_H
 #define TILEMAP_H
 
