@@ -115,7 +115,7 @@ void EntityManager::CollideWithEntities() {
             if (i == j) continue;
 
             Entity* tmpEnt = entityList[j];
-            entityList[i]->CheckCollisionCentered(*tmpEnt, 0.5f);
+            entityList[i]->CheckCollisionCentered(*tmpEnt, PUSH_BACK_VALUE);
         }
     }
 }

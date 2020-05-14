@@ -17,6 +17,10 @@
 #include "EnemyType.h"
 
 #define AGGRO_DISTANCE 12.0f
+#define CHASE_THRESHOLD 16.0f
+#define MECHA_SIZE 48.0f
+#define TILE_SIZE 32.0f
+#define WANDER_CHANCE 10
 
 class Enemy : public Entity {
 private:

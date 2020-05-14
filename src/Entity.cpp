@@ -27,7 +27,7 @@ Entity::Entity(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imag
     Next = nullptr;
     row = 0;
 
-    body.setSize(sf::Vector2f(32.0f, 32.0f));
+    body.setSize(sf::Vector2f(TILE_SIZE, TILE_SIZE));
     body.setOrigin(body.getSize() / 2.0f);
     body.setPosition(window->getSize().x / 2.0f, window->getSize().y / 2.0f);
     body.setTexture(texture);
@@ -74,7 +74,7 @@ void Entity::Draw(sf::RenderWindow* window) {
  *      fogOfWar - the fog of war map to determine visibility
  */
 void Entity::Draw(sf::RenderWindow* window, const std::vector<std::vector<bool>>& fogOfWar) {
-    sf::Vector2i positionOnMap = (sf::Vector2i)GetPosition() / 32;
+    sf::Vector2i positionOnMap = (sf::Vector2i)GetPosition() / TILE_SIZE_INT;
 
     // Tests edge case where entity might be in the "real" void causing a crash.
     if (positionOnMap.x > 0 && positionOnMap.x < fogOfWar[0].size() &&  positionOnMap.y > 0 && positionOnMap.y < fogOfWar.size()) {

@@ -26,7 +26,7 @@ Enemy::Enemy(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageC
     this->type = type;
 
     if (type == EnemyType::Mecha) {
-        body.setSize(sf::Vector2f(48.0f, 48.0f));
+        body.setSize(sf::Vector2f(MECHA_SIZE, MECHA_SIZE));
     }
 }
 
@@ -102,7 +102,7 @@ void Enemy::Update(float* deltaTime, sf::Vector2f playerPos) {
  *      yMove - the amount the enemy should move in the y direction
  */
 void Enemy::mechaUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove) {
-    if (GetDistanceBetween(playerPos) < AGGRO_DISTANCE * 32.0f) {
+    if (GetDistanceBetween(playerPos) < AGGRO_DISTANCE * TILE_SIZE) {
         state = EnemyState::Attack;
     }
 
@@ -122,7 +122,7 @@ void Enemy::mechaUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove) {
  *      yMove - the amount the enemy should move in the y direction
  */
 void Enemy::evilUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove) {
-    if (GetDistanceBetween(playerPos) < AGGRO_DISTANCE * 32.0f) {
+    if (GetDistanceBetween(playerPos) < AGGRO_DISTANCE * TILE_SIZE) {
         state = EnemyState::Attack;
     }
 
@@ -155,7 +155,7 @@ void Enemy::goodUpdate(float& xMove, float& yMove) {
  *      yMove - the amount the enemy should move in the y direction
  */
 void Enemy::wander(float& xMove, float& yMove) {
-     if (std::rand() % 10 == 1) {
+     if (std::rand() % WANDER_CHANCE == 1) {
         int xDirection = std::rand() % 2;
         int yDirection = std::rand() % 2;
 
@@ -183,7 +183,7 @@ void Enemy::walkAttack(sf::Vector2f& playerPos, float& xMove, float& yMove) {
     sf::Vector2f currentPos = body.getPosition();
     sf::Vector2f deltaPos = playerPos - currentPos;
 
-    if (deltaPos.x > 0 && deltaPos.x < 16) {
+    if (deltaPos.x > 0 && deltaPos.x < CHASE_THRESHOLD) {
         xMove = 0;
     } else if (deltaPos.x > 0) {
         xMove = speed;
@@ -191,7 +191,7 @@ void Enemy::walkAttack(sf::Vector2f& playerPos, float& xMove, float& yMove) {
         xMove = speed * -1;
     }
 
-    if (deltaPos.y > 0 && deltaPos.y < 16) {
+    if (deltaPos.y > 0 && deltaPos.y < CHASE_THRESHOLD) {
         yMove = 0;
     } else if (deltaPos.y > 0) {
         yMove = speed;
