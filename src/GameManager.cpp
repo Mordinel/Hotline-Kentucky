@@ -340,6 +340,7 @@ void GameManager::Update(float deltaTime) {
     newRect.setSize(exitRect.getSize());
     newRect.setPosition(exitRect.getPosition() - (exitRect.getSize() / 2.0f));
 
+<<<<<<< HEAD
     // Has player died?
     if (newGame) {
         gameState = GameState::Over;
@@ -347,6 +348,15 @@ void GameManager::Update(float deltaTime) {
     // Has player reached the exit or died?
     if (player->CheckCollision(newRect, 0.0f)) {
         levelCount++;
+=======
+        if (newGame) {
+            levelCount = 1;
+            score = 0;
+
+        } else {
+            levelCount++;
+        }
+>>>>>>> db6217af85b9a713b6dd1601875d9e25d9dc6f33
 
         dungeon.NextDungeon(false);
         Init(); // Re-Initialize

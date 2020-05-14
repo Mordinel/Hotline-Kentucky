@@ -17,7 +17,7 @@
 
 #define LINE_VERTEX_COUNT 2
 #define FIRE_ANIMATION_LEN 0.1f
-#define TRACER_SIZE 4.0f, 4.0f
+#define TRACER_SIZE 0.0f, 0.0f
 #define TILE_FACTOR 32
 
 class Gun : public sf::Drawable {

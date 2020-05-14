@@ -23,7 +23,7 @@ int main()
     std::srand(random_seed);
 
     // Creates the game window
-    sf::RenderWindow window(sf::VideoMode(RESOLUTION_DEV), "Hotline Kentucky", STYLES_DEV);
+    sf::RenderWindow window(sf::VideoMode(RESOLUTION_PROD), "Hotline Kentucky", STYLES_PROD);
     window.setVerticalSyncEnabled(true);
 
     // Creates the viewport of the game world
