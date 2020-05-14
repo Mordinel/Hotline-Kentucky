@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Filename: ItemManager.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 11/05/2020
+ * Description: Manages a collection of items
+ *****************************************************************************/
+
 #ifndef ITEMMANAGER_H
 #define ITEMMANAGER_H
 
