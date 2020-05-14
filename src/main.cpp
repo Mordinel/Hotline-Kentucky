@@ -9,6 +9,12 @@
 #include <SFML/Graphics.hpp>
 #include "GameManager.h"
 
+#define RESOLUTION_PROD 1920, 1080 
+#define STYLES_PROD sf::Style::None | sf::Style::Fullscreen
+
+#define RESOLUTION_DEV 1600, 900
+#define STYLES_DEV sf::Style::Titlebar | sf::Style::Close
+
 const unsigned int random_seed = static_cast<unsigned int>(time(NULL));
 
 int main()
@@ -17,7 +23,7 @@ int main()
     std::srand(random_seed);
 
     // Creates the game window
-    sf::RenderWindow window(sf::VideoMode(1600, 900), "Hotline Kentucky", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(RESOLUTION_DEV), "Hotline Kentucky", STYLES_DEV);
     window.setVerticalSyncEnabled(true);
 
     // Creates the viewport of the game world
