@@ -9,13 +9,21 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#define POWER_UP_TIME 20
-#define SPEED_BOOST 1.5f
-
 #include <SFML/Graphics.hpp>
 
 #include "Entity.h"
 #include "PlayerState.h"
+
+#define POWER_UP_TIME 20
+#define SPEED_BOOST 1.5f
+#define WEST_MOVING 0
+#define EAST_MOVING 1
+#define NORTH_MOVING 2
+#define SOUTH_MOVING 3
+#define WEST_IDLE 4
+#define EAST_IDLE 5
+#define NORTH_IDLE 6
+#define SOUTH_IDLE 7
 
 // define Player as child of entity
 class Player : public Entity {

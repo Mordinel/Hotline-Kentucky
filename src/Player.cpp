@@ -65,23 +65,23 @@ void Player::Update(float* deltaTime) {
     if (movement.x == 0.0f && movement.y == 0.0f) { // idle
 
         if (lastMovement.x < 0.0f) {
-            row = 4;
+            row = WEST_IDLE;
         } else if (lastMovement.x > 0.0f) {
-            row = 5;
+            row = EAST_IDLE;
         } else if (lastMovement.y < 0.0f) {
-            row = 6;
+            row = NORTH_IDLE;
         } else if (lastMovement.y > 0.0f) {
-            row = 7;
+            row = SOUTH_IDLE;
         }
         
     } else if (movement.x < 0.0f) { // west
-        row = 0;
+        row = WEST_MOVING;
     } else if (movement.x > 0.0f) { // east
-        row = 1;
+        row = EAST_MOVING;
     } else if (movement.y < 0.0f) { // north
-        row = 2;
+        row = NORTH_MOVING;
     } else if (movement.y > 0.0f) { // south
-        row = 3;
+        row = SOUTH_MOVING;
     }
 
     lastMovement.x = movement.x;
