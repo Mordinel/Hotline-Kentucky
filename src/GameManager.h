@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Filename: GameManager.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 12/05/2020
+ * Description: Handles game flow, ties all classes together.
+ *****************************************************************************/
+
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 

@@ -1,5 +1,22 @@
+/******************************************************************************
+ * Filename: GameManager.cpp
+ * FileType: C++ Source File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 12/05/2020
+ * Description: Handles game flow, ties all classes together.
+ *****************************************************************************/
+
 #include "GameManager.h"
 
+/*
+ * GameManager Constructor
+ *
+ * Parameters:
+ *      startWindow - Window to draw all graphics to.
+ *      startView - view to follow player
+ *      playerTex - player texture map
+ *      startFont - text font.
+ */
 GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::Texture* playerTex, sf::Font startFont) {
     window = startWindow;
     
@@ -12,6 +29,7 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
 
     font = startFont;
 
+    // set text fonts
     levelText.setFont(font);
     levelText.setFillColor(sf::Color::White);
     levelText.setCharacterSize(TEXT_SIZE);
@@ -68,6 +86,11 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
     Init();
 }
 
+/*
+ * Gamemanager destructor
+ *
+ * Destroys all heap pointers owned by this class.
+ */
 GameManager::~GameManager() {
     delete tileMap;
     delete player;
@@ -82,6 +105,10 @@ GameManager::~GameManager() {
     delete itemManager;
 }
 
+/*
+ * Called on initialization of each new dungeon
+ * Sets player to starting room, spawns enemies and items.
+ */
 void GameManager::Init() {
     map = dungeon.GenMap();
     rooms = dungeon.GetRooms();
@@ -106,12 +133,17 @@ void GameManager::Init() {
     spawnItems();
 }
 
+/*
+ * Spawns enemies in the current dungeon.
+ */
 void GameManager::spawnEnemies() {
     int i;
     int j;
     int chickens;
 
+    // for each room
     for (i = 1; i < rooms.size() - 1; i++) {
+        // add chickens up to 40 per room
         chickens = std::rand() % 40 + 1;
         for(j = 0; j < chickens; j++) {
 
@@ -119,21 +151,30 @@ void GameManager::spawnEnemies() {
 
             Enemy* tmpEnemy;
 
+            // 8 / 50 will be good
             if (randomVal >= 2 && randomVal <= 10) {
                 tmpEnemy = new Enemy(goodTexture, window, sf::Vector2u(8, 8), 0.2f, 1.4f, &map, EnemyType::Good);
+            // 2 / 50 will be mecha
             } else if (randomVal >= 0 && randomVal < 2) {
                 tmpEnemy = new Enemy(mechaTexture, window, sf::Vector2u(8, 8), 0.3f, 5.0f, &map, EnemyType::Mecha);
+            // the rest will be evil (normal enemies)
             } else {
                 tmpEnemy = new Enemy(evilTexture, window, sf::Vector2u(8, 8), 0.2f, 1.4f, &map, EnemyType::Evil);
             }
 
+            // place it within the room
             sf::Vector2f spawnLocation = getRandomLocationInRoom(rooms[i]);
             tmpEnemy->SetPosition(spawnLocation);
+
+            // add it to the EnemyManager
             enemyManager->Append(tmpEnemy);
         }
     }   
 }
 
+/*
+ * Spawns powerups and coins in the rooms
+ */
 void GameManager::spawnItems() {
     // Spawn Power Ups
     for (int i = 0; i < rooms.size(); i++) {
@@ -173,6 +214,15 @@ void GameManager::spawnItems() {
     }
 }
 
+/*
+ * Gets random location in a room
+ *
+ * Parameters:
+ *      room - pointer to room to get location within
+ *
+ * Returns:
+ *      position inside the room
+ */
 sf::Vector2f GameManager::getRandomLocationInRoom(Room* room) {
     int xPos, yPos;
 
@@ -182,6 +232,12 @@ sf::Vector2f GameManager::getRandomLocationInRoom(Room* room) {
     return sf::Vector2f(xPos, yPos);
 }
 
+/*
+ * Updates game entities, lighting, handles window events, computes scores, ends rounds and starts new games.
+ *
+ * Parameters:
+ *      deltaTime - passed into update functions for animation speed and movement speed regulation.
+ */
 void GameManager::Update(float deltaTime) {
     int i;
     bool newGame = false;
@@ -199,8 +255,8 @@ void GameManager::Update(float deltaTime) {
 
     gun->Update(&deltaTime);
 
+    // change the score based on dead enemies
     std::vector<Enemy*>* dead = enemyManager->GetDead();
-
     for (i = 0; i < dead->size(); i++) {
         switch ((*dead)[i]->GetType()) {
             case EnemyType::Good:
@@ -214,17 +270,20 @@ void GameManager::Update(float deltaTime) {
                 break;
         }
     }
-
     delete dead;
 
+    // call enemyManager functions
     enemyManager->DeleteDead();
     enemyManager->Update(&deltaTime, player->GetPosition());
     enemyManager->CollideWithEntities();
     newGame = enemyManager->CheckCollisionPlayer(*player, 0.4f);
 
+    // call itemManager functions
     itemManager->DeleteConsumed();
     itemManager->Update(&deltaTime);
     ItemType pickedUpItem = itemManager->CheckCollisionPlayer(*player);
+
+    // score or apply perks based on the item picked up.
     switch (pickedUpItem) {
         case ItemType::Coin:
             score += 100;
@@ -237,9 +296,11 @@ void GameManager::Update(float deltaTime) {
             break;
     }
 
+    // sets the score string
     scoreString = "Score: " + std::to_string(score);
     scoreText.setString(scoreString);
 
+    // sets the perk string based on the current active perk
     switch (player->GetState()) {
         case PlayerState::IncreasedVision:
             powerupString = "Increased Vision";
@@ -276,16 +337,25 @@ void GameManager::Update(float deltaTime) {
     }
 }
 
+/*
+ * Calls drawing functions of game objects and other things needed to be drawn.
+ */
 void GameManager::Draw() {
+    // clear the window and draw the tilemap
     window->clear(BACKGROUND_COLOR);
     window->draw(*tileMap);
     window->draw(*gun);
+
+    // draw enemies and items based on the fog of war
     enemyManager->Draw(window, fogOfWar);
     itemManager->Draw(window, fogOfWar);
+
     player->Draw(window);
 
+    // set the window view
     window->setView(window->getDefaultView());
 
+    // set the location of and draw the text to the window
     levelText.setPosition(TEXT_LOCATION);
     scoreText.setPosition(TEXT_LOCATION + TEXT_SIZE);
     powerupText.setPosition(TEXT_LOCATION + (TEXT_SIZE * 2));
@@ -294,32 +364,44 @@ void GameManager::Draw() {
     window->draw(scoreText);
     window->draw(powerupText);
 
+    // display all changes made
     window->display();
 }
 
+/*
+ * Handles window input events
+ */
 void GameManager::handleWindowEvents() {
     sf::Event evnt;
 
     while (window->pollEvent(evnt)) {
         switch(evnt.type) {
-            case sf::Event::Closed:
+            case sf::Event::Closed:                 // window closed (alt + f4, click the X in the corner etc)
                 window->close();
                 break;
-            case sf::Event::MouseWheelMoved:
+            case sf::Event::MouseWheelMoved:        // mouse wheel scroll
                 setViewZoom(evnt.mouseWheel.delta);
                 break;
-            case sf::Event::MouseButtonPressed:
-                sf::Vector2i cursorPos = sf::Mouse::getPosition(*window); 
-                sf::Vector2f relativeCursorPos = window->mapPixelToCoords(cursorPos);
-                sf::Vector2f playerPos = player->GetPosition();
-                gun->SetLineCoordinates(player->GetPosition(), relativeCursorPos);
-                gun->Fire(playerPos, relativeCursorPos, window);
+            case sf::Event::MouseButtonPressed:     // mousebutton clicks
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                    sf::Vector2i cursorPos = sf::Mouse::getPosition(*window); 
+                    sf::Vector2f relativeCursorPos = window->mapPixelToCoords(cursorPos);
+                    sf::Vector2f playerPos = player->GetPosition();
+                    gun->SetLineCoordinates(player->GetPosition(), relativeCursorPos);
+                    gun->Fire(playerPos, relativeCursorPos, window);
+                }
                 break;
 
         }
     } 
 }
 
+/*
+ * sets the view resolution, limiting the zoom in the process.
+ *
+ * Parameters:
+ *      mouseDelta - the direction of the mouse scroll wheel.
+ */
 void GameManager::setViewZoom(int mouseDelta) {
     if (mouseDelta < 0) {
         viewZoom += ZOOM_INCREMENTS;
