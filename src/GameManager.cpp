@@ -84,17 +84,17 @@ void GameManager::SpawnThings() {
     int chickens;
 
     for (i = 1; i < rooms.size() - 1; i++) {
-        chickens = std::rand() % 30 + 1;
+        chickens = std::rand() % 50 + 1;
         for(j = 0; j < chickens; j++) {
 
             int randomVal = std::rand() % 50;
 
             Enemy* tmpEnemy;
 
-            if (randomVal >= 0 && randomVal <= 15) {
-                tmpEnemy = new Enemy(goodTexture, window, sf::Vector2u(8, 8), 0.125f, 2.6f, &map, EnemyType::Good);
+            if (randomVal >= 0 && randomVal <= 10) {
+                tmpEnemy = new Enemy(goodTexture, window, sf::Vector2u(8, 8), 0.2f, 1.4f, &map, EnemyType::Good);
             } else {
-                tmpEnemy = new Enemy(evilTexture, window, sf::Vector2u(8, 8), 0.125f, 2.6f, &map, EnemyType::Evil);
+                tmpEnemy = new Enemy(evilTexture, window, sf::Vector2u(8, 8), 0.2f, 1.4f, &map, EnemyType::Evil);
             }
 
             sf::Vector2f tmpSpawn = rooms[i]->GetCenter();

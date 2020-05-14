@@ -8,7 +8,7 @@
 #include "EnemyState.h"
 #include "EnemyType.h"
 
-#define AGGRO_DISTANCE (16.0f * 32.0f)
+#define AGGRO_DISTANCE 12.0f
 
 class Enemy : public Entity {
 private:

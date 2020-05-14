@@ -198,9 +198,9 @@ std::vector<std::vector<TileType>> Dungeon::GenMap() {
         path.Right = (toPos.x > fromPos.x) ? toPos.x : fromPos.x;
 
         path.Top -= 1;
-        //path.Bottom += 1;
+        path.Bottom += 1;
         path.Left -= 1;
-        //path.Right += 1;
+        path.Right += 1;
 
         // fill with floor
         for (j = path.Top; j <= path.Bottom; j++) {
