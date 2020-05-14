@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Filename: Player.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 01/05/2020
+ * Description: Handles movement of player and player interaction with the tilemap.
+ *****************************************************************************/
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -9,7 +17,7 @@
 #include "Entity.h"
 #include "PlayerState.h"
 
-// define PLayer as child of entity and Collider
+// define Player as child of entity
 class Player : public Entity {
 public:
     Player(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageCount, float switchTime, float speed, std::vector<std::vector<TileType>>* tileMap);
