@@ -12,6 +12,7 @@ void ItemManager::Draw(sf::RenderWindow* window, const std::vector<std::vector<b
 void ItemManager::DeleteConsumed() {
     for (int i = 0; i < entityList.size(); i++) {
         if (((Item*)entityList[i])->GetConsumed() == true) {
+            delete entityList[i];
             entityList.erase(entityList.begin() + i);
         }
     }

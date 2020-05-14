@@ -37,9 +37,14 @@ void Entity::Draw(sf::RenderWindow* window) {
 void Entity::Draw(sf::RenderWindow* window, const std::vector<std::vector<bool>>& fogOfWar) {
     sf::Vector2i positionOnMap = (sf::Vector2i)GetPosition() / 32;
 
-    if (fogOfWar[positionOnMap.y][positionOnMap.x]) {
-        window->draw(body);
+    // Tests edge case where entity might be in the "real" void causing a crash.
+    if (positionOnMap.x > 0 && positionOnMap.x < fogOfWar[0].size() &&  positionOnMap.y > 0 && positionOnMap.y < fogOfWar.size()) {
+        // Only draw if in a visible portion of fog of war
+        if (fogOfWar[positionOnMap.y][positionOnMap.x]) {
+            window->draw(body);
+        }
     }
+    
 }
 
 void Entity::SetPosition(sf::Vector2f* position) {
