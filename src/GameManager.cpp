@@ -55,7 +55,7 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
 
     gun = new Gun(&map, enemyManager);
 
-    
+    score = 0;
 
     Init();
 }
@@ -95,8 +95,6 @@ void GameManager::Init() {
 
     spawnThings();
     spawnItems();
-
-    score = 0;
 }
 
 void GameManager::spawnThings() {
@@ -219,6 +217,7 @@ void GameManager::Update(float deltaTime) {
     if (player->CheckCollision(newRect, 0.0f) || newGame) {
         newGame ? levelCount = 1 : levelCount++;
         dungeon.NextDungeon(newGame);
+        score = 0;
         Init(); // Re-Initialize
     }
 }
