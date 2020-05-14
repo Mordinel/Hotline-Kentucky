@@ -17,6 +17,7 @@
 #include "Item.h"
 #include "ItemType.h"
 #include "EnemyType.h"
+#include "PlayerState.h"
 
 #define TILE_SIZE 32.0f
 #define CHICKEN_ANIMATION_SIZE 8

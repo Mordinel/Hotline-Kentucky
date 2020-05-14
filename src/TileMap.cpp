@@ -72,7 +72,7 @@ void TileMap::SetTiles(std::vector<std::vector<TileType>> newTiles)
     init();
 }
 
-void TileMap::CastLight(float playerX, float playerY) {
+void TileMap::CastLight(float playerX, float playerY, bool increasedDistance) {
     int i;
     int j;
     float x;
@@ -80,6 +80,12 @@ void TileMap::CastLight(float playerX, float playerY) {
     float y;
     float oy;
     float d;
+    int distance;
+    
+    distance = VIEW_DISTANCE;
+    if (increasedDistance) {
+        distance *= 2;
+    }
 
     TileType newTile;
 
@@ -116,7 +122,7 @@ void TileMap::CastLight(float playerX, float playerY) {
         oy = playerY;
 
         // walk the ray from the player, setting each tile to be lit until a wall or the limit is reached.
-        for (j = 0; j < VIEW_DISTANCE; j++) {
+        for (j = 0; j < distance; j++) {
 
             // if the tile exceeds the bounds,  break
             if ((int)oy >= height || (int)ox >= width) {

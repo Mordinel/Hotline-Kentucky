@@ -42,7 +42,7 @@ public:
 	~TileMap();
 
 	void SetTiles(std::vector<std::vector<TileType>> newTiles);
-    void CastLight(float playerX, float playerY);
+    void CastLight(float playerX, float playerY, bool increasedVision);
 	std::vector<std::vector<bool>> LitMaskToFogOfWar();
 	
 };
