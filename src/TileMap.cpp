@@ -1,5 +1,4 @@
 #include "TileMap.h"
-#include <cmath>
 
 TileMap::TileMap(std::vector<std::vector<TileType>> startTiles, int startTileSize, sf::Texture startTileset)
 {
