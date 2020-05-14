@@ -27,6 +27,7 @@
 #include "EnemyType.h"
 #include "PlayerState.h"
 #include "ItemManager.h"
+#include "GameState.h"
 
 #define TILE_SIZE 32.0f
 #define CHICKEN_ANIMATION_SIZE 8
@@ -71,9 +72,11 @@ private:
     sf::Text levelText;
     sf::Text scoreText;
     sf::Text powerupText;
+    sf::Text lossText;
     std::string levelString;
     std::string scoreString;
     std::string powerupString;
+    std::string lossString;
     float viewZoom;
     Dungeon dungeon;
     int levelCount;
@@ -93,6 +96,7 @@ private:
     sf::Texture* visibilityTexture;
     Gun* gun;
     int score;
+    GameState gameState;
 
     void handleWindowEvents();
     void setViewZoom(int mouseDelta);

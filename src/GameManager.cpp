@@ -42,6 +42,15 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
     powerupText.setFillColor(sf::Color::White);
     powerupText.setCharacterSize(TEXT_SIZE);
 
+    lossText.setFont(font);
+    lossText.setFillColor(sf::Color::White);
+    lossText.setCharacterSize(TEXT_SIZE);
+    lossString = "You died! Press SPACEBAR to restart.";
+    lossText.setString(lossString);
+    int lossTextXPos = (window->getSize().x / 2) - (lossText.getLocalBounds().width / 2);
+    int lossTextYPos = (window->getSize().y / 2) - (TEXT_SIZE  / 2);
+    lossText.setPosition(lossTextXPos, lossTextYPos);
+
     levelCount = 1;
     
     // Setting up the exit of the dungeon
@@ -82,6 +91,8 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
     gun = new Gun(&map, enemyManager);
 
     score = 0;
+
+    gameState = GameState::Running;
 
     Init();
 }
@@ -246,14 +257,19 @@ void GameManager::Update(float deltaTime) {
 
     handleWindowEvents();
 
-    player->Update(&deltaTime);
+    if (gameState == GameState::Running) {
+        player->Update(&deltaTime);
+    }
+    
     sf::Vector2f playerPos = player->GetPosition();
 
     bool increaseVision = player->GetState() == PlayerState::IncreasedVision;
     tileMap->CastLight(playerPos.x, playerPos.y, increaseVision);
     fogOfWar = tileMap->LitMaskToFogOfWar();
 
-    gun->Update(&deltaTime);
+    if (gameState == GameState::Running) {
+        gun->Update(&deltaTime);
+    }
 
     // change the score based on dead enemies
     std::vector<Enemy*>* dead = enemyManager->GetDead();
@@ -276,8 +292,9 @@ void GameManager::Update(float deltaTime) {
     enemyManager->DeleteDead();
     enemyManager->Update(&deltaTime, player->GetPosition());
     enemyManager->CollideWithEntities();
-    newGame = enemyManager->CheckCollisionPlayer(*player, PLAYER_ENEMY_PUSH);
-
+    if (gameState == GameState::Running) {
+        newGame = enemyManager->CheckCollisionPlayer(*player, PLAYER_ENEMY_PUSH);
+    }
     // call itemManager functions
     itemManager->DeleteConsumed();
     itemManager->Update(&deltaTime);
@@ -322,17 +339,16 @@ void GameManager::Update(float deltaTime) {
     sf::RectangleShape newRect;
     newRect.setSize(exitRect.getSize());
     newRect.setPosition(exitRect.getPosition() - (exitRect.getSize() / 2.0f));
+
+    // Has player died?
+    if (newGame) {
+        gameState = GameState::Over;
+    }
     // Has player reached the exit or died?
-    if (player->CheckCollision(newRect, 0.0f) || newGame) {
+    if (player->CheckCollision(newRect, 0.0f)) {
+        levelCount++;
 
-        if (newGame) {
-            levelCount = 1;
-            score = 0;
-        } else {
-            levelCount++;
-        }
-
-        dungeon.NextDungeon(newGame);
+        dungeon.NextDungeon(false);
         Init(); // Re-Initialize
     }
 }
@@ -350,7 +366,10 @@ void GameManager::Draw() {
     enemyManager->Draw(window, fogOfWar);
     itemManager->Draw(window, fogOfWar);
 
-    player->Draw(window);
+    if (gameState == GameState::Running) {
+        player->Draw(window);
+    }
+    
 
     // set the window view
     window->setView(window->getDefaultView());
@@ -363,6 +382,10 @@ void GameManager::Draw() {
     window->draw(levelText);
     window->draw(scoreText);
     window->draw(powerupText);
+
+    if (gameState == GameState::Over) {
+        window->draw(lossText);
+    }
 
     // display all changes made
     window->display();
@@ -383,7 +406,7 @@ void GameManager::handleWindowEvents() {
                 setViewZoom(evnt.mouseWheel.delta);
                 break;
             case sf::Event::MouseButtonPressed:     // mousebutton clicks
-                if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && gameState == GameState::Running) {
                     sf::Vector2i cursorPos = sf::Mouse::getPosition(*window); 
                     sf::Vector2f relativeCursorPos = window->mapPixelToCoords(cursorPos);
                     sf::Vector2f playerPos = player->GetPosition();
@@ -391,6 +414,14 @@ void GameManager::handleWindowEvents() {
                     gun->Fire(playerPos, relativeCursorPos, window);
                 }
                 break;
+            case sf::Event::KeyPressed:
+                if (evnt.key.code == sf::Keyboard::Space && gameState == GameState::Over) {
+                    gameState = GameState::Running;
+                    score = 0;
+                    levelCount = 0;
+                    dungeon.NextDungeon(false);
+                    Init();
+                }
 
         }
     } 
