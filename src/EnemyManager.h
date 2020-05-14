@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Filename: EnemyManager.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 12/05/2020
+ * Description: Manages collections of enemies, implementing Enemy specific functions.
+ *****************************************************************************/
+
 #ifndef ENEMYMANAGER_H
 #define ENEMYMANAGER_H
 
