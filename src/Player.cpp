@@ -7,7 +7,7 @@ Player::Player(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imag
     row = 7;
     lastMovement.x = 0.0f;
     lastMovement.y = 0.0f;
-    playerState = PlayerState::Normal;
+    state = PlayerState::Normal;
 }
 
 // define Update override to use 
