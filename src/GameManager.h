@@ -69,7 +69,8 @@ private:
     void handleWindowEvents();
     void setViewZoom(int mouseDelta);
     void spawnItems();
-    void spawnThings();
+    void spawnEnemies();
+    sf::Vector2f getRandomLocationInRoom(Room* room);
 
 public:
     GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::Texture* playerTex, sf::Font startFont);
