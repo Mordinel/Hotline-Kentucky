@@ -110,8 +110,10 @@ void GameManager::spawnThings() {
 
             Enemy* tmpEnemy;
 
-            if (randomVal >= 0 && randomVal <= 10) {
+            if (randomVal >= 2 && randomVal <= 10) {
                 tmpEnemy = new Enemy(goodTexture, window, sf::Vector2u(8, 8), 0.2f, 1.4f, &map, EnemyType::Good);
+            } else if (randomVal >= 0 && randomVal < 2) {
+                tmpEnemy = new Enemy(mechaTexture, window, sf::Vector2u(8, 8), 0.3f, 5.0f, &map, EnemyType::Mecha);
             } else {
                 tmpEnemy = new Enemy(evilTexture, window, sf::Vector2u(8, 8), 0.2f, 1.4f, &map, EnemyType::Evil);
             }

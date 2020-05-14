@@ -53,7 +53,7 @@ bool EnemyManager::CheckCollisionPlayer(Entity& ent, float push) {
 
         collided = entityList[i]->CheckCollisionCentered(ent, push);
 
-        if ( ((Enemy*)entityList[i])->GetType() == EnemyType::Evil) {
+        if ( ((Enemy*)entityList[i])->GetType() == EnemyType::Evil || ((Enemy*)entityList[i])->GetType() == EnemyType::Mecha ) {
             if (collided) return collided;
         }
 
