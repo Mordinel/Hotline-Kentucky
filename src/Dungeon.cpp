@@ -10,6 +10,9 @@
 #include "Dungeon.h"
 #include "Direction.h"
 
+/*
+ * Constructor for the Dungeon Class
+ */
 Dungeon::Dungeon()
 {
     roomCount = INITIAL_ROOM_COUNT;
@@ -17,8 +20,17 @@ Dungeon::Dungeon()
     translateRooms();
 }
 
+/*
+ * Destructor for the Collider Class
+ */
 Dungeon::~Dungeon(){}
 
+/*
+ * Generates a list(std::vector) of rooms in a dungeon (or level).
+ *
+ * Parameters:
+ *      roomCount - the number of rooms to generate
+ */
 void Dungeon::genRooms(unsigned int roomCount) {
     unsigned int r;
     int ri; 
@@ -95,6 +107,14 @@ void Dungeon::genRooms(unsigned int roomCount) {
     }
 }
 
+/*
+ * Figures out whether two rooms intersect.
+ * This is so we can generate a dungeon with no overlapping rooms.
+ *
+ * Parameters:
+ *      a - a room that you want to check against room b
+ *      b - a room that you want to check against room a
+ */
 bool Dungeon::roomsIntersect(Room* a, Room* b) {
     int deltaX;
     int deltaY;
@@ -110,6 +130,9 @@ bool Dungeon::roomsIntersect(Room* a, Room* b) {
     return ((intersectX < 0) && (intersectY < 0));
 }
 
+/*
+ * Clears the rooms list so that it can be re-initialized.
+ */
 void Dungeon::clearRooms() {
     for (int i = 0; i < roomCount; i++)
     {
@@ -117,6 +140,14 @@ void Dungeon::clearRooms() {
     }
 }
 
+/*
+ * Generates the next dungeon in the game.
+ * If not reset it will add more rooms so that as the game goes on there are more rooms.
+ *
+ * Parameters:
+ *      reset - whether you want to start from the start or continue to higher room counts
+ *              (usually true when the player has lost)
+ */
 void Dungeon::NextDungeon(bool reset) {
     clearRooms();
 
@@ -130,10 +161,21 @@ void Dungeon::NextDungeon(bool reset) {
     translateRooms();
 }
 
+/*
+ * Get the rooms list
+ *  * Returns: 
+ *      The rooms in the dungeon
+ */
 std::vector<Room*> Dungeon::GetRooms() {
     return rooms;
 }
 
+/*
+ * Generates a tile map based on the rooms that have been generated.
+ *
+ * Returns:
+ *      A tile map of the randomly generated dungeon
+ */
 std::vector<std::vector<TileType>> Dungeon::GenMap() {
     int i;
     int j;
@@ -230,10 +272,20 @@ std::vector<std::vector<TileType>> Dungeon::GenMap() {
     return map;
 }
 
+/*
+ * Gets the exit location of the dungeon whick also happens to be the the center of the last room.
+ *
+ * Returns:
+ *      The exit location of the dungeon.
+ */
 sf::Vector2f Dungeon::GetExitLocation() {
     return rooms[rooms.size()-1]->GetCenter();
 }
 
+/*
+ * Changes the room coordinates so that the left most coordinate of the map is 0,0 instead of being a negative number.
+ * This helps with alligning it to the tile map.
+ */
 void Dungeon::translateRooms() {
     int i;
     Box b = getBounds();
@@ -244,6 +296,13 @@ void Dungeon::translateRooms() {
     }
 }
 
+/*
+ * Gets the min and max x and y values of the room coordinates.
+ * This is used to translate the room coordinates so that the top left of the map is 0,0
+ * 
+ * Returns:
+ *      A Box that contains the min and max x and y values of the rooms.
+ */
 Box Dungeon::getBounds()
 {
     int minLeft = 0;
