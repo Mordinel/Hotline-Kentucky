@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Filename: EntityManager.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 12/05/2020
+ * Description: Manages collections of entity.
+ *****************************************************************************/
+
 #ifndef ENTMANAGER_H
 #define ENTMANAGER_H
 
