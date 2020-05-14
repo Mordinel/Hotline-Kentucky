@@ -17,6 +17,9 @@
 #include "TileType.h"
 
 #define VIEW_DISTANCE 12
+#define DEGREES_CIRCLE 360.0f
+#define RAY_STEP 0.2f
+#define DEGREE_TO_RADIAN_FACTOR 0.01745329f
 
 class TileMap : public sf::Drawable, public sf::Transformable
 {
