@@ -74,13 +74,13 @@ void Gun::Fire(sf::Vector2f& from, sf::Vector2f& to, sf::RenderWindow* window) {
     sf::Vector2f aimDir = to - from;
     sf::Vector2f aimDirNorm = aimDir / (float)sqrt(pow(aimDir.x, 2) + pow(aimDir.y, 2));
 
-    sf::RectangleShape tracer(sf::Vector2f(4.0f, 4.0f));
+    sf::RectangleShape tracer(sf::Vector2f(TRACER_SIZE));
     tracer.setPosition(from);
 
     sf::Vector2f tracerPos = tracer.getPosition();
 
     // cast the bullet until it hits a wall or enemy
-    while((*tileMap)[(int)tracer.getPosition().y / 32][(int)tracer.getPosition().x / 32] != TileType::Wall && !enemyHit) {
+    while((*tileMap)[(int)tracer.getPosition().y / TILE_FACTOR][(int)tracer.getPosition().x / TILE_FACTOR] != TileType::Wall && !enemyHit) {
         tracerPos += aimDirNorm;
         tracer.setPosition(tracerPos);
         enemyHit = enemyManager->Shoot(tracer);
