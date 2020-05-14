@@ -1,9 +1,19 @@
+/******************************************************************************
+ * Filename: Item.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 14/05/2020
+ * Description: Class representing an item
+ *****************************************************************************/
+
 #ifndef ITEM_H
 #define ITEM_H
 
 #include <SFML/Graphics.hpp>
 #include "Entity.h"
 #include "ItemType.h"
+
+#define ITEM_SIZE 16.0f
 
 class Item : public Entity {
 private:
