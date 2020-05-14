@@ -2,9 +2,10 @@
 #define ITEMTYPE_H
 
 enum class ItemType {
+    None,
     Vision,
     Speed,
-    Treasure
+    Coin
 };
 
 #endif

@@ -8,12 +8,15 @@
 class Item : public Entity {
 private:
     ItemType itemType;
+    bool consumed;
 
 public:
     Item(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageCount, float switchTime, float speed, std::vector<std::vector<TileType>>* tileMap, ItemType startItemType);
     ItemType GetItemType();
     void SetItemType(ItemType newType);
     void Update(float* deltaTime) override;
+    bool GetConsumed();
+    void SetConsumed(bool isConsumed);
 };
 
 #endif

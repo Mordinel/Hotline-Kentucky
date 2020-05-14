@@ -7,8 +7,6 @@ Player::Player(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imag
     row = 7;
     lastMovement.x = 0.0f;
     lastMovement.y = 0.0f;
-    state = PlayerState::IncreasedVision;
-    powerUpTimeLeft = 20.0f;
 }
 
 // define Update override to use 
@@ -80,4 +78,14 @@ void Player::Update(float* deltaTime) {
 
 PlayerState Player::GetState() {
     return state;
+}
+
+void Player::GiveSpeed() {
+    state = PlayerState::IncreasedSpeed;
+    powerUpTimeLeft = POWER_UP_TIME;
+}
+
+void Player::GiveVisibility() {
+    state = PlayerState::IncreasedVision;
+    powerUpTimeLeft = POWER_UP_TIME;
 }

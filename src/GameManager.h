@@ -18,6 +18,7 @@
 #include "ItemType.h"
 #include "EnemyType.h"
 #include "PlayerState.h"
+#include "ItemManager.h"
 
 #define TILE_SIZE 32.0f
 #define CHICKEN_ANIMATION_SIZE 8
@@ -31,6 +32,8 @@
 #define ZOOM_DEFAULT 1.0f
 #define TEXT_SIZE 14
 #define TEXT_LOCATION 10, 10
+#define ITEM_SPAWN_CHANCE 4 // 1 in 4
+#define ROOM_COIN_COUNT 5
 
 class GameManager {
 private:
@@ -52,10 +55,17 @@ private:
     sf::Texture* evilTexture;
     sf::Texture* mechaTexture;
     sf::Texture* goodTexture;
+    ItemManager* itemManager;
+    sf::Texture* coinTexture;
+    sf::Texture* speedTexture;
+    sf::Texture* visibilityTexture;
     Gun* gun;
+    int score;
 
     void handleWindowEvents();
     void setViewZoom(int mouseDelta);
+    void spawnItems();
+    void spawnThings();
 
 public:
     GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::Texture* playerTex, sf::Font startFont);
@@ -63,7 +73,7 @@ public:
     void Init();
     void Update(float deltaTime);
     void Draw();
-    void SpawnThings();
+    
 };
 
 #endif

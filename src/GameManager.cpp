@@ -27,6 +27,7 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
     tileTex.loadFromFile("../assets/sprites/tiles.png");
     tileMap = new TileMap(map, TILE_SIZE, tileTex);
 
+    // Load enemy textures
     evilTexture = new sf::Texture();
     evilTexture->loadFromFile("../assets/sprites/evil-chicken.png");
 
@@ -36,12 +37,25 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
     goodTexture = new sf::Texture();
     goodTexture->loadFromFile("../assets/sprites/good-chicken.png");
 
+    // Load item textures
+    coinTexture = new sf::Texture();
+    coinTexture->loadFromFile("../assets/sprites/coin.png");
+
+    speedTexture = new sf::Texture();
+    speedTexture->loadFromFile("../assets/sprites/speed-potion.png");
+
+    visibilityTexture = new sf::Texture();
+    visibilityTexture->loadFromFile("../assets/sprites/visibility-potion.png");
+
     // Setting up the player
     player = new Player(playerTex, window, sf::Vector2u(CHICKEN_ANIMATION_SIZE, CHICKEN_ANIMATIONS), ANIMATION_SWITCH_TIME, PLAYER_SPEED, &map);
 
-    enemyManager = new EnemyManager();;
+    enemyManager = new EnemyManager();
+    itemManager = new ItemManager();
 
     gun = new Gun(&map, enemyManager);
+
+    score = 0;
 
     Init();
 }
@@ -54,6 +68,9 @@ GameManager::~GameManager() {
     delete mechaTexture;
     delete goodTexture;
     delete gun;
+    delete coinTexture;
+    delete speedTexture;
+    delete visibilityTexture;
 }
 
 void GameManager::Init() {
@@ -74,11 +91,17 @@ void GameManager::Init() {
     levelText.setString(levelString);
     
     enemyManager->DeleteAll();
+    itemManager->DeleteAll();
 
-    SpawnThings();
+    spawnThings();
+    spawnItems();
+
+    //coin->SetPosition(player->GetPosition() + sf::Vector2f(60.0f, 60.0f));
+    //speedPotion->SetPosition(player->GetPosition() + sf::Vector2f(-60.0f, 60.0f));
+    //visiblePotion->SetPosition(player->GetPosition() + sf::Vector2f(60.0f, -60.0f));
 }
 
-void GameManager::SpawnThings() {
+void GameManager::spawnThings() {
     int i;
     int j;
     int chickens;
@@ -105,6 +128,48 @@ void GameManager::SpawnThings() {
     }   
 }
 
+void GameManager::spawnItems() {
+    // Spawn Power Ups
+    for (int i = 0; i < rooms.size(); i++) {
+        if (std::rand() % ITEM_SPAWN_CHANCE == 0) {
+            Item* tmpItem;
+
+            if (std::rand() % 2 == 0) {
+                tmpItem = new Item(speedTexture, window, sf::Vector2u(1, 1), 0.2f, 0.0f, &map, ItemType::Speed);
+            } else {
+                tmpItem = new Item(visibilityTexture, window, sf::Vector2u(1, 1), 0.2f, 0.0f, &map, ItemType::Vision);
+            }
+
+            int xPos, yPos;
+
+            xPos = ((std::rand() % (rooms[i]->Width - 2)) + rooms[i]->X + 2) * TILE_SIZE;
+            yPos = ((std::rand() % (rooms[i]->Height - 2)) + rooms[i]->Y + 2) * TILE_SIZE;
+
+            tmpItem->SetPosition(sf::Vector2f(xPos, yPos));
+
+            itemManager->Append(tmpItem);
+        }
+    }
+
+    // Spawn Coins
+    for (int i = 0; i < rooms.size(); i++) {
+        int coinCount = std::rand() % ROOM_COIN_COUNT;
+
+        for (int i = 0; i < coinCount; i++) {
+            Item* tmpItem = new Item(coinTexture, window, sf::Vector2u(4, 1), 0.2f, 0.0f, &map, ItemType::Coin);
+
+            int xPos, yPos;
+
+            xPos = ((std::rand() % (rooms[i]->Width - 2)) + rooms[i]->X + 2) * TILE_SIZE;
+            yPos = ((std::rand() % (rooms[i]->Height - 2)) + rooms[i]->Y + 2) * TILE_SIZE;
+
+            tmpItem->SetPosition(sf::Vector2f(xPos, yPos));
+
+            itemManager->Append(tmpItem);
+        }
+    }
+}
+
 void GameManager::Update(float deltaTime) {
     bool newGame = false;
 
@@ -125,6 +190,24 @@ void GameManager::Update(float deltaTime) {
     enemyManager->Update(&deltaTime, player->GetPosition());
     enemyManager->CollideWithEntities();
     newGame = enemyManager->CheckCollisionPlayer(*player, 0.4f);
+
+    itemManager->DeleteConsumed();
+    itemManager->Update(&deltaTime);
+    ItemType pickedUpItem = itemManager->CheckCollisionPlayer(*player);
+    switch (pickedUpItem) {
+        case ItemType::Coin:
+            score += 100;
+            std::cout << "Score: " << score << std::endl;
+            break;
+        case ItemType::Speed:
+            player->GiveSpeed();
+            std::cout << "You got increased speed for 20 sec!" << std::endl;
+            break;
+        case ItemType::Vision:
+            player->GiveVisibility();
+            std::cout << "You got increased vision for 20 sec!" << std::endl;
+            break;
+    }
 
     // Update view
     sf::Vector2f viewSize(window->getSize().x, window->getSize().y);
@@ -147,6 +230,7 @@ void GameManager::Draw() {
     window->draw(*tileMap);
     window->draw(*gun);
     enemyManager->Draw(window, fogOfWar);
+    itemManager->Draw(window, fogOfWar);
     player->Draw(window);
 
     window->setView(window->getDefaultView());

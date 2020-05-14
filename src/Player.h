@@ -15,6 +15,8 @@ public:
     Player(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageCount, float switchTime, float speed, std::vector<std::vector<TileType>>* tileMap);
     void Update(float* deltaTime) override;
     PlayerState GetState();
+    void GiveVisibility();
+    void GiveSpeed();
 
 private:
     sf::Vector2f lastMovement;
