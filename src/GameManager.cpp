@@ -84,7 +84,7 @@ void GameManager::SpawnThings() {
     int chickens;
 
     for (i = 1; i < rooms.size() - 1; i++) {
-        chickens = std::rand() % 50 + 1;
+        chickens = std::rand() % 40 + 1;
         for(j = 0; j < chickens; j++) {
 
             int randomVal = std::rand() % 50;
