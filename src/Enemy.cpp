@@ -60,7 +60,7 @@ void Enemy::Update(float* deltaTime, sf::Vector2f playerPos) {
 }
 
 void Enemy::evilUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove) {
-    if (GetDistanceBetween(playerPos) < (10.0f * 32.0f)) {
+    if (GetDistanceBetween(playerPos) < AGGRO_DISTANCE) {
         state = EnemyState::Attack;
     }
 
