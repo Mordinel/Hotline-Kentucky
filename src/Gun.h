@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Filename: Gun.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 09/05/2020
+ * Description: Handles gun shooting and collision with game entities.
+ *****************************************************************************/
+
 #ifndef GUN_H
 #define GUN_H
 
