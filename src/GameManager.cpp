@@ -419,7 +419,7 @@ void GameManager::handleWindowEvents() {
                     gameState = GameState::Running;
                     score = 0;
                     levelCount = 1;
-                    dungeon.NextDungeon(false);
+                    dungeon.NextDungeon(true);
                     Init();
                 }
 
