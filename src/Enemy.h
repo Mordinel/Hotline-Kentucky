@@ -21,6 +21,16 @@
 #define MECHA_SIZE 48.0f
 #define TILE_SIZE 32.0f
 #define WANDER_CHANCE 10
+#define POWER_UP_TIME 20
+#define SPEED_BOOST 1.5f
+#define WEST_MOVING 0
+#define EAST_MOVING 1
+#define NORTH_MOVING 2
+#define SOUTH_MOVING 3
+#define WEST_IDLE 4
+#define EAST_IDLE 5
+#define NORTH_IDLE 6
+#define SOUTH_IDLE 7
 
 class Enemy : public Entity {
 private:
