@@ -31,7 +31,7 @@ main-linux should appear in bin/
 | Dungeon	procedurally	generated	at	each	new	level,	e.g.,	multiple	non-overlapping	rooms,	walls,	corridors	and	portal	tiles	correctly	placed | :heavy_check_mark: |
 | Fog	of	war	reveals	the	dungeon	as	the	player	character	progressively	navigates	through	the	dungeon	| :heavy_check_mark: |
 | One	or	more	player	characters	are	controlled	by	user	keyword	| :heavy_check_mark: |
-| Two	distinct	animated	enemies | :x: |
+| Two	distinct	animated	enemies | :heavy_check_mark: |
 | Careful	sprite	and	terrain	collision	detection,	e.g.,	sprite	to	enemy,	sprite	to	wall	collision	detection | :heavy_check_mark: |
 | Careful	collision	detection that	affects	the	score	and	condition,	e.g.,	sprite	to	coin,	sprite	to	health	potion | :heavy_check_mark: |
 | Working	battle	system,	e.g.,	turn-based	or/and to-the death | :heavy_check_mark: |
