@@ -1,22 +1,20 @@
 # Instructions to make this run:
 
 ## Windows
+- Checkout to the `visual-studio` branch
+- Open the visual studio solution in the `HotlineKentuckyVisualStudio` folder
+- Open a `.cpp` file
+- In properties make sure it's set to release
+- Under C/C++ -> General -> Additional Include Directories add the following path `(repo-path)/SFML-2.5.1/include`
+- Under Linker -> General -> Additional Library Directories add the following path `(repo-path)/SFML-2.5.1/lib`
+- Under Linker -> Input -> Additional Dependencies add `sfml-system.lib;sfml-window.lib;sfml-graphics.lib;` to the start of it
 
-- Install [Msys2](https://www.msys2.org/)
-- run `MSYS2 MinGW 64-bit` via the start menu
-- run the command:
-`pacman -S git make mingw64/mingw-w64-x86_64-sfml mingw64/mingw-w64-x86_64-gcc msys/mingw-w64-cross-gcc`
-
-- cd into the same directory as the `Makefile`
-- run `make`
-
-main.exe should appear in bin/
 
 ## Unix
 
 - Install `g++` using your package manager
 - Install `make` using your package manager
-- Install `libsfml` using your package manager
+- Install `libsfml` or `libsfml-dev` using your package manager
 - cd into the same directory as the `Makefile`
 - run `make linux`
 
