@@ -2,7 +2,7 @@
 #define ITEMTYPE_H
 
 enum ItemType {
-    Ammo,
+    Vision,
     Speed,
     Treasure
 };
