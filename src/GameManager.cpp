@@ -102,11 +102,11 @@ void GameManager::Init() {
     enemyManager->DeleteAll();
     itemManager->DeleteAll();
 
-    spawnThings();
+    spawnEnemies();
     spawnItems();
 }
 
-void GameManager::spawnThings() {
+void GameManager::spawnEnemies() {
     int i;
     int j;
     int chickens;
@@ -127,9 +127,8 @@ void GameManager::spawnThings() {
                 tmpEnemy = new Enemy(evilTexture, window, sf::Vector2u(8, 8), 0.2f, 1.4f, &map, EnemyType::Evil);
             }
 
-            sf::Vector2f tmpSpawn = rooms[i]->GetCenter();
-            tmpSpawn *= (float)TILE_SIZE;
-            tmpEnemy->SetPosition(tmpSpawn);
+            sf::Vector2f spawnLocation = getRandomLocationInRoom(rooms[i]);
+            tmpEnemy->SetPosition(spawnLocation);
             enemyManager->Append(tmpEnemy);
         }
     }   
@@ -147,12 +146,8 @@ void GameManager::spawnItems() {
                 tmpItem = new Item(visibilityTexture, window, sf::Vector2u(1, 1), 0.2f, 0.0f, &map, ItemType::Vision);
             }
 
-            int xPos, yPos;
-
-            xPos = ((std::rand() % (rooms[i]->Width - 2)) + rooms[i]->X + 2) * TILE_SIZE;
-            yPos = ((std::rand() % (rooms[i]->Height - 2)) + rooms[i]->Y + 2) * TILE_SIZE;
-
-            tmpItem->SetPosition(sf::Vector2f(xPos, yPos));
+            sf::Vector2f spawnLocation = getRandomLocationInRoom(rooms[i]);
+            tmpItem->SetPosition(spawnLocation);
 
             itemManager->Append(tmpItem);
         }
@@ -170,11 +165,21 @@ void GameManager::spawnItems() {
             xPos = ((std::rand() % (rooms[i]->Width - 2)) + rooms[i]->X + 2) * TILE_SIZE;
             yPos = ((std::rand() % (rooms[i]->Height - 2)) + rooms[i]->Y + 2) * TILE_SIZE;
 
-            tmpItem->SetPosition(sf::Vector2f(xPos, yPos));
+            sf::Vector2f spawnLocation = getRandomLocationInRoom(rooms[i]);
+            tmpItem->SetPosition(spawnLocation);
 
             itemManager->Append(tmpItem);
         }
     }
+}
+
+sf::Vector2f GameManager::getRandomLocationInRoom(Room* room) {
+    int xPos, yPos;
+
+    xPos = ((std::rand() % (room->Width - 2)) + room->X + 2) * TILE_SIZE;
+    yPos = ((std::rand() % (room->Height - 2)) + room->Y + 2) * TILE_SIZE;
+
+    return sf::Vector2f(xPos, yPos);
 }
 
 void GameManager::Update(float deltaTime) {
