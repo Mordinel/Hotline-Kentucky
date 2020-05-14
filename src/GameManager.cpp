@@ -328,6 +328,7 @@ void GameManager::Update(float deltaTime) {
         if (newGame) {
             levelCount = 1;
             score = 0;
+
         } else {
             levelCount++;
         }

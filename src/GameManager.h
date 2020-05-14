@@ -53,7 +53,7 @@
 #define BACKGROUND_COLOR sf::Color(29, 32, 33)
 #define ZOOM_INCREMENTS 0.2f
 #define ZOOM_MIN 0.6f
-#define ZOOM_MAX 5.0f
+#define ZOOM_MAX 3.0f
 #define ZOOM_DEFAULT 1.0f
 #define TEXT_SIZE 24
 #define TEXT_LOCATION 10, 10
