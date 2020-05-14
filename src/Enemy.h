@@ -18,7 +18,7 @@ private:
     sf::Vector2f lastMovement;
 
     void evilUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove);
-    //void mechaUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove);
+    void mechaUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove);
     void goodUpdate(float& xMove, float& yMove);
 
     void wander(float& xMove, float& yMove);

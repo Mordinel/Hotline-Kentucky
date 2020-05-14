@@ -4,6 +4,10 @@ Enemy::Enemy(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imageC
     state = EnemyState::Wander;
     lastMovement = sf::Vector2f(0.0f, 0.0f);
     this->type = type;
+
+    if (type == EnemyType::Mecha) {
+        body.setSize(sf::Vector2f(48.0f, 48.0f));
+    }
 }
 
 void Enemy::Die() {
@@ -20,7 +24,7 @@ void Enemy::Update(float* deltaTime, sf::Vector2f playerPos) {
             evilUpdate(playerPos, xMove, yMove);
             break;
         case EnemyType::Mecha:
-            //mechaUpdate(deltaTime, playerPos, xMove, yMove);
+            mechaUpdate(playerPos, xMove, yMove);
             break;
         case EnemyType::Good:
             goodUpdate(xMove, yMove);
@@ -57,6 +61,18 @@ void Enemy::Update(float* deltaTime, sf::Vector2f playerPos) {
     lastMovement = movement;
 
     checkCollisionsNearBody();
+}
+
+void Enemy::mechaUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove) {
+    if (GetDistanceBetween(playerPos) < AGGRO_DISTANCE * 32.0f) {
+        state = EnemyState::Attack;
+    }
+
+    if (state == EnemyState::Wander) {
+        wander(xMove, yMove);   
+    } else if (state == EnemyState::Attack) {
+        walkAttack(playerPos, xMove, yMove);
+    }
 }
 
 void Enemy::evilUpdate(sf::Vector2f& playerPos, float& xMove, float& yMove) {
