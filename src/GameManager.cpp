@@ -16,6 +16,14 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
     levelText.setFillColor(sf::Color::White);
     levelText.setCharacterSize(TEXT_SIZE);
 
+    scoreText.setFont(font);
+    scoreText.setFillColor(sf::Color::White);
+    scoreText.setCharacterSize(TEXT_SIZE);
+
+    powerupText.setFont(font);
+    powerupText.setFillColor(sf::Color::White);
+    powerupText.setCharacterSize(TEXT_SIZE);
+
     levelCount = 1;
     
     // Setting up the exit of the dungeon
@@ -200,7 +208,6 @@ void GameManager::Update(float deltaTime) {
                 score += 150;
                 break;
         }
-        std::cout << "Score: " << score << std::endl;
     }
 
     delete dead;
@@ -216,17 +223,30 @@ void GameManager::Update(float deltaTime) {
     switch (pickedUpItem) {
         case ItemType::Coin:
             score += 100;
-            std::cout << "Score: " << score << std::endl;
             break;
         case ItemType::Speed:
             player->GiveSpeed();
-            std::cout << "You got increased speed for 20 sec!" << std::endl;
             break;
         case ItemType::Vision:
             player->GiveVisibility();
-            std::cout << "You got increased vision for 20 sec!" << std::endl;
             break;
     }
+
+    scoreString = "Score: " + std::to_string(score);
+    scoreText.setString(scoreString);
+
+    switch (player->GetState()) {
+        case PlayerState::IncreasedVision:
+            powerupString = "Increased Vision";
+            break;
+        case PlayerState::IncreasedSpeed:
+            powerupString = "Increased Speed";
+            break;
+        default:
+            powerupString = "";
+            break;
+    }
+    powerupText.setString(powerupString);
 
     // Update view
     sf::Vector2f viewSize(window->getSize().x, window->getSize().y);
@@ -238,9 +258,15 @@ void GameManager::Update(float deltaTime) {
     newRect.setPosition(exitRect.getPosition() - (exitRect.getSize() / 2.0f));
     // Has player reached the exit or died?
     if (player->CheckCollision(newRect, 0.0f) || newGame) {
-        newGame ? levelCount = 1 : levelCount++;
+
+        if (newGame) {
+            levelCount = 1;
+            score = 0;
+        } else {
+            levelCount++;
+        }
+
         dungeon.NextDungeon(newGame);
-        score = 0;
         Init(); // Re-Initialize
     }
 }
@@ -254,8 +280,14 @@ void GameManager::Draw() {
     player->Draw(window);
 
     window->setView(window->getDefaultView());
+
     levelText.setPosition(TEXT_LOCATION);
+    scoreText.setPosition(TEXT_LOCATION + TEXT_SIZE);
+    powerupText.setPosition(TEXT_LOCATION + (TEXT_SIZE * 2));
+
     window->draw(levelText);
+    window->draw(scoreText);
+    window->draw(powerupText);
 
     window->display();
 }

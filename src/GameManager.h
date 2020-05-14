@@ -28,9 +28,9 @@
 #define BACKGROUND_COLOR sf::Color(29, 32, 33)
 #define ZOOM_INCREMENTS 0.2f
 #define ZOOM_MIN 0.6f
-#define ZOOM_MAX 100.0f
+#define ZOOM_MAX 5.0f
 #define ZOOM_DEFAULT 1.0f
-#define TEXT_SIZE 14
+#define TEXT_SIZE 24
 #define TEXT_LOCATION 10, 10
 #define ITEM_SPAWN_CHANCE 4 // 1 in 4
 #define ROOM_COIN_COUNT 5
@@ -41,7 +41,11 @@ private:
     sf::View view;
     sf::Font font;
     sf::Text levelText;
+    sf::Text scoreText;
+    sf::Text powerupText;
     std::string levelString;
+    std::string scoreString;
+    std::string powerupString;
     float viewZoom;
     Dungeon dungeon;
     int levelCount;
