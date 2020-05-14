@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Filename: Enemy.h
+ * FileType: C++ Header File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 10/04/2020
+ * Description: Class representing an enemy in the game
+ *****************************************************************************/
+
 #ifndef ENEMY_H
 #define ENEMY_H
 

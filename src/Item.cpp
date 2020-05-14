@@ -9,14 +9,14 @@
 #include "Item.h"
 
 /*
- * Player Constructor
+ * Item Constructor
  *
  * Parameters:
- *      texture - the texture for the player
- *      window - the window the player will be drawn to
+ *      texture - the texture for the item
+ *      window - the window the item will be drawn to
  *      imageCount - the image count of the texture
  *      switchTime - the speed of the animation transitions
- *      speed - how fast the entity will move
+ *      speed - N/A
  *      tileMap - a matrix of tileTypes
  *      itemType- the type of item
  */
