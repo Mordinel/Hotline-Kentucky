@@ -7,7 +7,8 @@ Player::Player(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imag
     row = 7;
     lastMovement.x = 0.0f;
     lastMovement.y = 0.0f;
-    state = PlayerState::Normal;
+    state = PlayerState::IncreasedSpeed;
+    powerUpTimeLeft = 20.0f;
 }
 
 // define Update override to use 
@@ -29,6 +30,11 @@ void Player::Update(float* deltaTime) {
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         movement.y += speed * *deltaTime;
+    }
+
+    if (state == PlayerState::IncreasedSpeed) {
+        movement.x *= SPEED_BOOST;
+        movement.y *= SPEED_BOOST;
     }
 
     
@@ -62,5 +68,13 @@ void Player::Update(float* deltaTime) {
     body.setTextureRect(animation.uvRect);
     body.move(movement);
     checkCollisionsNearBody();
+
+    if (state == PlayerState::IncreasedSpeed || state == PlayerState::IncreasedVision) {
+        powerUpTimeLeft -= *deltaTime;
+
+        if (powerUpTimeLeft < 0) {
+            state = PlayerState::Normal;
+        }
+    }
 }
 

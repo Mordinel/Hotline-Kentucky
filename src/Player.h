@@ -1,6 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#define POWER_UP_TIME 20
+#define SPEED_BOOST 1.5f
+
 #include <SFML/Graphics.hpp>
 
 #include "Entity.h"
@@ -16,6 +19,7 @@ public:
 private:
     sf::Vector2f lastMovement;
     PlayerState state;
+    float powerUpTimeLeft;
 };
 
 #endif
