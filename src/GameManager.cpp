@@ -55,7 +55,7 @@ GameManager::GameManager(sf::RenderWindow* startWindow, sf::View startView, sf::
 
     gun = new Gun(&map, enemyManager);
 
-    score = 0;
+    
 
     Init();
 }
@@ -96,9 +96,7 @@ void GameManager::Init() {
     spawnThings();
     spawnItems();
 
-    //coin->SetPosition(player->GetPosition() + sf::Vector2f(60.0f, 60.0f));
-    //speedPotion->SetPosition(player->GetPosition() + sf::Vector2f(-60.0f, 60.0f));
-    //visiblePotion->SetPosition(player->GetPosition() + sf::Vector2f(60.0f, -60.0f));
+    score = 0;
 }
 
 void GameManager::spawnThings() {
