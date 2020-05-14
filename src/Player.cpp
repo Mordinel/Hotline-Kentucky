@@ -7,7 +7,7 @@ Player::Player(sf::Texture* texture, sf::RenderWindow* window, sf::Vector2u imag
     row = 7;
     lastMovement.x = 0.0f;
     lastMovement.y = 0.0f;
-    state = PlayerState::IncreasedSpeed;
+    state = PlayerState::IncreasedVision;
     powerUpTimeLeft = 20.0f;
 }
 
@@ -78,3 +78,6 @@ void Player::Update(float* deltaTime) {
     }
 }
 
+PlayerState Player::GetState() {
+    return state;
+}

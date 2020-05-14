@@ -113,7 +113,8 @@ void GameManager::Update(float deltaTime) {
     player->Update(&deltaTime);
     sf::Vector2f playerPos = player->GetPosition();
 
-    tileMap->CastLight(playerPos.x, playerPos.y);
+    bool increaseVision = player->GetState() == PlayerState::IncreasedVision;
+    tileMap->CastLight(playerPos.x, playerPos.y, increaseVision);
     fogOfWar = tileMap->LitMaskToFogOfWar();
 
     //gun->SetLineCoordinates(playerPos, relativeCursorPos);
