@@ -1,13 +1,35 @@
+/******************************************************************************
+ * Filename: Collider.cpp
+ * FileType: C++ Source File
+ * Authors: James Olsen (1000060387) & Mason Soroka-Gill (1000049111)
+ * Created On: 07/05/2020
+ * Description: Handles all entity->entity collision and entity->tilemap collision.
+ *****************************************************************************/
+
 #include "Collider.h"
 
+/*
+ * Constructor for the Collider Class
+ *
+ * Parameters:
+ *      boundary - the boundary that gets checked for collisions
+ *      tileMap - a matrix of TileType enum that encodes the tiles in the tilemap.
+ */
 Collider::Collider(sf::RectangleShape& boundary, std::vector<std::vector<TileType>>* tileMap) : boundary(boundary) {
     this->tileMap = tileMap;
 }
 
+/*
+ * Destructor for the Collider class
+ */
 Collider::~Collider() {
 
 }
 
+/*
+ * Iterates over the tiles near the Collider's body.
+ * If any are walls, attempt to perform collision on it with full resistance (the tile does not move)
+ */
 void Collider::checkCollisionsNearBody() {
     int y;
     int x;
@@ -28,9 +50,9 @@ void Collider::checkCollisionsNearBody() {
     // for each tile in the selected area
     for (y = minY; y <= maxY; y++) {
         for (x = minX; x <= maxX; x++) {
-            // if thetile is a wall
+            // if the tile is a wall
             if ((*tileMap)[y][x] == TileType::Wall) {
-                // check make rects for the tile and collide with rect
+                // make rects for the tile and collide with this collider
                 sf::RectangleShape tmpRect;
                 tmpRect.setSize(sf::Vector2f(TILE_SIZE, TILE_SIZE));
                 tmpRect.setPosition(x * TILE_SIZE, y * TILE_SIZE);
@@ -43,6 +65,15 @@ void Collider::checkCollisionsNearBody() {
 
 //// Collider collisions
 
+/*
+ * Wrapper function for case where both colliders are center originated.
+ *
+ * Parameters:
+ *      other - the other collider to collide with
+ *      push - the amount the other collider will resist the collision
+ *
+ * Returns true if collision happens.
+ */
 bool Collider::CheckCollisionCentered(Collider& other, float push) {
     sf::Vector2f thisHalfSize = GetHalfSize();   
     sf::Vector2f thisPosition = GetColliderPosition();   
@@ -50,6 +81,15 @@ bool Collider::CheckCollisionCentered(Collider& other, float push) {
     return checkCollision(other, thisPosition, thisHalfSize, push);
 }
 
+/*
+ * Wrapper function for case where the caller collider is not center originated.
+ *
+ * Parameters:
+ *      other - the other collider to collide with
+ *      push - the amount the other collider will resist the collision
+ *
+ * Returns true if collision happens.
+ */
 bool Collider::CheckCollision(Collider& other, float push) {
     sf::Vector2f thisHalfSize = GetHalfSize();   
     sf::Vector2f thisPosition = GetColliderPosition() - thisHalfSize;   
@@ -57,19 +97,35 @@ bool Collider::CheckCollision(Collider& other, float push) {
     return checkCollision(other, thisPosition, thisHalfSize, push);
 }
 
+/*
+ * Checks collision on another Collider.
+ * Performs vector clipping depending on what axis of intersection is smaller.
+ *
+ * Parameters:
+ *      other - the other collider to collide with
+ *      thisPosition - the current position of this collider's body
+ *      thisHalfSize - half of the current body size
+ *      push - the amount the other collider will resist the collision
+ *
+ * Returns true if collision happens.
+ */
 bool Collider::checkCollision(Collider& other, sf::Vector2f& thisPosition, sf::Vector2f& thisHalfSize, float push) {
     sf::Vector2f otherPosition = other.GetColliderPosition();   
     sf::Vector2f otherHalfSize = other.GetHalfSize();   
 
+    // calculate difference
     float deltaX = otherPosition.x - thisPosition.x;
     float deltaY = otherPosition.y - thisPosition.y;
 
+    // calculate intersection
     float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x);
     float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
 
+    // if an intersection occurs
     if (intersectX < 0.0f && intersectY < 0.0f) {
         push = std::min(std::max(push, 0.0f), 1.0f);
 
+        // push the colliders apart along the shortest axis of intersection
         if (intersectX > intersectY) {
             if (deltaX > 0.0f) {
                 Move(intersectX * (1.0f - push),0.0f);
@@ -95,6 +151,10 @@ bool Collider::checkCollision(Collider& other, sf::Vector2f& thisPosition, sf::V
 }
 
 //// Rectangle collisions
+/*
+ * Is exactly the same as Collider collisions section
+ * except it handles sf::RectangleShape instead of Collider
+ */
 
 bool Collider::CheckCollisionCentered(sf::RectangleShape& rect, float push) {
     sf::Vector2f thisHalfSize = GetHalfSize();   
